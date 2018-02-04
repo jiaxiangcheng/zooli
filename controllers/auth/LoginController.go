@@ -9,12 +9,9 @@ type LoginController struct {
 	controllers.BaseController
 }
 
-
 func (c *LoginController) LoginForm() {
 	c.TplName = "auth/login.tpl"
 }
-
-
 
 func (c *LoginController) Login() {
 
@@ -27,7 +24,6 @@ func (c *LoginController) Login() {
 	}
 
 }
-
 
 func (c *LoginController) Logout() {
 	c.DelSession("user")
