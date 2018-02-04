@@ -10,9 +10,9 @@ import (
 )
 
 type User struct {
-	gorm.Model `valid:"-"`
-	Username   string `valid:"alphanum"`
-	Password   string `valid:"-"`
+	gorm.Model 			`valid:"-"`
+	Username   string	`valid:"alphanum"`
+	Password   string	`valid:"-"`
 }
 
 func (u *User) SetPassword(pass string) {

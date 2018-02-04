@@ -2,19 +2,18 @@ package controllers
 
 import (
 	"github.com/astaxie/beego"
+	"github.com/Qiaorui/zooli/controllers"
 )
 
 type UsersController struct {
-	BaseController
+	controllers.BaseController
 }
 
-func (this *UsersController) NestPrepare() {
-	if !this.IsLogin {
-		this.Ctx.Redirect(302, this.GoLogin())
-	}
+func (c *UsersController) NestPrepare() {
+
 }
 
-func (this *UsersController) Index() {
-	beego.ReadFromRequest(&this.Controller)
-	c.TplNames = "users/index.tpl"
+func (c *UsersController) Index() {
+	beego.ReadFromRequest(&c.Controller)
+	c.TplName = "users/index.tpl"
 }
