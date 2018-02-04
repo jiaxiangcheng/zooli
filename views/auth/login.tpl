@@ -15,7 +15,7 @@
                       <div class="form-group">
                         <label for="inputPassword" class="col-sm-3 control-label">Password</label>
                         <div class="col-sm-9">
-			    		  <input class="form-control" placeholder="Password" name="Password" type="password" value="" required pattern=".{6,}" title="Password title" id="inputPassword"  />
+			    		  <input class="form-control" placeholder="Password" name="Password" type="password" value="" required pattern=".{4,}" title="Password title" id="inputPassword"  />
                         </div>
                       </div>
                       <div class="form-group">

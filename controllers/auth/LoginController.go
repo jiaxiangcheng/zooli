@@ -1,41 +1,35 @@
 package controllers
 
-import models "zooli/models/users"
+import (
+	"github.com/Qiaorui/zooli/controllers"
+	"github.com/Qiaorui/zooli/models"
+)
 
 type LoginController struct {
+	controllers.BaseController
 }
 
-func (this *LoginController) Login() {
 
-	if this.IsLogin {
-		this.BaseController.Ctx.Redirect(302, this.UrlFor("UsersController.Index"))
-		return
+func (c *LoginController) LoginForm() {
+	c.TplName = "auth/login.tpl"
+}
+
+
+
+func (c *LoginController) Login() {
+
+	u := models.FindUserByUsername(c.GetString("Username"))
+	if u.ValidPassword(c.GetString("Password")) {
+		c.SetSession("user", u)
+		c.Redirect("/", 302)
+	} else {
+		c.Redirect("/login", 302)
 	}
 
-	this.TplNames = "auth/login.tpl"
-	username := c.GetString("Username")
-	password := c.GetString("Password")
-
-	user, err := this.Authenticate(username, password)
-
-	if err != nil {
-
-		return
-	}
-
-	this.SetUserSession(user)
-	this.Redirect(c.UrlFor("UsersController.Index"), 303)
 }
 
-func (this *LoginController) Authenticate(username string, password string) (user *models.User, err error) {
-	user = &models.User{Username: username}
 
-	// TODO: validate user
-	return user, nil
-
-}
-
-func (this *LoginController) Logout() {
-	this.DelUserSession()
-	this.Ctx.Redirect(302, c.UrlFor("LoginController.Login"))
+func (c *LoginController) Logout() {
+	c.DelSession("user")
+	c.Redirect("/", 302)
 }
