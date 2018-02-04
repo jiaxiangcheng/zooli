@@ -13,8 +13,8 @@ func (this *LoginController) Login() {
 	}
 
 	this.TplNames = "auth/login.tpl"
-	username := c.GetString("Username")
-	password := c.GetString("Password")
+	username := this.GetString("Username")
+	password := this.GetString("Password")
 
 	user, err := this.Authenticate(username, password)
 
@@ -24,7 +24,7 @@ func (this *LoginController) Login() {
 	}
 
 	this.SetUserSession(user)
-	this.Redirect(c.UrlFor("UsersController.Index"), 303)
+	this.Redirect(this.UrlFor("UsersController.Index"), 303)
 }
 
 func (this *LoginController) Authenticate(username string, password string) (user *models.User, err error) {
@@ -37,5 +37,5 @@ func (this *LoginController) Authenticate(username string, password string) (use
 
 func (this *LoginController) Logout() {
 	this.DelUserSession()
-	this.Ctx.Redirect(302, c.UrlFor("LoginController.Login"))
+	this.Ctx.Redirect(302, this.UrlFor("LoginController.Login"))
 }
