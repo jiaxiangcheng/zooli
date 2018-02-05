@@ -15,7 +15,7 @@ func init() {
 	beego.Router("/login", &auth.LoginController{}, "post:Login")
 
 	beego.Router("/users", &users.UsersController{}, "get:Index")
-	beego.Router("/user/:id", &users.UsersController{}, "get:LoadUser")
+	beego.Router("/users/{id}", &users.UsersController{}, "post:LoadUser")
 	beego.InsertFilter("/*", beego.BeforeRouter, FilterLoggedIn)
 }
 

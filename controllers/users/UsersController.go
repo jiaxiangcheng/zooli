@@ -21,7 +21,11 @@ func (c *UsersController) Index() {
 	c.TplName = "users/index.tpl"
 }
 
-func (c *UsersController) LoadUser(username string) {
+func (c *UsersController) LoadUser() {
+	id, _ := c.GetInt64("id")
+	userInfo := models.FindUserByID(uint(id))
+	c.Data["UserInfo"] = userInfo
+	c.TplName = "users/user.tpl"
 }
 
 func (c *UsersController) DeleteUser(username string) {
