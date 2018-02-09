@@ -33,56 +33,32 @@ CREATE USER 'zooli'@'localhost' IDENTIFIED BY '1234';
 GRANT ALL PRIVILEGES ON zooli.* TO 'zooli'@'localhost';
 ```
 
-### Installing
-
-A step by step series of examples that tell you have to get a development env running
-
-Say what the step will be
+## Architecture
+A typical [MVC](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller) model.
 
 ```
-Give the example
+.
+├── conf/                       Config files for different environments
+├── controllers/                Controllers to handle all http requests
+├── models/                     Database and model definition
+├── routers/                    Routers and filters
+├── tests/                      For now we have enough time do this, just ignore it
+├── static                      All static resource should store in here, a example would be organize css, js, etc by directory
+│   ├── css/
+│   ├── js/
+│   └── ...
+├── views                       Layout, template, html files
+├── main.go                     Main entry point
+└── semantic.json               Semantic UI config file
 ```
 
-And repeat
+## Tutorials
 
-```
-until finished
-```
 
-End with an example of getting some data out of the system or using it for a little demo
+## Development Methodology
 
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
+The methodology we are going to follow is Agile-like method. We publish **bugs**, **tasks** and **issues** as cards in [project panel](https://github.com/Qiaorui/zooli/projects/1). Then each member has to pick his task and drag into corresponding state column.
 
 ## Versioning
 
 We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [repository tags](https://github.com/Qiaorui/zooli/tags).
-
-## Authors
-
-* **项翘睿** - *Initial work* -
