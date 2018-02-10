@@ -16,7 +16,6 @@
             }
         });
     }
-
     function createUser() {
         $.ajax({
             async: false,
@@ -43,9 +42,9 @@
 		<link rel="stylesheet" href="/static/layout/header.css">
 		<link rel="stylesheet" href="/static/layout/nav.css">
 		<link rel="stylesheet" href="/static/layout/side-nav.css">
+        <link rel="stylesheet" href="/static/layout/widgets.css">
 		<link rel="stylesheet" href="/static/semantic-ui/dist/semantic.min.css"></link>
 		<script src="/static/dist/semantic-ui/semantic.min.js"></script>
-		<script src="/static/css/dashboard.js"></script>
 
         <script type="text/javascript">
             function getUser(user_id) {
@@ -71,6 +70,26 @@
 			    }
 			}
         </script>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+        <script type="text/javascript">
+            google.charts.load('current', {'packages':['corechart']});
+            google.charts.setOnLoadCallback(drawChart);
+
+            function drawChart() {
+              var data = google.visualization.arrayToDataTable([
+              ['Users', 'State'],
+              ['Active', 50],
+              ['Inactive', 60],
+            ]);
+
+              var options = {'title':'Analytics', 'width':550, 'height':400};
+
+              // Display the chart inside the <div> element with id="piechart"
+              var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+              chart.draw(data, options);
+            }
+        </script>
 
 	</head>
 	<body>
@@ -80,7 +99,8 @@
 				<span>Zooli</span>
 			</div>
             <div class="sidebar">
-			    <button class="ui right floated basic button" id="sidebutton" onclick="showsidebutton()">
+			    <button class="ui right floated basic button" id="sidebutton"
+                onclick="showsidebutton()">
 					<i class="sidebar icon"></i></button>
             </div>
 		</div>
@@ -98,19 +118,19 @@
 						</a>
 					</li>
 					<li>
-						<a href="/">
+						<a href="#ncomments">
 							<span><i class="home icon"></i></span>
 							<span>Home</span>
 						</a>
 					</li>
 					<li>
-						<a href="#">
+						<a href="#act-users">
 							<span><i class="bar chart icon"></i></span>
 							<span>Analytics</span>
 						</a>
 					</li>
 					<li>
-						<a href="/login">
+						<a href="https://www.google.es">
 							<span><i class="sign out icon"></i></span>
 							<span>Sig out</span>
 						</a>
@@ -126,30 +146,28 @@
 				<table id="table_users" class="ui celled table">
 					<thead>
 						<tr>
-							<th>ID</th>
-							<th>username</th>
-							<th>password</th>
-							<th></th>
+							<th class="center aligned">ID</th>
+							<th class="center aligned">Username</th>
+							<th class="center aligned">Password</th>
+							<th class="center aligned"></th>
 							<th></th>
 						</tr>
 					</thead>
 					<tbody>
 						{{ range .users }}
 						<tr>
-							<td>{{ .ID}}</td>
-							<td>{{ .Username}}</td>
-							<td>{{ .Password}}</td>
-							<td>
+							<td class="center aligned">{{ .ID}}</td>
+							<td class="center aligned">{{ .Username}}</td>
+							<td class="center aligned">{{ .Password}}</td>
+							<td class="center aligned">
 								<button type="button"
-										title="View user"
-										class="ui primary button"
+										class="ui basic button"
 										onclick="getUser('{{ .ID}}');">
 									View
 								</button>
 							</td>
-							<td>
+							<td class="center aligned">
 								<button type="button"
-										title="Delete user"
 										class="ui negative button"
 										data-toggle="modal"
 										data-target=".bs-example-modal-sm"
@@ -168,6 +186,24 @@
 						style="margin: 10px 10px">
 						<i class="add user icon"></i>Create user</button>
 				</div>
+                </br>
+
+                <div class="widget" id="act-users">
+                    <div class="title">
+                        Number of active Users
+                    </div>
+                    <div class="chart"></div>
+                </div>
+                <div class="widget" id="nvisits">
+					<div class="title">Number of visits</div>
+					<div class="chart"></div>
+				</div>
+				<div class="widget" id="ncomments">
+					<div class="title">Number of comments</div>
+					<div class="chart"></div>
+				</div>
+
+
 			</div>
 		</div>
 	</body>
