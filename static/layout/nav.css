@@ -1,0 +1,26 @@
+.nav-trigger {
+	position: relative;
+	float: right;
+	width: 20px;
+	height: 44px;
+	right: 30px;
+	display: block;
+}
+.nav-trigger span, .nav-trigger span:before, span:after {
+	width: 20px;
+	height: 2px;
+	background-color: #35475e;
+	position: absolute;
+}
+.nav-trigger span {
+	top: 50%;
+}
+.nav-trigger span:before, .nav-trigger span:after {
+	content: '';
+}
+.nav-trigger span:before {
+	top: -6px;
+}
+.nav-trigger span:after {
+	top: 6px;
+}
