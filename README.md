@@ -61,6 +61,8 @@ Basic
 * https://tour.golang.org/welcome/1 Golang tutorial
 
 Advance
+* http://gorm.io/  GORM guide
+* https://github.com/asaskevich/govalidator  GO validator
 * https://golang.org/doc/effective_go.html  Effective writing Go and coding style
 * http://gopl-zh.b0.upaiyun.com/
 
@@ -93,6 +95,33 @@ Book
 * https://book.douban.com/subject/27082348/ 自己动手写docker
 * https://github.com/yeasy/docker_practice 从入门到实践
 * https://book.douban.com/subject/26780404/ 第一本Docker
+
+## Use cases
+
+A company like BWM has a lot of stores. Each store can provide some kind of services as repair, wash, etc. The client can order a service and pay.
+Each store will have some manager (user) who using this application to monitoring the workflow and receive money. For now I'm really not so sure about do RBAC
+by using role and permission class or just get over with inheritance. On the other hand, I think we can improve security by separate admin table and user table.
+
+![alt text](https://github.com/Qiaorui/zooli/blob/master/uml.png "class diagram")
+
+Following we define some use cases. The necessary fields to create a model are defined in Go source code file under **/model** directory.
+
+| User    | Action          | Pre          | Summary                                       | Post                    |
+| ------- |:---------------:| :-----------:| --------------------------------------------- | :---------------------: |
+| All     | Login           | Not login    | User enters username and password             | Login and save session cookie if correct        |
+| All     | Logout          | Login        | Click logout                                  | Delete user session cookie |
+| Admin   | Show company list |            | Show all companies                            |                         |
+| Admin   | CRUD company    | Company list | Create, Read, Update or Delete a company      | Check and do CRUD       |
+| Admin   | Show store list |              | Show all stores                               |                         |
+| Admin   | CRUD store      | Store list   | CRUD a store                                  | Check and do CRUD       |
+| Admin   | Show service list |            | Show all services                             |                         |
+| Admin   | CRUD service    | Service list | CRUD a service                                | Check input and do CRUD |
+| Admin   | Show user list  |              | Show all users                                |                         |
+| Admin   | CRUD user       | User list    | Create, Read, Update or Delete a user         | Check input and do CRUD |
+| User    | Show order list |              | Show all orders made by corresponding store   |                         |
+| User    | RU order        | Order list   | Read detail of a order and/or update          |                         |
+| User    | Update store    | Store has a user | User update his store information         |                         |
+
 
 ## Development Methodology
 
