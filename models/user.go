@@ -64,6 +64,13 @@ func FindUserByUsername(username string) User {
 	return u
 }
 
+func ExistUserByUsername(username string) bool {
+	var u User
+	count := 0
+	DB.Where("username = ?", username).Find(&u).Count(&count)
+	return count > 0
+}
+
 func FindUsers() []User {
 	var u []User
 	DB.Find(&u)
