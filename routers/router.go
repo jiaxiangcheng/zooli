@@ -28,4 +28,7 @@ var FilterLoggedIn = func(ctx *context.Context) {
 	if user == nil && ctx.Request.RequestURI != "/login" {
 		ctx.Redirect(302, "/login")
 	}
+	if user != nil && ctx.Request.RequestURI == "/login" {
+		ctx.Redirect(302, "/")
+	}
 }

@@ -61,6 +61,8 @@ Basic
 * https://tour.golang.org/welcome/1 Golang tutorial
 
 Advance
+* http://gorm.io/  GORM guide
+* https://github.com/asaskevich/govalidator  GO validator
 * https://golang.org/doc/effective_go.html  Effective writing Go and coding style
 * http://gopl-zh.b0.upaiyun.com/
 
