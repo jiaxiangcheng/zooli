@@ -11,7 +11,6 @@ git clone https://github.com/Qiaorui/zooli.git $GOPATH/src/github.com/Qiaorui/zo
 cd $GOPATH/src/github.com/Qiaorui/zooli/
 
 bee run
-
 ```
 Then your app should be able to run in http://localhost:8090/
 > Note: if any error happens please check prerequisites first.
@@ -26,7 +25,7 @@ Then you can install beego package
 go get github.com/astaxie/beego
 ```
 
-A mysql admin account is required
+A mysql admin account is required. You should enter mysql shell and then use following command to create a mysql user for this project.
 
 ```sql
 CREATE USER 'zooli'@'localhost' IDENTIFIED BY '1234';
@@ -34,7 +33,9 @@ GRANT ALL PRIVILEGES ON zooli.* TO 'zooli'@'localhost';
 ```
 
 ## Architecture
-A typical [MVC](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller) model.
+
+In this application we are using **beego** framework + **semantic ui**.
+Beego is typical [MVC](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller) model. So you understand why we have controller, model, view directories .
 
 ```
 .
@@ -53,7 +54,45 @@ A typical [MVC](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93control
 ```
 
 ## Tutorials
+Here I'm going to give some useful link to study all required knowledge
 
+### Golang
+Basic
+* https://tour.golang.org/welcome/1 Golang tutorial
+
+Advance
+* https://golang.org/doc/effective_go.html  Effective writing Go and coding style
+* http://gopl-zh.b0.upaiyun.com/
+
+### Beego
+* https://beego.me/docs/intro/
+
+### Frontend
+General
+* https://github.com/hacke2/hacke2.github.io/issues/1  front end resources
+* https://github.com/hacke2/hacke2.github.io/issues/3  front end resources
+* http://coderlmn.github.io/code-standards/ front end coding style
+
+UI
+* https://beego.me/docs/mvc/view/tutorial.md  Go template guide
+* https://semantic-ui.com/ Semantic UI
+* https://www.w3schools.com/ basic html, css, js knowledge
+
+Javascript
+
+* http://bq69.com/blog/articles/script/868/google-javascript-style-guide.html js coding style
+* http://tc9011.com/ Very interesting blog about js
+
+### Docker
+Web
+* https://github.com/wsargent/docker-cheat-sheet/tree/master/zh-cn#docker-cheat-sheet
+* https://github.com/widuu/chinese_docker
+
+Book
+
+* https://book.douban.com/subject/27082348/ 自己动手写docker
+* https://github.com/yeasy/docker_practice 从入门到实践
+* https://book.douban.com/subject/26780404/ 第一本Docker
 
 ## Development Methodology
 
