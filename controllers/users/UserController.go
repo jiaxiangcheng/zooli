@@ -29,4 +29,10 @@ func (c *UserController) RegisterUser() {
 	new_user := models.User{Username: user_name, Password: password}
 	new_user.Insert()
 	c.Redirect("/users", 302)
+
+	/*if (!new_user.ExistsUsername()) {
+		new_user.Insert()
+		c.Redirect("/users", 302)
+	}
+	c.Redirect("/users/register", 302)*/
 }
