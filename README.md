@@ -94,6 +94,20 @@ Book
 * https://github.com/yeasy/docker_practice 从入门到实践
 * https://book.douban.com/subject/26780404/ 第一本Docker
 
+## Use cases
+
+![alt text](https://github.com/Qiaorui/zooli/blob/master/uml.png "class diagram")
+
+| User    | Action          | Pre          | Summary                                       | Post                    |
+| ------- |:---------------:| :-----------:| --------------------------------------------- | :---------------------: |
+| All     | Login           | Not login    | User enters username and password             | Login and save session cookie if correct        |
+| All     | Logout          | Login        | Click logout                                  | Delete user session cookie |
+| Admin   | Show user list  |              | Show all user list                            |                         |
+| Admin   | CRUD user       | User list    | Create, Read, Update or Delete a user         | Check input and do CRUD |
+| Admin   | Show company list |            | Show all company list                         |                         |
+
+
+
 ## Development Methodology
 
 The methodology we are going to follow is Agile-like method. We publish **bugs**, **tasks** and **issues** as cards in [project panel](https://github.com/Qiaorui/zooli/projects/1). Then each member has to pick his task and drag into corresponding state column.
