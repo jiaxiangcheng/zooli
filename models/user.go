@@ -10,23 +10,23 @@ import (
 )
 
 type User struct {
-	gorm.Model 			`valid:"-"`
-	Username   string	`valid:"alphanum"`
-	Password   string	`valid:"-"`
+	gorm.Model `valid:"-"`
+	Username   string `valid:"alphanum"`
+	Password   string `valid:"-"`
 }
 
 func (u *User) SetPassword(pass string) {
-	u.Password = encryptPasswordMD5(pass)
+	u.Password = EncryptPasswordMD5(pass)
 }
 
 func (u *User) ValidPassword(pass string) bool {
-	if u.Password == encryptPasswordMD5(pass) {
+	if u.Password == EncryptPasswordMD5(pass) {
 		return true
 	}
 	return false
 }
 
-func encryptPasswordMD5(pass string) string {
+func EncryptPasswordMD5(pass string) string {
 	h := md5.New()
 	io.WriteString(h, pass)
 	str := hex.EncodeToString(h.Sum(nil))
@@ -35,7 +35,7 @@ func encryptPasswordMD5(pass string) string {
 }
 
 func (u *User) Insert() {
-	DB.Create(u)
+	DB.Create(&u)
 }
 
 func (u *User) Exists() bool {

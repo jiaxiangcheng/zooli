@@ -1,118 +1,132 @@
 package models
 
 import (
-	"bytes"
 	"fmt"
 	"os"
-	"strings"
 
 	"github.com/astaxie/beego"
-	"github.com/go-sql-driver/mysql"
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
+	//_ "github.com/jinzhu/gorm/dialects/postgres"
+	//_ "github.com/jinzhu/gorm/dialects/sqlite"
+	//_ "github.com/jinzhu/gorm/dialects/mssql"
+	"log"
 )
 
 var DB *gorm.DB
 
-func init() {
 
-	DB = CreateGolibDB()
-
-	profileAdmin := &User{
-		Username: "admin",
-	}
-
-	if profileAdmin.Exists() == false {
-		profileAdmin.SetPassword("1234")
-
-		DB.Save(profileAdmin)
-	}
-
-}
-
-func CreateGolibDB() *gorm.DB {
-	var mysqlConnect bytes.Buffer
-
-	mysqluser := beego.AppConfig.String("mysqluser")
-	fmt.Println("mysqluser:" + mysqluser)
-	mysqlConnect.WriteString(mysqluser)
-
-	mysqlConnect.WriteString(":")
-
-	var mysqlpass string
-	mysqlpass = os.Getenv("MYSQL_PASS")
-	if mysqlpass == "" {
-		mysqlpass = beego.AppConfig.String("mysqlpass")
-	}
-	mysqlConnect.WriteString(mysqlpass)
-
-	mysqlConnect.WriteString("@tcp(")
-
-	mysqlhost := os.Getenv("MYSQL_HOST")
-	if mysqlhost == "" {
-		mysqlhost = beego.AppConfig.String("mysqlhost")
-	}
-	fmt.Println("mysqlhost:" + mysqlhost)
-
-	mysqlConnect.WriteString(mysqlhost)
-
-	mysqlport := beego.AppConfig.String("mysqlport")
-	if mysqlport == "" {
-		mysqlport = "3306"
-	}
-	fmt.Println("mysqlport:" + mysqlport)
-	mysqlConnect.WriteString(":" + mysqlport + ")/")
-
-	mysqldb := beego.AppConfig.String("mysqldb")
-	fmt.Println("mysqldb:" + mysqldb)
-
-	mysqlConnect.WriteString(mysqldb)
-	mysqlConnect.WriteString("?charset=utf8&parseTime=True&loc=Local")
-
-	db, err := gorm.Open("mysql", mysqlConnect.String())
-
-	if err != nil {
-		fmt.Println("Failed to connect database " + err.Error())
-
-		fmt.Println("Trying to create a database: " + mysqldb)
-
-		if mErr, ok := err.(*mysql.MySQLError); ok && mErr.Number == 1049 {
-			create(mysqluser, mysqlpass, mysqlhost, mysqlport, mysqldb)
-		}
-	}
-
-	LoadlibDB(db)
-
-	return db
-}
 
 func LoadlibDB(db *gorm.DB) {
-
-	DB = db
-
-	DB.AutoMigrate(&User{})
+	db.AutoMigrate(&User{})
 }
 
-func create(mysqluser, mysqlpass, mysqlhost, mysqlport, mysqldb string) *gorm.DB {
-	var err error
 
-	var mysqlConnect []string
-
-	mysqlConnect = append(mysqlConnect, mysqluser, ":", mysqlpass)
-	mysqlConnect = append(mysqlConnect, "@tcp(", mysqlhost, ":", mysqlport, ")/?charset=utf8&parseTime=True&loc=Local")
-
-	db, err := gorm.Open("mysql", strings.Join(mysqlConnect, ""))
-
-	if err != nil {
-		panic(err)
+func Syncdb() {
+	createDB()
+	if err := Connect(); err != nil {
+		beego.Error(err)
+		return
 	}
+	insertUser()
+	fmt.Println("database init is complete.")
+}
 
-	fmt.Println("CREATE DATABASE " + mysqldb)
-	db.Exec("CREATE DATABASE " + mysqldb)
+//数据库连接
+func Connect() error {
+	var dsn string
+	db_type := beego.AppConfig.String("db_type")
+	db_host := beego.AppConfig.String("db_host")
+	db_port := beego.AppConfig.String("db_port")
+	db_user := beego.AppConfig.String("db_user")
+	db_pass := beego.AppConfig.String("db_pass")
+	db_name := beego.AppConfig.String("db_name")
+	db_path := beego.AppConfig.String("db_path")
+	db_sslmode := beego.AppConfig.String("db_sslmode")
+	switch db_type {
+	case "mysql":
+		dsn = fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True&loc=Local", db_user, db_pass, db_host, db_port, db_name)
+		break
+	case "postgres":
+		dsn = fmt.Sprintf("dbname=%s host=%s  user=%s  password=%s  port=%s  sslmode=%s", db_name, db_host, db_user, db_pass, db_port, db_sslmode)
+		break
+	case "sqlite3":
+		if db_path == "" {
+			db_path = "./"
+		}
+		dsn = fmt.Sprintf("%s%s.db", db_path, db_name)
+		break
+	case "mssql":
+		dsn = fmt.Sprintf("sqlserver://%s:%s@%s:%s?database=%s", db_user, db_pass, db_host, db_port, db_name)
+		break
+	default:
+		beego.Critical("Database driver is not allowed:", db_type)
+	}
+	db, err := gorm.Open(db_type, dsn)
 
-	fmt.Println("USE " + mysqldb)
-	db.Exec("USE " + mysqldb)
+	if err == nil {
+		DB = db
+		LoadlibDB(db)
+	} else {
+		beego.Warning(err)
+	}
+	return err
+}
 
-	return db
+//创建数据库
+func createDB() {
 
+	db_type := beego.AppConfig.String("db_type")
+	db_host := beego.AppConfig.String("db_host")
+	db_port := beego.AppConfig.String("db_port")
+	db_user := beego.AppConfig.String("db_user")
+	db_pass := beego.AppConfig.String("db_pass")
+	db_name := beego.AppConfig.String("db_name")
+	db_path := beego.AppConfig.String("db_path")
+	db_sslmode := beego.AppConfig.String("db_sslmode")
+
+	var dsn string
+	var sqlstring string
+	switch db_type {
+	case "mysql":
+		dsn = fmt.Sprintf("%s:%s@tcp(%s:%s)/?charset=utf8&parseTime=True&loc=Local", db_user, db_pass, db_host, db_port)
+		sqlstring = fmt.Sprintf("CREATE DATABASE  if not exists `%s` CHARSET utf8 COLLATE utf8_general_ci", db_name)
+		break
+	case "postgres":
+		dsn = fmt.Sprintf("host=%s  user=%s  password=%s  port=%s  sslmode=%s", db_host, db_user, db_pass, db_port, db_sslmode)
+		sqlstring = fmt.Sprintf("CREATE DATABASE %s", db_name)
+		break
+	case "sqlite3":
+		if db_path == "" {
+			db_path = "./"
+		}
+		dsn = fmt.Sprintf("%s%s.db", db_path, db_name)
+		os.Remove(dsn)
+		sqlstring = "create table init (n varchar(32));drop table init;"
+		break
+	case "mssql":
+		dsn = fmt.Sprintf("sqlserver://%s:%s@%s:%s?database=%s", db_user, db_pass, db_host, db_port, db_name)
+		sqlstring = fmt.Sprintf("CREATE DATABASE %s", db_name)
+		break
+	default:
+		beego.Critical("Database driver is not allowed:", db_type)
+	}
+	db, err := gorm.Open(db_type, dsn)
+	if err != nil {
+		panic(err.Error())
+	}
+	db.Exec(sqlstring)
+	log.Println("Database ", db_name, " created")
+
+	defer db.Close()
+}
+
+func insertUser() {
+	fmt.Println("insert user ...")
+	u := new(User)
+	u.Username = "admin"
+	u.Password = EncryptPasswordMD5("1234")
+	DB.Create(&u)
+	fmt.Println("insert user end")
 }
