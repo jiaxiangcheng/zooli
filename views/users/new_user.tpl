@@ -12,7 +12,7 @@
             <div class="field">
                 <input id="password" type="password" placeholder="Password"/>
             </div>
-            <button class="ui fluid blue button" id="register" onclick="RegisterUser()">注册</button>
+            <button class="ui fluid blue button" id="register" onsubmit="RegisterUser()">注册</button>
     </form>
 </body>
 
@@ -21,17 +21,31 @@
     {
         var UserName = document.getElementById("username").value;
         var PassWord = document.getElementById("password").value;
-        if (Username != "" && Password != "") {
-            $.ajax({
-                async: false,
-                type: "POST",
-                url: "/users/register",
-                data: { "username":UserName, "password":PassWord },
-                success: function (data) {
-                    $('body').html(data);
+        console.log("userName = " + UserName);
+        console.log("password = " + PassWord);
+        $.ajax({
+            async: false,
+            type: "post",
+            dataType: "json",
+            url: "/users/existUserIf",
+            data: { "username": UserName },
+            success: function (data) {
+                if (data.existed) {
+                    window.alert("user existed");
                 }
-            });
-        }
+                else if (!data.existed) {
+                    $.ajax({
+                        async: false,
+                        type: "post",
+                        url: "/users/register",
+                        data: { "username": UserName, "password": PassWord },
+                        success: function (data) {
+                            $('body').html(data);
+                        }
+                    });
+                }
+            }
+        });
     }
 </script>
 
