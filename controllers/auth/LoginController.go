@@ -18,7 +18,13 @@ func (c *LoginController) Login() {
 	u := models.FindUserByUsername(c.GetString("Username"))
 	if u.ValidPassword(c.GetString("Password")) {
 		c.SetSession("user", u)
+
+		// role admin
 		c.Redirect("/users", 302)
+
+		// role storer
+		// TODO: clients view
+
 	} else {
 		c.Redirect("/login", 302)
 	}
