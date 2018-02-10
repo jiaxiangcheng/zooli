@@ -1,6 +1,8 @@
 package controllers
 
 import (
+	"fmt"
+
 	"github.com/Qiaorui/zooli/controllers"
 	"github.com/Qiaorui/zooli/models"
 	"github.com/astaxie/beego"
@@ -23,15 +25,21 @@ func (c *UsersController) Index() {
 
 func (c *UsersController) LoadUser() {
 	id, _ := c.GetInt64("id")
-	userInfo := models.FindUserByID(uint(id))
-	c.Data["UserInfo"] = userInfo
-	c.TplName = "users/user.tpl"
+	user := models.FindUserByID(uint(id))
+	c.Data["UserInfo"] = user
+	fmt.Print(c.Data["UserInfo"])
+
+	c.Redirect("/users/"+c.GetString("id"), 302)
 }
 
-func (c *UsersController) DeleteUser(username string) {
-
+func (c *UsersController) DeleteUser() {
+	id, _ := c.GetInt64("id")
+	user := models.FindUserByID(uint(id))
+	user.DeleteSoft()
+	c.Index()
 }
 
-func (c *UsersController) UpdateUser(username string) {
+func (c *UsersController) CreateUser() {
+	c.TplName = "users/new_user.tpl"
 
 }
