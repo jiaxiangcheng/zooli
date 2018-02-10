@@ -1,51 +1,3 @@
-<<<<<<< HEAD
-<body>
-    <table id="table_users" class="table table-striped">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>username</th>
-                <th>password</th>
-                <th></th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            {{ range .users }}
-            <tr>
-                <td>{{ .ID}}</td>
-                <td>{{ .Username}}</td>
-                <td>{{ .Password}}</td>
-                <td>
-                    <button type="button" 
-                            title="View user" 
-                            class="btn btn-default" 
-                            onclick="getUser('{{ .ID}}');">
-                        View
-                    </button>
-                </td>
-                <td>
-                    <button type="button" 
-                            title="Delete user" 
-                            class="btn btn-default" 
-                            data-toggle="modal" 
-                            data-target=".bs-example-modal-sm" 
-                            onclick="deleteUser('{{ .ID}}');">
-                        Delete
-                    </button>
-                </td>
-            </tr>
-            {{ end }}
-        </tbody>
-    </table>
-    <button type="button" 
-            title="View user" 
-            class="btn btn-default" 
-            onclick="createUser();">
-        Create user
-    </button>
-</body>
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <script type="text/javascript">
@@ -60,7 +12,7 @@
             },
             success: function (data) {
                 console.log("data = " + data);
-                $('body').html(data);    
+                $('body').html(data);
             }
         });
     }
@@ -71,13 +23,13 @@
             type: "post",
             url: "/users/new",
             success: function (data) {
-                $('body').html(data);    
+                $('body').html(data);
             }
         });
     }
 
 </script>
-=======
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -112,10 +64,10 @@
             }
 			function showsidebutton() {
 				var x = document.getElementById("si");
-			    if (x.style.display === "none") {
-			        x.style.display = "block";
-			    } else {
+			    if (x.style.display === "block") {
 			        x.style.display = "none";
+			    } else {
+			        x.style.display = "block";
 			    }
 			}
         </script>
@@ -171,58 +123,52 @@
 				Users
 			</div>
 			<div class="main">
-					<table class="ui celled table">
-		                <thead>
-		                    <tr>
-		                        <th>ID</th>
-		                        <th>Username</th>
-		                        <th>Password</th>
-		                        <th></th>
-		                        <th></th>
-		                        <th></th>
-		                    </tr>
-		                </thead>
-		                <tbody>
-		                    {{ range .users }}
-		                    <tr>
-		                        <td>{{ .ID}}</td>
-		                        <td class="positive">{{ .Username}}</td>
-		                        <td>{{ .Password}}</td>
-		                        <td>
-		                            <button type="button"
-		                            title="View user"
-		                            class="ui tiny button"
-		                            onclick="getUser('{{ .ID}}');">
-		                            View
-		                            </button>
-		                        </td>
-		                        <td>
-		                            <button type="button"
-		                            title="Delete user"
-		                            class="ui tiny negative button"
-		                            data-toggle="modal"
-		                            data-target=".bs-example-modal-sm"
-		                            onclick="deleteUser('{{ .ID}}');">
-		                            Delete
-		                            </button>
-		                        </td>
-		                        <td>
-		                            <button
-		                            title="Update user"
-		                            class="ui tiny button"
-		                            onclick="updateUser('{{ .ID}}');">
-		                            Update
-		                            </button>
-		                        </td>
-		                    </tr>
-		                    {{ end }}
-		                    </tbody>
-		            </table>
+				<table id="table_users" class="ui celled table">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>username</th>
+							<th>password</th>
+							<th></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						{{ range .users }}
+						<tr>
+							<td>{{ .ID}}</td>
+							<td>{{ .Username}}</td>
+							<td>{{ .Password}}</td>
+							<td>
+								<button type="button"
+										title="View user"
+										class="ui primary button"
+										onclick="getUser('{{ .ID}}');">
+									View
+								</button>
+							</td>
+							<td>
+								<button type="button"
+										title="Delete user"
+										class="ui negative button"
+										data-toggle="modal"
+										data-target=".bs-example-modal-sm"
+										onclick="deleteUser('{{ .ID}}');">
+									Delete
+								</button>
+							</td>
+						</tr>
+						{{ end }}
+					</tbody>
+				</table>
+				<button type="button"
+						title="View user"
+						class="ui basic big button"
+						onclick="createUser();"
+						style="margin: 10px 10px">
+						<i class="add user icon"></i>Create user</button>
 				</div>
 			</div>
 		</div>
 	</body>
-
-
 </html>
->>>>>>> 4af2267b4c4e4d9bb07152d95b727dd468ba03c8

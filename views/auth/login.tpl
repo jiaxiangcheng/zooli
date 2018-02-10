@@ -1,4 +1,4 @@
-<body>
+<body style="background-color: #DADADA;">
     <div class="ui grid">
         <link rel="stylesheet" href="/static/semantic-ui/dist/semantic.min.css"></link>
         <script src="/static/dist/semantic-ui/semantic.min.js"></script>
@@ -48,7 +48,6 @@
         justify-content: center;
         align-items: center;
         min-height: 100vh;
-        background-color: #DADADA;
     }
     .title {
         text-align: center;
