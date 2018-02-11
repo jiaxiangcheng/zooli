@@ -2,20 +2,6 @@
 
 <script type="text/javascript">
 
-    function getUser(user_id) {
-        $.ajax({
-            async: false,
-            type: "post",
-            url: "/users/" + user_id,
-            data: {
-                id: user_id
-            },
-            success: function (data) {
-                console.log("data = " + data);
-                $('body').html(data);
-            }
-        });
-    }
     function createUser() {
         $.ajax({
             async: false,
@@ -25,8 +11,32 @@
                 $('body').html(data);
             }
         });
-    }
+	}
+	
+	function getUser(user_id) {
+		console.log("user_id = " + user_id);
+		$.ajax({
+			async: false,
+			type: "post",
+			url: "/users/" + user_id,
+			data: {
+				id: user_id
+			},
+			success: function (data) {
+				console.log("data = " + data);
+				$('body').html(data);
+			}
+		});
+	}
 
+	function showsidebutton() {
+		var x = document.getElementById("si");
+		if (x.style.display === "block") {
+			x.style.display = "none";
+		} else {
+			x.style.display = "block";
+		}
+	}
 </script>
 
 <!DOCTYPE html>
@@ -45,31 +55,6 @@
         <link rel="stylesheet" href="/static/layout/widgets.css">
 		<link rel="stylesheet" href="/static/semantic-ui/dist/semantic.min.css"></link>
 		<script src="/static/dist/semantic-ui/semantic.min.js"></script>
-
-        <script type="text/javascript">
-            function getUser(user_id) {
-                console.log("user_id = " + user_id);
-                $.ajax({
-                    async: false,
-                    type: "post",
-                    url: "/users/" + user_id,
-                    data: {
-                        id: user_id
-                    },
-                    success: function (data) {
-                        //$('body').html(data);
-                    }
-                });
-            }
-			function showsidebutton() {
-				var x = document.getElementById("si");
-			    if (x.style.display === "block") {
-			        x.style.display = "none";
-			    } else {
-			        x.style.display = "block";
-			    }
-			}
-        </script>
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
         <script type="text/javascript">
@@ -158,7 +143,7 @@
 						<tr>
 							<td class="center aligned">{{ .ID}}</td>
 							<td class="center aligned">{{ .Username}}</td>
-							<td class="center aligned">{{ .Password}}</td>
+							<td class="center aligned">{{ .PasswordHash}}</td>
 							<td class="center aligned">
 								<button type="button"
 										class="ui basic button"
