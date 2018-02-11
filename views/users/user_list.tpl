@@ -1,3 +1,44 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+
+    function createUser() {
+        $.ajax({
+            async: false,
+            type: "post",
+            url: "/users/new",
+            success: function (data) {
+                $('body').html(data);
+            }
+        });
+	}
+
+	function getUser(user_id) {
+		console.log("user_id = " + user_id);
+		$.ajax({
+			async: false,
+			type: "post",
+			url: "/users/" + user_id,
+			data: {
+				id: user_id
+			},
+			success: function (data) {
+				console.log("data = " + data);
+				$('body').html(data);
+			}
+		});
+	}
+
+	function showsidebutton() {
+		var x = document.getElementById("si");
+		if (x.style.display === "block") {
+			x.style.display = "none";
+		} else {
+			x.style.display = "block";
+		}
+	}
+</script>
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -14,33 +55,24 @@
         <link rel="stylesheet" href="/static/layout/widgets.css">
 		<link rel="stylesheet" href="/static/semantic-ui/dist/semantic.min.css"></link>
 		<script src="/static/dist/semantic-ui/semantic.min.js"></script>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
         <script type="text/javascript">
-            function getUser(user_id) {
-                console.log("user_id = " + user_id);
-                $.ajax({
-                    async: false,
-                    type: "post",
-                    url: "/users/" + user_id,
-                    data: {
-                        id: user_id
-                    },
-                    success: function (data) {
-                        //$('body').html(data);
-                    }
-                });
-            }
-			function showsidebutton() {
-				var x = document.getElementById("si");
-			    if (x.style.display === "block") {
-			        x.style.display = "none";
-			    } else {
-			        x.style.display = "block";
-			    }
-			}
-            function setactive() {
-                var x = document.getElementById("users");
-                x.setAttribute('class', 'active');
+            google.charts.load('current', {'packages':['corechart']});
+            google.charts.setOnLoadCallback(drawChart);
+
+            function drawChart() {
+              var data = google.visualization.arrayToDataTable([
+              ['Users', 'State'],
+              ['Active', 50],
+              ['Inactive', 60],
+            ]);
+
+              var options = {'title':'Analytics', 'width':550, 'height':400};
+
+              // Display the chart inside the <div> element with id="piechart"
+              var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+              chart.draw(data, options);
             }
         </script>
 
@@ -123,36 +155,6 @@
 		</div>
 	</body>
 </html>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script type="text/javascript">
-
-    function getUser(user_id) {
-        $.ajax({
-            async: false,
-            type: "post",
-            url: "/users/" + user_id,
-            data: {
-                id: user_id
-            },
-            success: function (data) {
-                console.log("data = " + data);
-                $('body').html(data);
-            }
-        });
-    }
-    function createUser() {
-        $.ajax({
-            async: false,
-            type: "post",
-            url: "/users/new",
-            success: function (data) {
-                $('body').html(data);
-            }
-        });
-    }
-
-</script>
 
 <style>
     a:hover {
