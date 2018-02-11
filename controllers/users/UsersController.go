@@ -20,7 +20,8 @@ func (c *UsersController) Index() {
 	beego.ReadFromRequest(&c.Controller)
 
 	c.Data["users"] = models.FindUsers()
-	c.TplName = "users/index.tpl"
+	c.Layout = "users/index.tpl"
+	c.TplName = "users/header.html"
 }
 
 func (c *UsersController) LoadUser() {

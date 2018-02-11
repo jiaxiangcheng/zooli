@@ -78,49 +78,41 @@
 	</head>
 	<body>
 		<div class="header">
-			<div class="logo">
-				<i class="dashboard icon"></i>
-				<span>Zooli</span>
-			</div>
-            <div class="sidebar">
-			    <button class="ui right floated basic button" id="sidebutton"
-                onclick="showsidebutton()">
-					<i class="sidebar icon"></i></button>
-            </div>
+			{{.LayoutContent}}
 		</div>
 		<div class="side-nav" id="si">
 			<div class="logo">
 				<i class="large dashboard icon"></i>
 				<span>Zooli</span>
 			</div>
-			<nav>
-				<ul>
-					<li id="users" class="desactive">
-						<a href="/users" onclick="setactive()">
-							<span><i class="user icon"></i></span>
-							<span>Users</span>
-						</a>
-					</li >
-					<li>
-						<a href="#ncomments">
-							<span><i class="home icon"></i></span>
-							<span>Home</span>
-						</a>
-					</li>
-					<li>
-						<a href="#act-users">
-							<span><i class="bar chart icon"></i></span>
-							<span>Analytics</span>
-						</a>
-					</li>
-					<li>
-						<a href="https://www.google.es">
-							<span><i class="sign out icon"></i></span>
-							<span>Sig out</span>
-						</a>
-					</li>
-				</ul>
-			</nav>
+            <nav>
+                <ul>
+                    <li id="users" class="desactive">
+                        <a href="/users" onclick="setactive()">
+                            <span><i class="user icon"></i></span>
+                            <span>Users</span>
+                        </a>
+                    </li >
+                    <li>
+                        <a href="#ncomments">
+                            <span><i class="home icon"></i></span>
+                            <span>Home</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#act-users">
+                            <span><i class="bar chart icon"></i></span>
+                            <span>Analytics</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.google.es">
+                            <span><i class="sign out icon"></i></span>
+                            <span>Sig out</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
 		</div>
 		<div class="main-content">
 			<div class="title">
