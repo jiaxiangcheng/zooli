@@ -1,4 +1,4 @@
-# zooli
+# Zooli 酥梨
 
 The **web app** for the project Zooli. This part we're going to develop a platform
 

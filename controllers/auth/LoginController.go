@@ -16,7 +16,7 @@ func (c *LoginController) LoginForm() {
 func (c *LoginController) Login() {
 
 	u := models.FindUserByUsername(c.GetString("Username"))
-	if u.ValidPassword(c.GetString("Password")) {
+	if u.ValidPassword(c.GetString("PasswordHash")) {
 		c.SetSession("user", u)
 		// role admin
 		c.Redirect("/users", 302)
