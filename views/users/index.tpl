@@ -92,6 +92,7 @@
         </script>
 
 	</head>
+
 	<body>
 		<div class="header">
 			<div class="logo">
@@ -143,6 +144,8 @@
 				Users
 			</div>
 			<div class="main">
+				{{ template "common/flash.tpl" . }}
+
 				<table id="table_users" class="ui celled table">
 					<thead>
 						<tr>

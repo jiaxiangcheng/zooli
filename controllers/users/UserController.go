@@ -5,6 +5,7 @@ import (
 
 	"github.com/Qiaorui/zooli/controllers"
 	"github.com/Qiaorui/zooli/models"
+	"github.com/astaxie/beego"
 )
 
 type UserController struct {
@@ -30,11 +31,19 @@ func (c *UserController) ExistUserIf() {
 }
 
 func (c *UserController) RegisterUser() {
+	flash := beego.NewFlash()
+
 	user_name := c.GetString("username")
 	password := c.GetString("password")
 
-	new_user := models.User{Username: user_name, PasswordHash: password}
+	new_user := models.User {Username: user_name, PasswordHash: password}
+
+	//flash.Error("Username already exists")
+
 	new_user.Insert()
+	flash.Success("Successfully created user")
+	flash.Store(&c.Controller)
+
 	c.Redirect("/users", 302)
 
 	/*if (!new_user.ExistsUsername()) {
