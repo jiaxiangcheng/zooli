@@ -2,7 +2,7 @@
     <link rel="stylesheet" href="/static/semantic-ui/dist/semantic.min.css"></link>
     <script src="/static/dist/semantic-ui/semantic.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <form action="" class="ui form">
+    <form action="" class="ui form" onsubmit="RegisterUser();">
             <h2 class="title">
                 <i class="user icon"></i>
                 New user</h2></br>
@@ -12,7 +12,7 @@
             <div class="field">
                 <input id="password" type="password" placeholder="Password"/>
             </div>
-            <button class="ui fluid blue button" id="register" onsubmit="RegisterUser()">注册</button>
+            <input class="ui fluid blue button" id="register" type="submit" value="注册"></input>
     </form>
 </body>
 

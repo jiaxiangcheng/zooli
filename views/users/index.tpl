@@ -69,25 +69,9 @@
 			        x.style.display = "block";
 			    }
 			}
-        </script>
-        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-
-        <script type="text/javascript">
-            google.charts.load('current', {'packages':['corechart']});
-            google.charts.setOnLoadCallback(drawChart);
-
-            function drawChart() {
-              var data = google.visualization.arrayToDataTable([
-              ['Users', 'State'],
-              ['Active', 50],
-              ['Inactive', 60],
-            ]);
-
-              var options = {'title':'Analytics', 'width':550, 'height':400};
-
-              // Display the chart inside the <div> element with id="piechart"
-              var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-              chart.draw(data, options);
+            function setactive() {
+                var x = document.getElementById("users");
+                x.setAttribute('class', 'active');
             }
         </script>
 
@@ -111,12 +95,12 @@
 			</div>
 			<nav>
 				<ul>
-					<li class="active">
-						<a href="/users">
+					<li id="users" class="desactive">
+						<a href="/users" onclick="setactive()">
 							<span><i class="user icon"></i></span>
 							<span>Users</span>
 						</a>
-					</li>
+					</li >
 					<li>
 						<a href="#ncomments">
 							<span><i class="home icon"></i></span>
@@ -208,3 +192,8 @@
 		</div>
 	</body>
 </html>
+<style>
+    a:hover {
+        background-color: #87CEEB;
+    }
+</style>
