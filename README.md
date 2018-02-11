@@ -85,6 +85,11 @@ Javascript
 * http://bq69.com/blog/articles/script/868/google-javascript-style-guide.html js coding style
 * http://tc9011.com/ Very interesting blog about js
 
+Jquery
+
+* https://jquery.com/
+* https://www.w3schools.com/jquery/default.asp
+
 ### Docker
 Web
 * https://github.com/wsargent/docker-cheat-sheet/tree/master/zh-cn#docker-cheat-sheet
@@ -98,9 +103,10 @@ Book
 
 ## Use cases
 
-A company like BWM has a lot of stores. Each store can provide some kind of services as repair, wash, etc. The client can order a service and pay.
-Each store will have some manager (user) who using this application to monitoring the workflow and receive money. For now I'm really not so sure about do RBAC
-by using role and permission class or just get over with inheritance. On the other hand, I think we can improve security by separate admin table and user table.
+A company like BWM has a lot of stores. Each store can provide some kind of services (repair, wash, etc)
+and some products that belong to one service. The client can order a product and pay.
+Each store will have some manager (user) who using this application to monitoring the workflow and receive money.
+For now we are putting all kinds of user (admin, manager) in the same User table, differ by Role. This is easiest way to do so, but not correct.
 
 ![alt text](https://github.com/Qiaorui/zooli/blob/master/uml.png "class diagram")
 
@@ -115,12 +121,14 @@ Following we define some use cases. The necessary fields to create a model are d
 | Admin   | Show store list |              | Show all stores                               |                         |
 | Admin   | CRUD store      | Store list   | CRUD a store                                  | Check and do CRUD       |
 | Admin   | Show service list |            | Show all services                             |                         |
-| Admin   | CRUD service    | Service list | CRUD a service                                | Check input and do CRUD |
+| Admin   | CRUD service    | Service list | CRUD a service                                | Check and do CRUD |
 | Admin   | Show user list  |              | Show all users                                |                         |
-| Admin   | CRUD user       | User list    | Create, Read, Update or Delete a user         | Check input and do CRUD |
+| Admin   | CRUD user       | User list    | Create, Read, Update or Delete a user         | Check and do CRUD |
 | User    | Show order list |              | Show all orders made by corresponding store   |                         |
 | User    | RU order        | Order list   | Read detail of a order and/or update          |                         |
 | User    | Update store    | Store has a user | User update his store information         |                         |
+| User    | Show product list |            | Show all product of his store                 |                         |
+| User    | CRUD product    | Product list | CRUD a product                                | Check and do CRUD |
 
 
 ## Development Methodology
