@@ -19,7 +19,15 @@ var DB *gorm.DB
 
 
 func LoadlibDB(db *gorm.DB) {
+	db.AutoMigrate(&Service{})
+	db.AutoMigrate(&Company{})
+	db.AutoMigrate(&Role{})
 	db.AutoMigrate(&User{})
+	db.AutoMigrate(&Product{})
+	db.AutoMigrate(&Store{})
+	db.AutoMigrate(&Client{})
+	db.AutoMigrate(&Vehicle{})
+	db.AutoMigrate(&Order{})
 }
 
 
@@ -36,34 +44,34 @@ func Syncdb() {
 //数据库连接
 func Connect() error {
 	var dsn string
-	db_type := beego.AppConfig.String("db_type")
-	db_host := beego.AppConfig.String("db_host")
-	db_port := beego.AppConfig.String("db_port")
-	db_user := beego.AppConfig.String("db_user")
-	db_pass := beego.AppConfig.String("db_pass")
-	db_name := beego.AppConfig.String("db_name")
-	db_path := beego.AppConfig.String("db_path")
-	db_sslmode := beego.AppConfig.String("db_sslmode")
-	switch db_type {
+	dbType := beego.AppConfig.String("db_type")
+	dbHost := beego.AppConfig.String("db_host")
+	dbPort := beego.AppConfig.String("db_port")
+	dbUser := beego.AppConfig.String("db_user")
+	dbPass := beego.AppConfig.String("db_pass")
+	dbName := beego.AppConfig.String("db_name")
+	dbPath := beego.AppConfig.String("db_path")
+	dbSslmode := beego.AppConfig.String("db_sslmode")
+	switch dbType {
 	case "mysql":
-		dsn = fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True&loc=Local", db_user, db_pass, db_host, db_port, db_name)
+		dsn = fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True&loc=Local", dbUser, dbPass, dbHost, dbPort, dbName)
 		break
 	case "postgres":
-		dsn = fmt.Sprintf("dbname=%s host=%s  user=%s  password=%s  port=%s  sslmode=%s", db_name, db_host, db_user, db_pass, db_port, db_sslmode)
+		dsn = fmt.Sprintf("dbname=%s host=%s  user=%s  password=%s  port=%s  sslmode=%s", dbName, dbHost, dbUser, dbPass, dbPort, dbSslmode)
 		break
 	case "sqlite3":
-		if db_path == "" {
-			db_path = "./"
+		if dbPath == "" {
+			dbPath = "./"
 		}
-		dsn = fmt.Sprintf("%s%s.db", db_path, db_name)
+		dsn = fmt.Sprintf("%s%s.db", dbPath, dbName)
 		break
 	case "mssql":
-		dsn = fmt.Sprintf("sqlserver://%s:%s@%s:%s?database=%s", db_user, db_pass, db_host, db_port, db_name)
+		dsn = fmt.Sprintf("sqlserver://%s:%s@%s:%s?database=%s", dbUser, dbPass, dbHost, dbPort, dbName)
 		break
 	default:
-		beego.Critical("Database driver is not allowed:", db_type)
+		beego.Critical("Database driver is not allowed:", dbType)
 	}
-	db, err := gorm.Open(db_type, dsn)
+	db, err := gorm.Open(dbType, dsn)
 
 	if err == nil {
 		DB = db
@@ -126,7 +134,7 @@ func insertUser() {
 	fmt.Println("insert user ...")
 	u := new(User)
 	u.Username = "admin"
-	u.Password = EncryptPasswordMD5("1234")
+	u.SetPassword("1234")
 	DB.Create(&u)
 	fmt.Println("insert user end")
 }

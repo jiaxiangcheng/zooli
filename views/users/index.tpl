@@ -142,7 +142,7 @@
 						<tr>
 							<td class="center aligned">{{ .ID}}</td>
 							<td class="center aligned">{{ .Username}}</td>
-							<td class="center aligned">{{ .Password}}</td>
+							<td class="center aligned">{{ .PasswordHash}}</td>
 							<td class="center aligned">
 								<button type="button"
 										class="ui basic button"

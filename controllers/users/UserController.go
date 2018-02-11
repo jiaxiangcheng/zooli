@@ -33,7 +33,7 @@ func (c *UserController) RegisterUser() {
 	user_name := c.GetString("username")
 	password := c.GetString("password")
 
-	new_user := models.User{Username: user_name, Password: password}
+	new_user := models.User{Username: user_name, PasswordHash: password}
 	new_user.Insert()
 	c.Redirect("/users", 302)
 

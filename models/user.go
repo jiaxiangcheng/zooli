@@ -3,38 +3,26 @@ package models
 import (
 	"crypto/md5"
 	"encoding/hex"
-	"fmt"
 	"io"
 
 	"github.com/jinzhu/gorm"
+	"github.com/astaxie/beego"
 )
 
 type User struct {
-	gorm.Model `valid:"-"`
-	Username   string `valid:"alphanum"`
-	Password   string `valid:"-"`
+	gorm.Model				`valid:"-"`
+	Username     	string	`valid:"alphanum"`
+	PasswordHash 	string	`valid:"-"`
+	Email			string	`valid:"email,optional"`
+	Name			string	`valid:"-"`
+	Role			Role	`valid:"-"`
+	RoleID			uint	`valid:"-"`
+	Store			Store	`gorm:"foreignkey:ManagerID"`
 }
 
-func (u *User) SetPassword(pass string) {
-	u.Password = EncryptPasswordMD5(pass)
-}
-
-func (u *User) ValidPassword(pass string) bool {
-	if u.Password == EncryptPasswordMD5(pass) {
-		return true
-	}
-	return false
-}
-
-func EncryptPasswordMD5(pass string) string {
-	h := md5.New()
-	io.WriteString(h, pass)
-	str := hex.EncodeToString(h.Sum(nil))
-
-	return str
-}
 
 func (u *User) Insert() {
+	beego.Debug("Insert ", u)
 	DB.Create(&u)
 }
 
@@ -44,7 +32,6 @@ func (u *User) Exists() bool {
 	return count > 0
 }
 
-// ExistsUsername returns true if there is already an user with this username in the DB
 func (u *User) ExistsUsername() bool {
 	count := 0
 	DB.Where("username = ? and id <> ?", u.Username, u.ID).Find(&User{}).Count(&count)
@@ -77,28 +64,42 @@ func FindUsers() []User {
 	return u
 }
 
-func (u *User) ChangePassword(pass string) {
-
-	DB.Where("username = ?", u.Username).First(&u)
-
-	u.SetPassword(pass)
-	//hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(pass), bcrypt.DefaultCost)
-	//u.Hash = string(hashedPassword[:])
-
-	DB.Save(&u)
-}
 
 func (u *User) Update() {
+	beego.Debug("Update ", u)
 	var uDB User
 	uDB.ID = u.ID
 	DB.Where(&uDB).First(&uDB)
-
-	fmt.Print(uDB)
 	uDB.Username = u.Username
+	uDB.PasswordHash = u.PasswordHash
+	uDB.Email = u.Email
+	uDB.Name = u.Name
+	uDB.RoleID = u.RoleID
 
 	DB.Save(&uDB)
 }
 
 func (u *User) DeleteSoft() {
+	beego.Debug("Delete ", u)
 	DB.Delete(&u)
+}
+
+
+func (u *User) SetPassword(pass string) {
+	u.PasswordHash = encryptMD5(pass)
+}
+
+func (u *User) ValidPassword(pass string) bool {
+	if u.PasswordHash == encryptMD5(pass) {
+		return true
+	}
+	return false
+}
+
+func encryptMD5(pass string) string {
+	h := md5.New()
+	io.WriteString(h, pass)
+	str := hex.EncodeToString(h.Sum(nil))
+
+	return str
 }
