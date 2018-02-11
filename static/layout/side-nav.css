@@ -1,7 +1,4 @@
-.side-nav .logo {
-	background-color: #233245;
-	color: #fff;
-}
+/* side navigation styles */
 .side-nav {
 	position: absolute;
 	width: 100%;
@@ -46,11 +43,7 @@
 	font-size: 14px;
 	font-weight: 600;
 }
-@media screen and (max-width: 600px) {
-	.header .sidebar #sidebutton {
-		display: block;
-	}
-}
+
 /* set element styles to fit tablet and higher(desktop) */
 @media screen and (min-width: 600px) {
 	.header {
@@ -60,10 +53,6 @@
 	.header .logo {
 		display: none;
 	}
-	.header .sidebar #sidebutton {
-		display: none;
-	}
-
 	.nav-trigger {
 		display: none;
 	}
