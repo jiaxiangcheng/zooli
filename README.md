@@ -22,7 +22,8 @@ You need to install [golang](https://golang.org/) and [mysql](https://www.mysql.
 Then you can install beego package
 
 ```bash
-go get github.com/astaxie/beego
+go get -u github.com/astaxie/beego
+go get -u github.com/beego/bee
 ```
 
 A mysql admin account is required. You should enter mysql shell and then use following command to create a mysql user for this project.
@@ -108,7 +109,7 @@ and some products that belong to one service. The client can order a product and
 Each store will have some manager (user) who using this application to monitoring the workflow and receive money.
 For now we are putting all kinds of user (admin, manager) in the same User table, differ by Role. This is easiest way to do so, but not correct.
 
-![alt text](https://github.com/Qiaorui/zooli/blob/master/uml.png "class diagram")
+![alt text](https://image.ibb.co/j9uyFn/uml.png "class diagram")
 
 Following we define some use cases. The necessary fields to create a model are defined in Go source code file under **/model** directory.
 
