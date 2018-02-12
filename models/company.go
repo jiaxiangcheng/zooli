@@ -3,6 +3,7 @@ package models
 import (
 	"github.com/jinzhu/gorm"
 	"github.com/astaxie/beego"
+	"encoding/json"
 )
 
 type Company struct {
@@ -16,8 +17,8 @@ type Company struct {
 
 
 func (c *Company) Insert() {
-	beego.Debug("Insert ", c)
 	DB.Create(&c)
+	beego.Debug("Insert Company:", c)
 }
 
 func (c *Company) Exists() bool {
@@ -58,7 +59,6 @@ func FindCompanys() []Company {
 }
 
 func (c *Company) Update() {
-	beego.Debug("Update ", c)
 	var cDB Company
 	cDB.ID = c.ID
 	DB.Where(&cDB).First(&cDB)
@@ -69,11 +69,19 @@ func (c *Company) Update() {
 	cDB.Email = c.Email
 
 	DB.Save(&cDB)
+	beego.Debug("Update Company:", cDB)
 }
 
 func (c *Company) DeleteSoft() {
-	beego.Debug("Delete ", c)
 	DB.Delete(&c)
+	beego.Debug("Delete Company:", c)
 }
 
-
+func (c Company) String() string {
+	out, err := json.Marshal(c)
+	if err != nil {
+		beego.Error(err)
+		return ""
+	}
+	return string(out)
+}

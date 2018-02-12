@@ -3,6 +3,7 @@ package models
 import (
 	"github.com/jinzhu/gorm"
 	"github.com/astaxie/beego"
+	"encoding/json"
 )
 
 type Product struct {
@@ -11,14 +12,14 @@ type Product struct {
 	Description		string		`gorm:"type:longtext" valid:"-"`
 	Value			float64		`valid:"float,optional"`
 	Image			string		`valid:"url,optional"`
-	Service			Service		`valid:"-"`
+	Service			Service		`valid:"-" json:"-"`
 	ServiceID		uint		`gorm:"not null" valid:"-"`
 }
 
 
 func (p *Product) Insert() {
-	beego.Debug("Insert ", p)
 	DB.Create(&p)
+	beego.Debug("Insert Product:", p)
 }
 
 func (p *Product) Exists() bool {
@@ -54,7 +55,6 @@ func FindProducts() []Product {
 }
 
 func (p *Product) Update() {
-	beego.Debug("Update ", p)
 	var pDB Product
 	pDB.ID = p.ID
 	DB.Where(&pDB).First(&pDB)
@@ -66,11 +66,22 @@ func (p *Product) Update() {
 	pDB.ServiceID = p.ServiceID
 
 	DB.Save(&pDB)
+	beego.Debug("Update Product:", p)
 }
 
 func (p *Product) DeleteSoft() {
-	beego.Debug("Update ", p)
 	DB.Delete(&p)
+	beego.Debug("Delete Product:", p)
 }
+
+func (p Product) String() string {
+	out, err := json.Marshal(p)
+	if err != nil {
+		beego.Error(err)
+		return ""
+	}
+	return string(out)
+}
+
 
 

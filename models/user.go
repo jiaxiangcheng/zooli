@@ -7,6 +7,7 @@ import (
 
 	"github.com/jinzhu/gorm"
 	"github.com/astaxie/beego"
+	"encoding/json"
 )
 
 type User struct {
@@ -15,15 +16,15 @@ type User struct {
 	PasswordHash 	string	`gorm:"not null" valid:"-"`
 	Email			string	`valid:"email,optional"`
 	Name			string	`gorm:"not null" valid:"-"`
-	Role			Role	`valid:"-"`
+	Role			Role	`valid:"-" json:"-"`
 	RoleID			uint	`gorm:"not null" valid:"-"`
-	Store			Store	`gorm:"foreignkey:ManagerID"`
+	Store			Store	`gorm:"foreignkey:ManagerID" json:"-"`
 }
 
 
 func (u *User) Insert() {
-	beego.Debug("Insert ", u)
 	DB.Create(&u)
+	beego.Debug("Insert User:", u)
 }
 
 func (u *User) Exists() bool {
@@ -66,7 +67,6 @@ func FindUsers() []User {
 
 
 func (u *User) Update() {
-	beego.Debug("Update ", u)
 	var uDB User
 	uDB.ID = u.ID
 	DB.Where(&uDB).First(&uDB)
@@ -77,11 +77,12 @@ func (u *User) Update() {
 	uDB.RoleID = u.RoleID
 
 	DB.Save(&uDB)
+	beego.Debug("Update User:", u)
 }
 
 func (u *User) DeleteSoft() {
-	beego.Debug("Delete ", u)
 	DB.Delete(&u)
+	beego.Debug("Delete User:", u)
 }
 
 
@@ -102,4 +103,13 @@ func encryptMD5(pass string) string {
 	str := hex.EncodeToString(h.Sum(nil))
 
 	return str
+}
+
+func (u User) String() string {
+	out, err := json.Marshal(u)
+	if err != nil {
+		beego.Error(err)
+		return ""
+	}
+	return string(out)
 }

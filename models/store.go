@@ -3,6 +3,7 @@ package models
 import (
 	"github.com/jinzhu/gorm"
 	"github.com/astaxie/beego"
+	"encoding/json"
 )
 
 type Store struct {
@@ -13,16 +14,16 @@ type Store struct {
 	Longitude	float64		`gorm:"not null" valid:"longitude"`
 	PhoneNumber	string		`valid:"numeric,optional"`
 	Image		string		`valid:"url,optional"`
-	Company		Company		`valid:"-"`
+	Company		Company		`valid:"-" json:"-"`
 	CompanyID	uint		`gorm:"not null" valid:"-"`
 	ManagerID	uint		`valid:"-"`
-	Services	[]Service	`gorm:"many2many:store_services;" valid:"-"`
+	Services	[]Service	`gorm:"many2many:store_services;" valid:"-" json:"-"`
 }
 
 
 func (s *Store) Insert() {
-	beego.Debug("Insert ", s)
 	DB.Create(&s)
+	beego.Debug("Insert Store:", s)
 }
 
 func (s *Store) Exists() bool {
@@ -44,7 +45,6 @@ func FindStores() []Store {
 }
 
 func (s *Store) Update() {
-	beego.Debug("Update ", s)
 	var sDB Store
 	sDB.ID = s.ID
 	DB.Where(&sDB).First(&sDB)
@@ -60,9 +60,19 @@ func (s *Store) Update() {
 	DB.Model(&sDB).Association("Services").Replace(s.Services)
 
 	DB.Save(&sDB)
+	beego.Debug("Update Store:", s)
 }
 
 func (s *Store) DeleteSoft() {
-	beego.Debug("Update ", s)
 	DB.Delete(&s)
+	beego.Debug("Delete Store:", s)
+}
+
+func (s Store) String() string {
+	out, err := json.Marshal(s)
+	if err != nil {
+		beego.Error(err)
+		return ""
+	}
+	return string(out)
 }
