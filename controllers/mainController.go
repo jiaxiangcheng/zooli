@@ -1,6 +1,5 @@
 package controllers
 
-
 type MainController struct {
 	BaseController
 }
@@ -10,5 +9,6 @@ func (c *MainController) Prepare() {
 }
 
 func (c *MainController) Get() {
-	c.TplName = "dashboard.tpl"
+	c.Layout = "common/content.html"
+	c.TplName = "dashboard/dashboard.tpl"
 }

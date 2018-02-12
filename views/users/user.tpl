@@ -1,6 +1,7 @@
+<link rel="stylesheet" href="/static/semantic-ui/dist/semantic.min.css"></link>
+<script src="/static/dist/semantic-ui/semantic.min.js"></script>
+
 <body>
-    <link rel="stylesheet" href="/static/semantic-ui/dist/semantic.min.css"></link>
-    <script src="/static/dist/semantic-ui/semantic.min.js"></script>
     <form action="javascript:void(0);" class="ui form">
         <h2 class="title"><i class="user icon"></i>User Information</h2>
         <div class="field">
@@ -21,7 +22,6 @@
         <input class="ui button" id="cancel" type="submit" value="Cancel" onclick="CancelUser();">
     </form>
 </body>
-
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
@@ -45,19 +45,3 @@
         });
     }
 </script>
-
-<style>
-    body {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-    }
-    .title {
-        text-align: center;
-    }
-    .save-cancel input {
-        display:inline-block;
-    }
-</style>
