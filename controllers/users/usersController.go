@@ -12,9 +12,6 @@ type UsersController struct {
 	controllers.BaseController
 }
 
-func (c *UsersController) NestPrepare() {
-
-}
 
 func (c *UsersController) Index() {
 	beego.ReadFromRequest(&c.Controller)

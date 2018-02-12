@@ -18,8 +18,9 @@ type BaseController struct {
 }
 
 func (c *BaseController) Prepare() {
-
 	//// Overwrite beego.Controller.Layout (string)
+	_ = beego.ReadFromRequest(&c.Controller)
+
 	u := c.GetSession("user")
 	c.Data["user"] = u
 }

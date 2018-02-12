@@ -9,8 +9,7 @@ import (
 )
 
 func init() {
-	beego.Router("/", &controllers.MainController{})
-
+	beego.Router("/dashboard", &controllers.MainController{})
 	beego.Router("/login", &auth.LoginController{}, "get:LoginForm")
 	beego.Router("/login", &auth.LoginController{}, "post:Login")
 
@@ -20,16 +19,16 @@ func init() {
 	beego.Router("/users/insert", &users.UsersController{}, "post:InsertUser")
 	beego.Router("/users/existUserIf", &users.UsersController{}, "post:ExistUserIf")
 
-	beego.InsertFilter("/*", beego.BeforeRouter, FilterLoggedIn)
+	beego.InsertFilter("/*", beego.BeforeRouter, LoggedInFilter)
 }
 
-var FilterLoggedIn = func(ctx *context.Context) {
+var LoggedInFilter = func(ctx *context.Context) {
 	user := ctx.Input.Session("user")
 
 	if user == nil && ctx.Request.RequestURI != "/login" {
 		ctx.Redirect(302, "/login")
 	}
 	if user != nil && ctx.Request.RequestURI == "/login" {
-		ctx.Redirect(302, "/")
+		ctx.Redirect(302, "/dashboard")
 	}
 }
