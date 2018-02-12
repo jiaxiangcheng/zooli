@@ -9,9 +9,9 @@ import (
 type Client struct {
 	gorm.Model				`valid:"-"`
 	Name			string	`gorm:"not null" valid:"-"`
-	PhoneNumber		string	`gorm:"not null" valid:"numeric"`
-	PasswordHash 	string	`gorm:"not null" valid:"-"`
-	Email			string	`gorm:"not null" valid:"email"`
+	PhoneNumber		string	`gorm:"not null" valid:"required,numeric"`
+	PasswordHash 	string	`gorm:"not null" valid:"required,alphanum"`
+	Email			string	`gorm:"not null" valid:"required,email"`
 }
 
 

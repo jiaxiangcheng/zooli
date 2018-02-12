@@ -9,10 +9,10 @@ import (
 type Order struct {
 	gorm.Model				`valid:"-"`
 	Client		Client		`valid:"-" json:"-"`
-	ClientID	uint		`gorm:"not null" valid:"-"`
+	ClientID	uint		`gorm:"not null" valid:"required,alphanum"`
 	Product		Product		`valid:"-" json:"-"`
-	ProductID	uint		`gorm:"not null" valid:"-"`
-	Status		int			`gorm:"not null" valid:"-"`
+	ProductID	uint		`gorm:"not null" valid:"required,alphanum"`
+	Status		int			`gorm:"not null" valid:"required,alphanum"`
 	Price		float64		`valid:"-"`
 }
 

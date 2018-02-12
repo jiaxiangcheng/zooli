@@ -8,12 +8,12 @@ import (
 
 type Product struct {
 	gorm.Model					`valid:"-"`
-	Name			string		`gorm:"not null" valid:"-"`
+	Name			string		`gorm:"not null" valid:"required"`
 	Description		string		`gorm:"type:longtext" valid:"-"`
 	Value			float64		`valid:"float,optional"`
 	Image			string		`valid:"url,optional"`
 	Service			Service		`valid:"-" json:"-"`
-	ServiceID		uint		`gorm:"not null" valid:"-"`
+	ServiceID		uint		`gorm:"not null" valid:"required"`
 }
 
 

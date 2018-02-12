@@ -8,7 +8,7 @@ import (
 
 type Service struct {
 	gorm.Model			`valid:"-"`
-	Name		string	`gorm:"not null;unique" valid:"-"`
+	Name		string	`gorm:"not null;unique" valid:"required"`
 }
 
 func (s *Service) Insert() {
