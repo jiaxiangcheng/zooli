@@ -7,10 +7,11 @@ import (
 )
 
 type Vehicle struct {
-	Plate			string		`gorm:"primary_key" valid:"required,alphanum"`
+	ID				uint		`gorm:"primary_key" valid:"-"`
 	CreatedAt		time.Time	`valid:"-"`
 	UpdatedAt		time.Time	`valid:"-"`
 	DeletedAt		*time.Time	`sql:"index" valid:"-"`
+	Plate			string		`gorm:"not null;unique" valid:"required"`
 	Model			string		`valid:"-"`
 	Owner			Client		`valid:"-" json:"-"`
 	OwnerID			uint		`gorm:"not null" valid:"required"`
@@ -24,7 +25,13 @@ func (v *Vehicle) Insert() {
 
 func (v *Vehicle) Exists() bool {
 	count := 0
-	DB.Where("plate = ?", v.Plate).Find(&Vehicle{}).Count(&count)
+	DB.Where("id = ?", v.ID).Find(&Vehicle{}).Count(&count)
+	return count > 0
+}
+
+func (v *Vehicle) ExistsPlate() bool {
+	count := 0
+	DB.Where("plate = ? and id <> ?", v.Plate, v.ID).Find(&Vehicle{}).Count(&count)
 	return count > 0
 }
 

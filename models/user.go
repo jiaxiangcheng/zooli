@@ -37,7 +37,6 @@ func (u *User) ExistsUsername() bool {
 	count := 0
 	DB.Where("username = ? and id <> ?", u.Username, u.ID).Find(&User{}).Count(&count)
 	return count > 0
-
 }
 
 func FindUserByID(id uint) User {
