@@ -5,12 +5,12 @@ import (
 	"github.com/astaxie/beego"
 )
 
-const _ROLE_ADMIN = "admin"
-const _ROLE_MANAGER = "manager"
+const ROLE_ADMIN = "admin"
+const ROLE_MANAGER = "manager"
 
 type Role struct {
 	gorm.Model			`valid:"-"`
-	Name	string		`valid:"-"`
+	Name	string		`gorm:"not null;unique" valid:"-"`
 }
 
 func (r *Role) Insert() {

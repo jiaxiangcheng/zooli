@@ -79,4 +79,15 @@
     }
 </script>
 
-        </h2></br>
+<style>
+    body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+    }
+    .title {
+        text-align: center;
+    }
+</style>

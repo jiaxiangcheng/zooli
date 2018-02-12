@@ -7,14 +7,14 @@ import (
 
 type Store struct {
 	gorm.Model				`valid:"-"`
-	Name		string		`valid:"-"`
+	Name		string		`gorm:"not null" valid:"-"`
 	Address		string		`valid:"-"`
-	Latitude	float64		`valid:"latitude"`
-	Longitude	float64		`valid:"longitude"`
+	Latitude	float64		`gorm:"not null" valid:"latitude"`
+	Longitude	float64		`gorm:"not null" valid:"longitude"`
 	PhoneNumber	string		`valid:"numeric,optional"`
 	Image		string		`valid:"url,optional"`
 	Company		Company		`valid:"-"`
-	CompanyID	uint		`valid:"-"`
+	CompanyID	uint		`gorm:"not null" valid:"-"`
 	ManagerID	uint		`valid:"-"`
 	Services	[]Service	`gorm:"many2many:store_services;" valid:"-"`
 }

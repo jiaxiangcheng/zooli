@@ -11,12 +11,12 @@ import (
 
 type User struct {
 	gorm.Model				`valid:"-"`
-	Username     	string	`valid:"alphanum"`   //PK
-	PasswordHash 	string	`valid:"-"`
+	Username     	string	`gorm:"not null;unique" valid:"alphanum"`
+	PasswordHash 	string	`gorm:"not null" valid:"-"`
 	Email			string	`valid:"email,optional"`
-	Name			string	`valid:"-"`
+	Name			string	`gorm:"not null" valid:"-"`
 	Role			Role	`valid:"-"`
-	RoleID			uint	`valid:"-"`
+	RoleID			uint	`gorm:"not null" valid:"-"`
 	Store			Store	`gorm:"foreignkey:ManagerID"`
 }
 

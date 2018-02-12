@@ -12,7 +12,7 @@ type Vehicle struct {
 	DeletedAt		*time.Time	`sql:"index" valid:"-"`
 	Model			string		`valid:"-"`
 	Owner			Client		`valid:"-"`
-	OwnerID			uint		`valid:"-"`
+	OwnerID			uint		`gorm:"not null" valid:"-"`
 }
 
 

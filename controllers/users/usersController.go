@@ -6,13 +6,12 @@ import (
 	"github.com/astaxie/beego"
 )
 
+const _ROLE_MANAGER = "manager"
+
 type UsersController struct {
 	controllers.BaseController
 }
 
-func (c *UsersController) NestPrepare() {
-
-}
 
 func (c *UsersController) Index() {
 	beego.ReadFromRequest(&c.Controller)
@@ -25,7 +24,7 @@ func (c *UsersController) LoadUser() {
 	id, _ := c.GetInt64("id")
 	user := models.FindUserByID(uint(id))
 	c.Data["UserInfo"] = user
-
+	beego.Info(c.Data["UserInfo"])
 	c.TplName = "users/user.tpl"
 }
 
@@ -48,9 +47,20 @@ func (c *UsersController) ExistUserIf() {
 }
 
 func (c *UsersController) InsertUser() {
+	role := models.Role{Name: _ROLE_MANAGER}
+
 	user_name := c.GetString("username")
 	password := c.GetString("password")
-	new_user := models.User{Username: user_name, PasswordHash: password}
+	email := c.GetString("email")
+	name := c.GetString("name")
+
+	new_user := models.User{
+		Username:     user_name,
+		PasswordHash: password,
+		Email:        email,
+		Name:         name,
+		Role:         role,
+		RoleID:       uint(1)}
 
 	new_user.SetPassword(password)
 	new_user.Insert()

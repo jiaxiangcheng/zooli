@@ -79,4 +79,35 @@
     }
 </script>
 
+<<<<<<< HEAD:views/users/new_user.tpl
+<style>
+    body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+    }
+    .title {
+        text-align: center;
+    }
+</style>
+=======
+<body>
+    <form action="javascript:void(0);" class="ui form" onsubmit="InsertUser();" id="create-form">
+        <h2 class="title1">
+            <i class="user icon"></i>
+            New user
         </h2></br>
+        <div class="field">
+            <input id="username" type="text" placeholder="Username" required/>
+        </div>
+        <div class="field">
+            <input id="password" type="password" placeholder="Password" required/>
+        </div>
+        <input class="ui blue button" id="register" type="submit" value="注册">
+    </form>
+</body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+>>>>>>> master:views/users/components/new_user.tpl

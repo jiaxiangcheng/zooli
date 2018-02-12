@@ -37,6 +37,7 @@ func Syncdb() {
 		beego.Error(err)
 		return
 	}
+	insertRoles()
 	insertUser()
 	fmt.Println("database init is complete.")
 }
@@ -130,11 +131,29 @@ func createDB() {
 	defer db.Close()
 }
 
+func insertRoles() {
+	fmt.Println("insert roles ...")
+	admin := Role{
+		Name: ROLE_ADMIN,
+	}
+	admin.Insert()
+	manager := Role{
+		Name: ROLE_MANAGER,
+	}
+	manager.Insert()
+	fmt.Println("insert roles end")
+}
+
+
 func insertUser() {
 	fmt.Println("insert user ...")
-	u := new(User)
-	u.Username = "admin"
+	u := User{
+		Username: "admin",
+		Email: "admin@zooli.com",
+		Name: "Boss",
+		Role: FindRoleByName(ROLE_ADMIN),
+	}
 	u.SetPassword("1234")
-	DB.Create(&u)
+	u.Insert()
 	fmt.Println("insert user end")
 }
