@@ -8,10 +8,10 @@ import (
 type Order struct {
 	gorm.Model				`valid:"-"`
 	Client		Client		`valid:"-"`
-	ClientID	uint		`valid:"-"`
+	ClientID	uint		`gorm:"not null" valid:"-"`
 	Product		Product		`valid:"-"`
-	ProductID	uint		`valid:"-"`
-	Status		int			`valid:"-"`
+	ProductID	uint		`gorm:"not null" valid:"-"`
+	Status		int			`gorm:"not null" valid:"-"`
 	Price		float64		`valid:"-"`
 }
 

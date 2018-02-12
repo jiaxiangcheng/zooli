@@ -8,7 +8,7 @@ import (
 type Company struct {
 	gorm.Model				`valid:"-"`
 	Name			string	`gorm:"not null;unique" valid:"-"`
-	Contact			string	`valid:"-"`
+	Contact			string	`gorm:"not null" valid:"-"`
 	PhoneNumber		string	`valid:"numeric,optional"`
 	Email			string	`valid:"email,optional"`
 }

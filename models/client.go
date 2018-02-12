@@ -7,10 +7,10 @@ import (
 
 type Client struct {
 	gorm.Model				`valid:"-"`
-	Name			string	`valid:"-"`
-	PhoneNumber		string	`valid:"numeric"`
-	PasswordHash 	string	`valid:"-"`
-	Email			string	`valid:"email"`
+	Name			string	`gorm:"not null" valid:"-"`
+	PhoneNumber		string	`gorm:"not null" valid:"numeric"`
+	PasswordHash 	string	`gorm:"not null" valid:"-"`
+	Email			string	`gorm:"not null" valid:"email"`
 }
 
 

@@ -12,7 +12,7 @@ type Product struct {
 	Value			float64		`valid:"float,optional"`
 	Image			string		`valid:"url,optional"`
 	Service			Service		`valid:"-"`
-	ServiceID		uint		`valid:"-"`
+	ServiceID		uint		`gorm:"not null" valid:"-"`
 }
 
 
