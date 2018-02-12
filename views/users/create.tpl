@@ -69,9 +69,8 @@
             {{template "users/components/navigation.html"}}
 		</div>
 		<div class="main-content">
-            {{template "users/components/userlist.html" . }}
+            {{template "users/components/new_user.tpl" . }}
 		</div>
-
 	</body>
 </html>
 

@@ -39,7 +39,7 @@ func (c *UsersController) DeleteUser() {
 }
 
 func (c *UsersController) CreateUser() {
-	c.TplName = "users/new_user.tpl"
+	c.TplName = "users/create.tpl"
 }
 
 func (c *UsersController) ExistUserIf() {

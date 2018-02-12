@@ -1,0 +1,63 @@
+<body>
+    <div class="title">Users</div>
+    <div class="main">
+        <table id="table_users" class="ui celled table">
+            <thead>
+                <tr>
+                    <th class="center aligned">ID</th>
+                    <th class="center aligned">Username</th>
+                    <th class="center aligned">Password</th>
+                    <th class="center aligned"></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {{ range .users }}
+                <tr>
+                    <td class="center aligned">{{ .ID}}</td>
+                    <td class="center aligned">{{ .Username}}</td>
+                    <td class="center aligned">{{ .PasswordHash}}</td>
+                    <td class="center aligned">
+                        <button type="button"
+                                class="ui basic button"
+                                onclick="getUser('{{ .ID}}');">
+                            View
+                        </button>
+                    </td>
+                    <td class="center aligned">
+                        <button type="button"
+                                class="ui negative button"
+                                data-toggle="modal"
+                                data-target=".bs-example-modal-sm"
+                                onclick="deleteUser('{{ .ID}}');">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+                {{ end }}
+            </tbody>
+        </table>
+        <button type="button"
+                title="View user"
+                class="ui basic big button"
+                onclick="createUser();"
+                style="margin: 10px 10px">
+                <i class="add user icon"></i>Create user</button>
+        </div>
+        </br>
+        <div class="widget" id="act-users">
+            <div class="title">
+                Number of active Users
+            </div>
+            <div class="chart"></div>
+        </div>
+        <div class="widget" id="nvisits">
+            <div class="title">Number of visits</div>
+            <div class="chart"></div>
+        </div>
+        <div class="widget" id="ncomments">
+            <div class="title">Number of comments</div>
+            <div class="chart"></div>
+        </div>
+    </div>
+</body>
