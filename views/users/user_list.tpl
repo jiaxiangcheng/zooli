@@ -23,7 +23,6 @@
 				id: user_id
 			},
 			success: function (data) {
-				console.log("data = " + data);
 				$('body').html(data);
 			}
 		});
@@ -51,6 +50,8 @@
 					<th class="center aligned">ID</th>
 					<th class="center aligned">Username</th>
 					<th class="center aligned">Password</th>
+					<th class="center aligned">Email</th>
+					<th class="center aligned">Name</th>
 					<th class="center aligned"></th>
 					<th></th>
 				</tr>
@@ -61,6 +62,8 @@
 					<td class="center aligned">{{ .ID}}</td>
 					<td class="center aligned">{{ .Username}}</td>
 					<td class="center aligned">{{ .PasswordHash}}</td>
+					<td class="center aligned">{{ .Email}}</td>
+					<td class="center aligned">{{ .Name}}</td>
 					<td class="center aligned">
 						<button type="button"
 								class="ui basic button"

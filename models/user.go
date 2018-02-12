@@ -5,22 +5,22 @@ import (
 	"encoding/hex"
 	"io"
 
-	"github.com/jinzhu/gorm"
-	"github.com/astaxie/beego"
 	"encoding/json"
+
+	"github.com/astaxie/beego"
+	"github.com/jinzhu/gorm"
 )
 
 type User struct {
-	gorm.Model				`valid:"-"`
-	Username     	string	`gorm:"not null;unique" valid:"alphanum,required"`
-	PasswordHash 	string	`gorm:"not null" valid:"required,alphanum"`
-	Email			string	`valid:"email,optional"`
-	Name			string	`gorm:"not null" valid:"required"`
-	Role			Role	`valid:"-" json:"-"`
-	RoleID			uint	`gorm:"not null" valid:"required"`
-	Store			Store	`gorm:"foreignkey:ManagerID" json:"-"`
+	gorm.Model   `valid:"-"`
+	Username     string `gorm:"not null;unique" valid:"alphanum,required"`
+	PasswordHash string `gorm:"not null" valid:"required,alphanum"`
+	Email        string `valid:"email,optional"`
+	Name         string `gorm:"not null" valid:"required"`
+	Role         Role   `valid:"-" json:"-"`
+	RoleID       uint   `gorm:"not null" valid:"required"`
+	Store        Store  `gorm:"foreignkey:ManagerID" json:"-"`
 }
-
 
 func (u *User) Insert() {
 	DB.Create(&u)
@@ -64,11 +64,12 @@ func FindUsers() []User {
 	return u
 }
 
-
 func (u *User) Update() {
 	var uDB User
 	uDB.ID = u.ID
 	DB.Where(&uDB).First(&uDB)
+
+	//// TODO: username should not be updated
 	uDB.Username = u.Username
 	uDB.PasswordHash = u.PasswordHash
 	uDB.Email = u.Email
@@ -83,7 +84,6 @@ func (u *User) DeleteSoft() {
 	DB.Delete(&u)
 	beego.Debug("Delete User:", u)
 }
-
 
 func (u *User) SetPassword(pass string) {
 	u.PasswordHash = encryptMD5(pass)

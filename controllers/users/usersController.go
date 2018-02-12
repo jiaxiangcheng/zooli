@@ -70,3 +70,18 @@ func (c *UsersController) InsertUser() {
 	new_user.Insert()
 	c.Redirect("/users", 302)
 }
+
+func (c *UsersController) SaveUser() {
+	user_name := c.GetString("username")
+
+	email := c.GetString("email")
+	name := c.GetString("name")
+
+	user := models.FindUserByUsername(user_name)
+	user.Email = email
+	user.Name = name
+
+	user.Update()
+
+	//flash
+}
