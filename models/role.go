@@ -10,7 +10,7 @@ const ROLE_MANAGER = "manager"
 
 type Role struct {
 	gorm.Model			`valid:"-"`
-	Name	string		`valid:"-"`
+	Name	string		`gorm:"not null;unique" valid:"-"`
 }
 
 func (r *Role) Insert() {

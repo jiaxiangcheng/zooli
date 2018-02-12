@@ -11,7 +11,7 @@ import (
 
 type User struct {
 	gorm.Model				`valid:"-"`
-	Username     	string	`valid:"alphanum"`   //PK
+	Username     	string	`gorm:"not null;unique" valid:"alphanum"`
 	PasswordHash 	string	`valid:"-"`
 	Email			string	`valid:"email,optional"`
 	Name			string	`valid:"-"`
