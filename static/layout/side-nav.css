@@ -43,9 +43,17 @@
 	font-size: 14px;
 	font-weight: 600;
 }
+@media screen and (max-width: 600px) {
+	#sidebutton {
+		display: none;
+	}
+}
 
 /* set element styles to fit tablet and higher(desktop) */
 @media screen and (min-width: 600px) {
+	#sidebutton {
+		display: block;
+	}
 	.header {
 		background-color: #35475e;
 		z-index: 1;

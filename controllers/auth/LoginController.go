@@ -19,7 +19,7 @@ func (c *LoginController) Login() {
 	if u.ValidPassword(c.GetString("Password")) {
 		c.SetSession("user", u)
 		// role admin
-		c.Redirect("/users", 302)
+		c.Redirect("/dashboard", 302)
 
 		// role storer
 		// TODO: clients view
