@@ -29,10 +29,11 @@ body {
     color: white;
 }
 
-#content {
+#main_content {
     margin-left: 16%;
     width: 85%;
     margin-top: 3em;
-    padding-left: 3em;
+    padding-left: 5em;
     float: left;
+    padding-right: 15em;
 }

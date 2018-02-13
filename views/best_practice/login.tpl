@@ -1,4 +1,4 @@
-{{template "best_practice/common/form/header.tpl"}}
+<script type="text/javascript" src="/static/js/message.js"></script>
 
 <style type="text/css">
     body {

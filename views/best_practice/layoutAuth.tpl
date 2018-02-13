@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"-->
     <title>ZOOLI</title>
 
-{{ template "best_practice/common/header.tpl"}}
+    {{ template "best_practice/common/header.tpl"}}
     <link rel="stylesheet" href="/static/css/tmp.css"/>
     <script type="text/javascript" src="/static/js/nav.js"></script>
 
@@ -73,7 +73,7 @@
             </div>
         </div>
 
-        <div class="column" id="content">
+        <div class="column" id="main_content">
         {{.LayoutContent}}
         </div>
     </div>
@@ -82,7 +82,3 @@
 </body>
 
 </html>
-
-<script>
-
-</script>

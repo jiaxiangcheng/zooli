@@ -1,41 +1,6 @@
-
-<script type="text/javascript">
-    function createUser() {
-        $.ajax({
-            async: false,
-            type: "post",
-            url: "/users/new",
-            success: function (data) {
-                $('body').html(data);
-            }
-        });
-    }
-    function getUser(user_id) {
-        console.log("user_id = " + user_id);
-        $.ajax({
-            async: false,
-            type: "post",
-            url: "/users/" + user_id,
-            data: {
-                id: user_id
-            },
-            success: function (data) {
-                $('body').html(data);
-            }
-        });
-    }
-    function showsidebutton() {
-        var x = document.getElementById("si");
-        if (x.style.display === "block") {
-            x.style.display = "none";
-        } else {
-            x.style.display = "block";
-        }
-    }
-</script>
-
+<script type="text/javascript" src="/static/js/message.js"></script>
 <h1 class="ui header">Users</h1>
-
+{{template "best_practice/common/flash.tpl" .}}
 <table class="ui single line striped collapsing table">
     <thead>
     <tr>
@@ -61,6 +26,7 @@
                 View
             </button>
         </td>
+        {{if ne $.user.ID .ID}}
         <td class="center aligned">
             <button type="button"
                     class="ui negative button"
@@ -70,6 +36,7 @@
                 Delete
             </button>
         </td>
+        {{end}}
     </tr>
     {{ end }}
     </tbody>
@@ -77,10 +44,44 @@
 <button type="button"
         title="View user"
         class="ui basic big button"
-        onclick="createUser();"
+        onclick="userForm();"
         style="margin: 10px 10px">
     <i class="add user icon"></i>
     Create user
 </button>
 
 
+
+<script type="text/javascript">
+    function userForm() {
+        $.ajax({
+            async: false,
+            type: "get",
+            url: "/users/new",
+            success: function (data) {
+                $('#main_content').html(data);
+            }
+        });
+    }
+    function getUser(user_id) {
+        console.log("user_id = " + user_id);
+        $.ajax({
+            async: false,
+            type: "get",
+            url: "/users/" + user_id,
+            success: function (data) {
+                $('#main_content').html(data);
+            }
+        });
+    }
+    function deleteUser(user_id) {
+        $.ajax({
+            async: false,
+            type: "delete",
+            url: "/users/" + user_id,
+            success: function (data) {
+                $('#main_content').html(data);
+            }
+        });
+    }
+</script>

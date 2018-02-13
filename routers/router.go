@@ -15,12 +15,13 @@ func init() {
 	beego.Router("/login", &auth.LoginController{}, "post:Login")
 	beego.Router("/logout", &auth.LoginController{}, "get:Logout")
 
-	beego.Router("/users", &users.UsersController{}, "get:Get")
-	beego.Router("/users/:id", &users.UsersController{}, "post:LoadUser")
-	beego.Router("/users/new", &users.UsersController{}, "post:CreateUser")
-	beego.Router("/users/insert", &users.UsersController{}, "post:InsertUser")
-	beego.Router("/users/existUserIf", &users.UsersController{}, "post:ExistUserIf")
-	beego.Router("/users/saveUser", &users.UsersController{}, "post:SaveUser")
+	beego.Router("/users", &users.UsersController{})
+	beego.Router("/users/:id", &users.UsersController{}, "get:Edit")
+	beego.Router("/users/new", &users.UsersController{}, "get:New")
+	beego.Router("/users/new", &users.UsersController{}, "post:Create")
+	//beego.Router("/users/existUserIf", &users.UsersController{}, "post:ExistUserIf")
+	beego.Router("/users/:id", &users.UsersController{}, "post:Update")
+	beego.Router("/users/:id", &users.UsersController{}, "delete:Delete")
 
 	beego.InsertFilter("*", beego.BeforeRouter, LoggedInFilter)
 }
