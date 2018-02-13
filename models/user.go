@@ -60,7 +60,7 @@ func ExistUserByUsername(username string) bool {
 
 func FindUsers() []User {
 	var u []User
-	DB.Find(&u)
+	DB.Preload("Role").Find(&u)
 	return u
 }
 

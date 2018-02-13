@@ -7,7 +7,9 @@
     <title>ZOOLI</title>
 
 {{ template "best_practice/common/header.tpl"}}
-    <link rel="stylesheet" href="/static/layout/tmp.css"/>
+    <link rel="stylesheet" href="/static/css/tmp.css"/>
+    <script type="text/javascript" src="/static/js/nav.js"></script>
+
 </head>
 <body>
 <div class="ui blue huge inverted borderless fixed fluid menu">
@@ -28,7 +30,7 @@
 <div class="ui grid">
     <div class="row">
         <div class="column" id="sidebar">
-            <div class="ui secondary vertical fluid menu">
+            <div class="ui secondary vertical fluid menu" id="nav_menu">
                 <a class="item" href="/dashboard">
                     <span><i class="dashboard icon"></i>Dashboard</span>
                 </a>
@@ -68,17 +70,19 @@
                     </a>
                 {{end}}
 
-
             </div>
         </div>
+
         <div class="column" id="content">
         {{.LayoutContent}}
         </div>
     </div>
 </div>
 
-
-
 </body>
 
 </html>
+
+<script>
+
+</script>
