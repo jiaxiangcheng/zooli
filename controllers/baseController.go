@@ -8,6 +8,7 @@ import (
 	"strconv"
 	"time"
 	"errors"
+	"github.com/Qiaorui/zooli/models"
 )
 
 const EXTERNAL_FILE_STORAGE = "static/storage/"
@@ -23,6 +24,12 @@ func (c *BaseController) Prepare() {
 
 	u := c.GetSession("user")
 	c.Data["user"] = u
+	c.Data["roleManager"] = models.ROLE_MANAGER
+	c.Data["roleAdmin"] = models.ROLE_ADMIN
+
+	if !c.IsAjax() {
+		c.Layout = "best_practice/layoutAuth.tpl"
+	}
 }
 
 /*

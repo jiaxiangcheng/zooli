@@ -9,6 +9,6 @@ func (c *MainController) Prepare() {
 }
 
 func (c *MainController) Get() {
-	c.Layout = "common/content.html"
-	c.TplName = "dashboard/dashboard.tpl"
+
+	c.TplName = "best_practice/dashboard.tpl"
 }

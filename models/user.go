@@ -41,13 +41,13 @@ func (u *User) ExistsUsername() bool {
 
 func FindUserByID(id uint) User {
 	var u User
-	DB.Where("id = ?", id).Find(&u)
+	DB.Preload("Role").Where("id = ?", id).Find(&u)
 	return u
 }
 
 func FindUserByUsername(username string) User {
 	var u User
-	DB.Where("username = ?", username).Find(&u)
+	DB.Preload("Role").Where("username = ?", username).Find(&u)
 	return u
 }
 
