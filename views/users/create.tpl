@@ -1,7 +1,5 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-<script type="text/javascript">
-
+<script>
     function createUser() {
         $.ajax({
             async: false,
@@ -11,32 +9,31 @@
                 $('body').html(data);
             }
         });
-	}
+    }
 
-	function getUser(user_id) {
-		console.log("user_id = " + user_id);
-		$.ajax({
-			async: false,
-			type: "post",
-			url: "/users/" + user_id,
-			data: {
-				id: user_id
-			},
-			success: function (data) {
-				console.log("data = " + data);
-				$('body').html(data);
-			}
-		});
-	}
-
-	function showsidebutton() {
-		var x = document.getElementById("si");
-		if (x.style.display === "block") {
-			x.style.display = "none";
-		} else {
-			x.style.display = "block";
-		}
-	}
+    function getUser(user_id) {
+        console.log("user_id = " + user_id);
+        $.ajax({
+            async: false,
+            type: "post",
+            url: "/users/" + user_id,
+            data: {
+                id: user_id
+            },
+            success: function (data) {
+                console.log("data = " + data);
+                $('body').html(data);
+            }
+        });
+    }
+    function showsidebutton() {
+        var x = document.getElementById("si");
+        if (x.style.display === "block") {
+            x.style.display = "none";
+        } else {
+            x.style.display = "block";
+        }
+    }
 </script>
 
 <!DOCTYPE html>
