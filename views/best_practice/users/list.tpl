@@ -1,4 +1,4 @@
-<script type="text/javascript" src="/static/js/message.js"></script>
+
 <h1 class="ui header">Users</h1>
 {{template "best_practice/common/flash.tpl" .}}
 <table class="ui single line striped collapsing table">
@@ -22,7 +22,7 @@
         <td class="center aligned">
             <button type="button"
                     class="ui basic button"
-                    onclick="getUser('{{ .ID}}');">
+                    onclick="editUser('{{ .ID}}');">
                 View
             </button>
         </td>
@@ -44,7 +44,7 @@
 <button type="button"
         title="View user"
         class="ui basic big button"
-        onclick="userForm();"
+        onclick="newUser();"
         style="margin: 10px 10px">
     <i class="add user icon"></i>
     Create user
@@ -53,7 +53,7 @@
 
 
 <script type="text/javascript">
-    function userForm() {
+    function newUser() {
         $.ajax({
             async: false,
             type: "get",
@@ -63,8 +63,7 @@
             }
         });
     }
-    function getUser(user_id) {
-        console.log("user_id = " + user_id);
+    function editUser(user_id) {
         $.ajax({
             async: false,
             type: "get",

@@ -1,5 +1,5 @@
+<script type="text/javascript" src="/static/js/message.js"></script>
 {{ if .flash.error }}
-
 <div class="ui negative message">
     <i class="close icon"></i>
     <div class="header">

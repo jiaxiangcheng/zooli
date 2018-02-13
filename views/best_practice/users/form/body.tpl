@@ -7,11 +7,11 @@
         <div class="two fields">
             <div class="field">
                 <label>Username</label>
-                <input id="username" type="text" placeholder="Username" required/>
+                <input name="username" value="{{.userForm.Username}}" type="text" placeholder="Username" required/>
             </div>
             <div class="field">
                 <label>Password</label>
-                <input id="password" type="password" placeholder="Password" required/>
+                <input type="password" placeholder="Password" required/>
             </div>
         </div>
     </div>
@@ -19,17 +19,17 @@
         <div class="fields">
             <div class="ten wide field">
                 <label>Email</label>
-                <input id="email" name="email" type="email" placeholder="Email" required/>
+                <input name="email" type="email" placeholder="Email" required/>
             </div>
             <div class="six wide field">
                 <label>Name</label>
-                <input id="name" type="text" placeholder="Name" required/>
+                <input name="name" type="text" placeholder="Name" required/>
             </div>
         </div>
     </div>
     <div class="six wide field">
         <label>Role</label>
-        <select class="ui dropdown">
+        <select name="role" class="ui dropdown">
             {{ range .roles }}
             <option value="{{.ID}}">{{.Name}}</option>
             {{end}}

@@ -1,5 +1,3 @@
-<script type="text/javascript" src="/static/js/message.js"></script>
-
 <style type="text/css">
     body {
         background-color: #DADADA;

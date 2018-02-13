@@ -1,8 +1,9 @@
-<script type="text/javascript" src="/static/js/message.js"></script>
+
 <form action="javascript:void(0);" class="ui form">
     <h2 class="title"><i class="user icon"></i>User Information</h2>
         {{template "best_practice/users/form/body.tpl" .}}
-    <input class="ui fluid blue button" id="register" type="submit" value="Create">
+    <input class="ui primary button" id="save" type="submit" value="Create" onclick="SaveUser();">
+    <input class="ui button" id="cancel" type="submit" value="Cancel" onclick="CancelUser();">
 </form>
 
 
