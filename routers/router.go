@@ -20,7 +20,7 @@ func init() {
 	beego.Router("/users/existUserIf", &users.UsersController{}, "post:ExistUserIf")
 	beego.Router("/users/saveUser", &users.UsersController{}, "post:SaveUser")
 
-	beego.InsertFilter("/*", beego.BeforeRouter, LoggedInFilter)
+	beego.InsertFilter("*", beego.BeforeRouter, LoggedInFilter)
 }
 
 var LoggedInFilter = func(ctx *context.Context) {

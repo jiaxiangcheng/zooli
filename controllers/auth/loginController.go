@@ -3,6 +3,7 @@ package controllers
 import (
 	"github.com/Qiaorui/zooli/controllers"
 	"github.com/Qiaorui/zooli/models"
+	"github.com/astaxie/beego"
 )
 
 type LoginController struct {
@@ -10,26 +11,27 @@ type LoginController struct {
 }
 
 func (c *LoginController) LoginForm() {
-	c.TplName = "auth/login.tpl"
+	c.Layout = "best_practice/layout.tpl"
+	c.TplName = "best_practice/login.tpl"
 }
 
 func (c *LoginController) Login() {
-
-	u := models.FindUserByUsername(c.GetString("Username"))
-	if u.ValidPassword(c.GetString("Password")) {
+	flash := beego.NewFlash()
+	u := models.FindUserByUsername(c.GetString("username"))
+	if u.ValidPassword(c.GetString("password")) {
 		c.SetSession("user", u)
-		// role admin
 		c.Redirect("/dashboard", 302)
-
-		// role storer
-		// TODO: clients view
-
 	} else {
+		flash.Error("Wrong username password combination")
+		flash.Store(&c.Controller)
 		c.Redirect("/login", 302)
 	}
 }
 
 func (c *LoginController) Logout() {
 	c.DelSession("user")
-	c.Redirect("/", 302)
+	flash := beego.NewFlash()
+	flash.Success("Log out successfully")
+	flash.Store(&c.Controller)
+	c.Redirect("/login", 302)
 }
