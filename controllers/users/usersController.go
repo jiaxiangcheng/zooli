@@ -12,11 +12,12 @@ type UsersController struct {
 	controllers.BaseController
 }
 
-
 func (c *UsersController) Index() {
 	beego.ReadFromRequest(&c.Controller)
 
 	c.Data["users"] = models.FindUsers()
+
+	c.Layout = "common/content.html"
 	c.TplName = "users/user_list.tpl"
 }
 
@@ -25,6 +26,8 @@ func (c *UsersController) LoadUser() {
 	user := models.FindUserByID(uint(id))
 	c.Data["UserInfo"] = user
 	beego.Info(c.Data["UserInfo"])
+
+	c.Layout = "common/content.html"
 	c.TplName = "users/user.tpl"
 }
 
@@ -36,6 +39,7 @@ func (c *UsersController) DeleteUser() {
 }
 
 func (c *UsersController) CreateUser() {
+	c.Layout = "common/content.html"
 	c.TplName = "users/create.tpl"
 }
 
@@ -65,4 +69,19 @@ func (c *UsersController) InsertUser() {
 	new_user.SetPassword(password)
 	new_user.Insert()
 	c.Redirect("/users", 302)
+}
+
+func (c *UsersController) SaveUser() {
+	user_name := c.GetString("username")
+
+	email := c.GetString("email")
+	name := c.GetString("name")
+
+	user := models.FindUserByUsername(user_name)
+	user.Email = email
+	user.Name = name
+
+	user.Update()
+
+	//flash
 }

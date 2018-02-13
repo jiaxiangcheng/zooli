@@ -3,27 +3,35 @@ package models
 import (
 	"time"
 	"github.com/astaxie/beego"
+	"encoding/json"
 )
 
 type Vehicle struct {
-	Plate			string		`gorm:"primary_key" valid:"alphanum"`
+	ID				uint		`gorm:"primary_key" valid:"-"`
 	CreatedAt		time.Time	`valid:"-"`
 	UpdatedAt		time.Time	`valid:"-"`
 	DeletedAt		*time.Time	`sql:"index" valid:"-"`
+	Plate			string		`gorm:"not null;unique" valid:"required"`
 	Model			string		`valid:"-"`
-	Owner			Client		`valid:"-"`
-	OwnerID			uint		`gorm:"not null" valid:"-"`
+	Owner			Client		`valid:"-" json:"-"`
+	OwnerID			uint		`gorm:"not null" valid:"required"`
 }
 
 
 func (v *Vehicle) Insert() {
-	beego.Debug("Insert ", v)
 	DB.Create(&v)
+	beego.Debug("Insert Vehicle:", v)
 }
 
 func (v *Vehicle) Exists() bool {
 	count := 0
-	DB.Where("plate = ?", v.Plate).Find(&Vehicle{}).Count(&count)
+	DB.Where("id = ?", v.ID).Find(&Vehicle{}).Count(&count)
+	return count > 0
+}
+
+func (v *Vehicle) ExistsPlate() bool {
+	count := 0
+	DB.Where("plate = ? and id <> ?", v.Plate, v.ID).Find(&Vehicle{}).Count(&count)
 	return count > 0
 }
 
@@ -47,7 +55,6 @@ func FindVehicles() []Vehicle {
 }
 
 func (v *Vehicle) Update() {
-	beego.Debug("Update ", v)
 	var vDB Vehicle
 	DB.Where("plate = ?", v.Plate).First(&vDB)
 
@@ -55,9 +62,19 @@ func (v *Vehicle) Update() {
 	vDB.OwnerID = v.OwnerID
 
 	DB.Save(&vDB)
+	beego.Debug("Update Vehicle:", v)
 }
 
 func (v *Vehicle) DeleteSoft() {
-	beego.Debug("Update ", v)
 	DB.Delete(&v)
+	beego.Debug("Delete Vehicle:", v)
+}
+
+func (v Vehicle) String() string {
+	out, err := json.Marshal(v)
+	if err != nil {
+		beego.Error(err)
+		return ""
+	}
+	return string(out)
 }

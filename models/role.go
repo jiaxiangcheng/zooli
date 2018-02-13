@@ -3,6 +3,7 @@ package models
 import (
 	"github.com/jinzhu/gorm"
 	"github.com/astaxie/beego"
+	"encoding/json"
 )
 
 const ROLE_ADMIN = "admin"
@@ -10,12 +11,12 @@ const ROLE_MANAGER = "manager"
 
 type Role struct {
 	gorm.Model			`valid:"-"`
-	Name	string		`gorm:"not null;unique" valid:"-"`
+	Name	string		`gorm:"not null;unique" valid:"required"`
 }
 
 func (r *Role) Insert() {
-	beego.Debug("Insert ", r)
 	DB.Create(&r)
+	beego.Debug("Insert Role:", r)
 }
 
 func (r *Role) Exists() bool {
@@ -57,7 +58,7 @@ func FindRoles() []Role {
 }
 
 func (r *Role) Update() {
-	beego.Debug("Update ", r)
+
 	var rDB Role
 	rDB.ID = r.ID
 	DB.Where(&rDB).First(&rDB)
@@ -65,11 +66,19 @@ func (r *Role) Update() {
 	rDB.Name = r.Name
 
 	DB.Save(&rDB)
+	beego.Debug("Update Role:", rDB)
 }
 
 func (r *Role) DeleteSoft() {
-	beego.Debug("Update ", r)
 	DB.Delete(&r)
+	beego.Debug("Delete Role:", r)
 }
 
-
+func (r Role) String() string {
+	out, err := json.Marshal(r)
+	if err != nil {
+		beego.Error(err)
+		return ""
+	}
+	return string(out)
+}

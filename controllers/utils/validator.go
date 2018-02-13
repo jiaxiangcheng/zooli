@@ -22,20 +22,39 @@ func Validate(obj interface{}, validatePK ...bool) error {
 		if obj.ExistsName() {
 			err = errors.New("role already exists")
 		}
+	case models.Company:
+		if obj.ExistsName() {
+			err = errors.New("company name already exists")
+		}
+	case models.Store:
+		//
+	case models.Product:
+		found := false;
+		availableServices := models.FindStoreByID(obj.ServiceID).Services
+		for _, s := range availableServices {
+			if s.ID == obj.ServiceID {
+				found = true
+				break
+			}
+		}
+		if !found {
+			err = errors.New("product provides a service that is not available for its store")
+		}
+	case models.Order:
+		//
+	case models.Client:
+		//
+	case models.Vehicle:
+		if obj.ExistsPlate() {
+			err = errors.New("vehicle plate already been registered")
+		}
 
 	}
+
 	if err != nil {
 		return err
 	}
 	_, err = govalidator.ValidateStruct(obj)
-	//prepare the error message
-	/*if err != nil {
-		for _, e := range err.(govalidator.Errors) {
-			field := e.(govalidator.Error).Name
-			errMsg += "Invalid " + field //+ "<br>"
-		}
-	}*/
-
 
 	return err
 }

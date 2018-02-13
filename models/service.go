@@ -3,16 +3,17 @@ package models
 import (
 	"github.com/jinzhu/gorm"
 	"github.com/astaxie/beego"
+	"encoding/json"
 )
 
 type Service struct {
 	gorm.Model			`valid:"-"`
-	Name		string	`gorm:"not null;unique" valid:"-"`
+	Name		string	`gorm:"not null;unique" valid:"required"`
 }
 
 func (s *Service) Insert() {
-	beego.Debug("Insert ", s)
 	DB.Create(&s)
+	beego.Debug("Insert Service:", s)
 }
 
 func (s *Service) Exists() bool {
@@ -54,7 +55,6 @@ func FindServices() []Service {
 }
 
 func (s *Service) Update() {
-	beego.Debug("Update ", s)
 	var sDB Service
 	sDB.ID = s.ID
 	DB.Where(&sDB).First(&sDB)
@@ -62,9 +62,20 @@ func (s *Service) Update() {
 	sDB.Name = s.Name
 
 	DB.Save(&sDB)
+	beego.Debug("Update Service:", s)
 }
 
 func (s *Service) DeleteSoft() {
-	beego.Debug("Update ", s)
 	DB.Delete(&s)
+	beego.Debug("Delete Service:", s)
+}
+
+
+func (s Service) String() string {
+	out, err := json.Marshal(s)
+	if err != nil {
+		beego.Error(err)
+		return ""
+	}
+	return string(out)
 }

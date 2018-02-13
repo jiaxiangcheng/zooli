@@ -3,20 +3,21 @@ package models
 import (
 	"github.com/jinzhu/gorm"
 	"github.com/astaxie/beego"
+	"encoding/json"
 )
 
 type Client struct {
 	gorm.Model				`valid:"-"`
 	Name			string	`gorm:"not null" valid:"-"`
-	PhoneNumber		string	`gorm:"not null" valid:"numeric"`
-	PasswordHash 	string	`gorm:"not null" valid:"-"`
-	Email			string	`gorm:"not null" valid:"email"`
+	PhoneNumber		string	`gorm:"not null" valid:"required,numeric"`
+	PasswordHash 	string	`gorm:"not null" valid:"required,alphanum"`
+	Email			string	`gorm:"not null" valid:"required,email"`
 }
 
 
 func (c *Client) Insert() {
-	beego.Debug("Insert ", c)
 	DB.Create(&c)
+	beego.Debug("Insert Client:", c)
 }
 
 func (c *Client) Exists() bool {
@@ -38,7 +39,6 @@ func FindClients() []Client {
 }
 
 func (c *Client) Update() {
-	beego.Debug("Update ", c)
 	var cDB Client
 	cDB.ID = c.ID
 	DB.Where(&cDB).First(&cDB)
@@ -49,11 +49,12 @@ func (c *Client) Update() {
 	cDB.Email = c.Email
 
 	DB.Save(&cDB)
+	beego.Debug("Update Client:", cDB)
 }
 
 func (c *Client) DeleteSoft() {
-	beego.Debug("Delete ", c)
 	DB.Delete(&c)
+	beego.Debug("Delete Client:", c)
 }
 
 
@@ -66,4 +67,13 @@ func (c *Client) ValidPassword(pass string) bool {
 		return true
 	}
 	return false
+}
+
+func (c Client) String() string {
+	out, err := json.Marshal(c)
+	if err != nil {
+		beego.Error(err)
+		return ""
+	}
+	return string(out)
 }

@@ -18,6 +18,7 @@ func init() {
 	beego.Router("/users/new", &users.UsersController{}, "post:CreateUser")
 	beego.Router("/users/insert", &users.UsersController{}, "post:InsertUser")
 	beego.Router("/users/existUserIf", &users.UsersController{}, "post:ExistUserIf")
+	beego.Router("/users/saveUser", &users.UsersController{}, "post:SaveUser")
 
 	beego.InsertFilter("/*", beego.BeforeRouter, LoggedInFilter)
 }

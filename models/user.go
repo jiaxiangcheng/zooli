@@ -5,25 +5,26 @@ import (
 	"encoding/hex"
 	"io"
 
-	"github.com/jinzhu/gorm"
+	"encoding/json"
+
 	"github.com/astaxie/beego"
+	"github.com/jinzhu/gorm"
 )
 
 type User struct {
-	gorm.Model				`valid:"-"`
-	Username     	string	`gorm:"not null;unique" valid:"alphanum"`
-	PasswordHash 	string	`gorm:"not null" valid:"-"`
-	Email			string	`valid:"email,optional"`
-	Name			string	`gorm:"not null" valid:"-"`
-	Role			Role	`valid:"-"`
-	RoleID			uint	`gorm:"not null" valid:"-"`
-	Store			Store	`gorm:"foreignkey:ManagerID"`
+	gorm.Model   `valid:"-"`
+	Username     string `gorm:"not null;unique" valid:"alphanum,required"`
+	PasswordHash string `gorm:"not null" valid:"required,alphanum"`
+	Email        string `valid:"email,optional"`
+	Name         string `gorm:"not null" valid:"required"`
+	Role         Role   `valid:"-" json:"-"`
+	RoleID       uint   `gorm:"not null" valid:"required"`
+	Store        Store  `gorm:"foreignkey:ManagerID" json:"-"`
 }
 
-
 func (u *User) Insert() {
-	beego.Debug("Insert ", u)
 	DB.Create(&u)
+	beego.Debug("Insert User:", u)
 }
 
 func (u *User) Exists() bool {
@@ -36,7 +37,6 @@ func (u *User) ExistsUsername() bool {
 	count := 0
 	DB.Where("username = ? and id <> ?", u.Username, u.ID).Find(&User{}).Count(&count)
 	return count > 0
-
 }
 
 func FindUserByID(id uint) User {
@@ -64,12 +64,12 @@ func FindUsers() []User {
 	return u
 }
 
-
 func (u *User) Update() {
-	beego.Debug("Update ", u)
 	var uDB User
 	uDB.ID = u.ID
 	DB.Where(&uDB).First(&uDB)
+
+	//// TODO: username should not be updated
 	uDB.Username = u.Username
 	uDB.PasswordHash = u.PasswordHash
 	uDB.Email = u.Email
@@ -77,13 +77,13 @@ func (u *User) Update() {
 	uDB.RoleID = u.RoleID
 
 	DB.Save(&uDB)
+	beego.Debug("Update User:", u)
 }
 
 func (u *User) DeleteSoft() {
-	beego.Debug("Delete ", u)
 	DB.Delete(&u)
+	beego.Debug("Delete User:", u)
 }
-
 
 func (u *User) SetPassword(pass string) {
 	u.PasswordHash = encryptMD5(pass)
@@ -102,4 +102,13 @@ func encryptMD5(pass string) string {
 	str := hex.EncodeToString(h.Sum(nil))
 
 	return str
+}
+
+func (u User) String() string {
+	out, err := json.Marshal(u)
+	if err != nil {
+		beego.Error(err)
+		return ""
+	}
+	return string(out)
 }

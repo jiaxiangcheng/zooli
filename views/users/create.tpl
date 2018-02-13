@@ -1,77 +1,91 @@
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script>
-    function createUser() {
-        $.ajax({
-            async: false,
-            type: "post",
-            url: "/users/new",
-            success: function (data) {
-                $('body').html(data);
-            }
-        });
-    }
+<link rel="stylesheet" href="/static/semantic-ui/dist/semantic.min.css"></link>
+<script src="/static/dist/semantic-ui/semantic.min.js"></script>
 
-    function getUser(user_id) {
-        console.log("user_id = " + user_id);
+<body>
+	<form action="javascript:void(0);" class="ui form" onsubmit="InsertUser();" id="createform">
+		<h2 class="title1">
+			<i class="user icon"></i>
+			New user
+		</h2></br>
+		<div class="field">
+			<label>Username</label>
+			<input id="username" type="text" placeholder="Username" required/>
+		</div>
+		<div class="field">
+			<label>Password</label>
+			<input id="password" type="password" placeholder="Password" required/>
+		</div>
+		<div class="field">
+			<label>Email</label>
+			<input id="email" name="email" type="email" placeholder="Email" required/>
+		</div>
+		<div class="field">
+			<label>Name</label>
+			<input id="name" type="text" placeholder="Name" required/>
+		</div>
+		<input class="ui blue button" id="register" type="submit" value="注册">
+	</form>
+</body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $('.ui.form')
+        .form({
+            fields: {
+            email: {
+                identifier: 'email',
+                rules: [{
+                    type   : 'email',
+                    prompt : 'Please enter a valid email'
+                }]
+            }
+        }
+    });
+
+    function InsertUser() {
+        var userName = document.getElementById("username").value;
+        var passWord = document.getElementById("password").value;
+        var email = document.getElementById("email").value;
+        var name = document.getElementById("name").value;
         $.ajax({
             async: false,
             type: "post",
-            url: "/users/" + user_id,
-            data: {
-                id: user_id
-            },
+            dataType: "json",
+            url: "/users/existUserIf",
+            data: { "username": userName },
             success: function (data) {
-                console.log("data = " + data);
-                $('body').html(data);
+                if (data.existed) {
+                    window.alert("user existed");
+                }
+                else if (!data.existed) {
+                    $.ajax({
+                        async: false,
+                        type: "post",
+                        url: "/users/insert",
+                        data: {
+                            "username": userName,
+                            "password": passWord,
+                            "email": email,
+                            "name": name
+                        },
+                        success: function (data) {
+                            $('body').html(data);
+                        }
+                    });
+                }
             }
         });
-    }
-    function showsidebutton() {
-        var x = document.getElementById("si");
-        if (x.style.display === "block") {
-            x.style.display = "none";
-        } else {
-            x.style.display = "block";
-        }
     }
 </script>
 
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8">
-	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    	<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>ZOOLI Dashboard</title>
-
-        <link rel="stylesheet" href="/static/layout/dashboard.css">
-		<link rel="stylesheet" href="/static/layout/content.css">
-		<link rel="stylesheet" href="/static/layout/header.css">
-		<link rel="stylesheet" href="/static/layout/nav.css">
-		<link rel="stylesheet" href="/static/layout/side-nav.css">
-
-		<link rel="stylesheet" href="/static/semantic-ui/dist/semantic.min.css"></link>
-		<script src="/static/dist/semantic-ui/semantic.min.js"></script>
-
-	</head>
-	<body>
-		<div class="header">
-			{{template "users/components/header.html"}}
-		</div>
-		<div class="side-nav" id="si">
-			<div class="logo">
-				<i class="large database icon"></i>
-				<span>Zooli</span>
-			</div>
-            {{template "users/components/navigation.html"}}
-		</div>
-		<div class="main-content">
-            {{template "users/components/new_user.tpl" . }}
-		</div>
-	</body>
-</html>
-
 <style>
+    #createform {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+    }
     a:hover {
         background-color: #87CEEB;
     }
