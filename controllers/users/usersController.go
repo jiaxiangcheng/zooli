@@ -10,15 +10,12 @@ type UsersController struct {
 	controllers.BaseController
 }
 
-func (c *UsersController) Prepare() {
-	//// Overwrite beego.Controller.Layout (string)
-	_ = beego.ReadFromRequest(&c.Controller)
+func (c *UsersController) Get() {
+	beego.ReadFromRequest(&c.Controller)
 
-	u := c.GetSession("user")
-	c.Data["user"] = u
-	c.Data["roleManager"] = models.ROLE_MANAGER
-	c.Data["roleAdmin"] = models.ROLE_ADMIN
+	c.Data["users"] = models.FindUsers()
 
+	c.TplName = "best_practice/users/list.tpl"
 }
 
 func (c *UsersController) LoadUser() {
