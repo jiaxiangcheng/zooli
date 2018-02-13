@@ -11,6 +11,11 @@ type LoginController struct {
 }
 
 func (c *LoginController) LoginForm() {
+	if u := c.GetSession("userInfo"); u != nil {
+		c.DelSession("userInfo")
+		c.Data["userForm"] = u.(models.User)
+	}
+
 	c.Layout = "best_practice/layout.tpl"
 	c.TplName = "best_practice/login.tpl"
 }
@@ -22,6 +27,7 @@ func (c *LoginController) Login() {
 		c.SetSession("user", u)
 		c.Redirect("/dashboard", 302)
 	} else {
+		c.SetSession("userInfo", u)
 		flash.Error("Wrong username password combination")
 		flash.Store(&c.Controller)
 		c.Redirect("/login", 302)
