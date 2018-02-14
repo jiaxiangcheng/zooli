@@ -10,7 +10,7 @@
 {{ end }}
 
 {{ if .flash.success }}
-<div class="ui success message">
+<div class="ui positive message">
     <i class="close icon"></i>
     <div class="header">
         Success

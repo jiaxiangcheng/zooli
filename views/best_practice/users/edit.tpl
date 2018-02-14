@@ -6,15 +6,14 @@
     <button id="cancel" class="ui button" type="button">Cancel</button>
 </form>
 
-
 <script type="text/javascript">
     $(document)
             .ready(function() {
                 $('#save')
                         .on('click', function() {
                             $.ajax({
-                                async: false,
-                                type: "post",
+                                //async: false,
+                                type: "POST",
                                 url: "/users/{{.userForm.ID}}",
                                 data: $("form").serialize(),
                                 success: function (data) {
