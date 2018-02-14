@@ -41,9 +41,9 @@
             </div>
 
             <div class="ui error message"></div>
-
+            {{template "best_practice/common/flash.tpl" .}}
         </form>
-    {{template "best_practice/common/flash.tpl" .}}
+
     </div>
 </div>
 

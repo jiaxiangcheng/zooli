@@ -3,6 +3,7 @@
         <i class="user icon"></i>
         New user
     </h2></br>
+    {{template "best_practice/common/flash.tpl" .}}
     <div class="field">
         <div class="two fields">
             <div class="field">
@@ -11,7 +12,7 @@
             </div>
             <div class="field">
                 <label>Password</label>
-                <input type="password" placeholder="Password" required/>
+                <input name="password" type="password" placeholder="Password" required/>
             </div>
         </div>
     </div>

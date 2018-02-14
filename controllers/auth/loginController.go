@@ -22,6 +22,16 @@ func (c *LoginController) LoginForm() {
 
 func (c *LoginController) Login() {
 	flash := beego.NewFlash()
+	if !models.ExistUserByUsername(c.GetString("username")) {
+		u := models.User{
+			Username: c.GetString("username"),
+		}
+		c.SetSession("userInfo", u)
+		flash.Error("Wrong username password combination")
+		flash.Store(&c.Controller)
+		c.Redirect("/login", 302)
+		return
+	}
 	u := models.FindUserByUsername(c.GetString("username"))
 	if u.ValidPassword(c.GetString("password")) {
 		c.SetSession("user", u)

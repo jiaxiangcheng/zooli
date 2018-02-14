@@ -15,14 +15,12 @@ func init() {
 	beego.Router("/login", &auth.LoginController{}, "post:Login")
 	beego.Router("/logout", &auth.LoginController{}, "get:Logout")
 
-	beego.Router("/users", &users.UsersController{})
+	beego.Router("/users", &users.UsersController{}, "get:Get")
 	beego.Router("/users/:id([0-9]+", &users.UsersController{}, "get:Edit")
 	beego.Router("/users/:id([0-9]+", &users.UsersController{}, "post:Update")
 	beego.Router("/users/:id([0-9]+", &users.UsersController{}, "delete:Delete")
 	beego.Router("/users/new", &users.UsersController{}, "get:New")
 	beego.Router("/users/new", &users.UsersController{}, "post:Create")
-	//beego.Router("/users/existUserIf", &users.UsersController{}, "post:ExistUserIf")
-
 
 	beego.InsertFilter("*", beego.BeforeRouter, LoggedInFilter)
 }

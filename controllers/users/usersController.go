@@ -24,7 +24,7 @@ func (c *UsersController) Edit() {
 	var u models.User
 
 	if userSession != nil {
-		c.DelSession("userUser")
+		c.DelSession("userInfo")
 		u = userSession.(models.User)
 	} else {
 		id , _ := strconv.Atoi(c.Ctx.Input.Param(":id"))
@@ -73,7 +73,6 @@ func (c *UsersController) Create() {
 	flash := beego.NewFlash()
 
 	u, err := c.getUser()
-
 	//load the error, save the form fields and redirect
 	if err != nil {
 		flash.Error(err.Error())
@@ -95,7 +94,7 @@ func (c *UsersController) Create() {
 	u.Insert()
 
 	// load message success and redirect
-	flash.Success("You have create the user ", u.Name)
+	flash.Success("You have create the user " + u.Name)
 	flash.Store(&c.Controller)
 	c.Redirect("/users", 303)
 }
@@ -111,7 +110,7 @@ func (c *UsersController) Update() {
 	if err != nil {
 		flash.Error(err.Error())
 		flash.Store(&c.Controller)
-		c.Redirect("/users", 303)
+		c.Redirect("/users", 302)
 		return
 	}
 
@@ -119,7 +118,7 @@ func (c *UsersController) Update() {
 	if !u.Exists() {
 		flash.Error("Incorrect user id")
 		flash.Store(&c.Controller)
-		c.Redirect("/users", 303)
+		c.Redirect("/users", 302)
 		return
 	}
 
@@ -130,7 +129,7 @@ func (c *UsersController) Update() {
 		flash.Error(err.Error())
 		flash.Store(&c.Controller)
 		c.SetSession("userInfo", u)
-		c.Redirect("/users/" + strconv.Itoa(id), 303)
+		c.Redirect("/users/" + strconv.Itoa(id), 302)
 		return
 	}
 
