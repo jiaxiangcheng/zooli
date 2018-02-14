@@ -17,6 +17,12 @@ func Validate(obj interface{}, validatePK ...bool) error {
 	case models.User:
 		if obj.ExistsUsername() {
 			err = errors.New("username already exists")
+			break
+		}
+		role := new(models.Role)
+		role.ID = obj.RoleID
+		if !role.Exists() {
+			err = errors.New("Invalid Role")
 		}
 	case models.Role:
 		if obj.ExistsName() {
