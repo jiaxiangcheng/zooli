@@ -69,7 +69,6 @@ func (u *User) Update() {
 	uDB.ID = u.ID
 	DB.Where(&uDB).First(&uDB)
 
-	//// TODO: username should not be updated
 	uDB.Username = u.Username
 	uDB.PasswordHash = u.PasswordHash
 	uDB.Email = u.Email

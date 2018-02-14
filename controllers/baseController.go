@@ -32,6 +32,11 @@ func (c *BaseController) Prepare() {
 	}
 }
 
+func (c *BaseController) GetString(key string, def ...string) string {
+	str := c.Controller.GetString(key, def ...)
+	return strings.TrimSpace(str)
+}
+
 /*
 Using form key and specify format to upload a file.
 Return path and error if exists.

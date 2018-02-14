@@ -6,6 +6,7 @@ import (
 	"github.com/astaxie/beego"
 	"strconv"
 	utils "github.com/Qiaorui/zooli/controllers/utils"
+	"github.com/pkg/errors"
 )
 
 type UsersController struct {
@@ -110,7 +111,7 @@ func (c *UsersController) Update() {
 	if err != nil {
 		flash.Error(err.Error())
 		flash.Store(&c.Controller)
-		c.Redirect("/users", 302)
+		c.Redirect("/users/" + strconv.Itoa(id), 302)
 		return
 	}
 
@@ -139,7 +140,7 @@ func (c *UsersController) Update() {
 	// load message success and redirect
 	flash.Success("You have update the user " + u.Name)
 	flash.Store(&c.Controller)
-	c.Redirect("/users", 302)
+	c.Redirect("/users/" + strconv.Itoa(id), 302)
 }
 
 
@@ -172,7 +173,11 @@ func (c *UsersController) getUser() (models.User, error) {
 		Email: c.GetString("email"),
 		Name: c.GetString("name"),
 	}
-	u.SetPassword(c.GetString("password"))
+	pwd := c.GetString("password")
+	if pwd == "" {
+		return u, errors.New("Password can not be empty")
+	}
+	u.SetPassword(pwd)
 	roleID, err := c.GetInt("role")
 	if err != nil {
 		return u, err
