@@ -5,6 +5,7 @@ import (
 	"github.com/Qiaorui/zooli/models"
 	"github.com/astaxie/beego"
 	"strconv"
+	utils "github.com/Qiaorui/zooli/controllers/utils"
 )
 
 type UsersController struct {
@@ -17,9 +18,28 @@ func (c *UsersController) Get() {
 }
 
 func (c *UsersController) Edit() {
-	id, _ := c.GetInt64("id")
-	user := models.FindUserByID(uint(id))
-	c.Data["userForm"] = user
+
+	userSession := c.GetSession("userInfo")
+
+	var u models.User
+
+	if userSession != nil {
+		c.DelSession("userUser")
+		u = userSession.(models.User)
+	} else {
+		id , _ := strconv.Atoi(c.Ctx.Input.Param(":id"))
+		// load user in DB
+		u = models.FindUserByID(uint(id))
+	}
+	if !u.Exists() {
+		flash := beego.NewFlash()
+		flash.Error("Incorrect user id")
+		flash.Store(&c.Controller)
+		c.Redirect("/settings/user/getList", 302)
+		return
+	}
+
+	c.Data["userForm"] = u
 	c.Data["roles"] = models.FindRoles()
 
 	c.TplName = "best_practice/users/edit.tpl"
@@ -28,7 +48,13 @@ func (c *UsersController) Edit() {
 
 
 func (c *UsersController) New() {
-	//c.TplName = "users/create.tpl"
+
+	//get the user session and load if exist
+	u := c.GetSession("userInfo")
+	if u != nil {
+		c.DelSession("userInfo")
+		c.Data["userForm"] = u.(models.User)
+	}
 
 	c.Data["roles"] = models.FindRoles()
 	c.TplName = "best_practice/users/new.tpl"
@@ -44,38 +70,77 @@ func (c *UsersController) ExistUserIf() {
 */
 
 func (c *UsersController) Create() {
+	flash := beego.NewFlash()
 
+	u, err := c.getUser()
 
-	user_name := c.GetString("username")
-	password := c.GetString("password")
-	email := c.GetString("email")
-	name := c.GetString("name")
+	//load the error, save the form fields and redirect
+	if err != nil {
+		flash.Error(err.Error())
+		flash.Store(&c.Controller)
+		c.SetSession("userInfo", u)
+		c.Redirect("/users/new", 303)
+		return
+	}
 
-	new_user := models.User{
-		Username:     user_name,
-		PasswordHash: password,
-		Email:        email,
-		Name:         name,
-		RoleID:       uint(1)}
+	err = utils.Validate(u)
+	if err != nil {
+		flash.Error(err.Error())
+		flash.Store(&c.Controller)
+		c.SetSession("userInfo", u)
+		c.Redirect("/users/new", 303)
+		return
+	}
 
-	new_user.SetPassword(password)
-	new_user.Insert()
-	c.Redirect("/users", 302)
+	u.Insert()
+
+	// load message success and redirect
+	flash.Success("You have create the user ", u.Name)
+	flash.Store(&c.Controller)
+	c.Redirect("/users", 303)
 }
 
 func (c *UsersController) Update() {
-	user_name := c.GetString("username")
+	//init object for error control
+	flash := beego.NewFlash()
 
-	email := c.GetString("email")
-	name := c.GetString("name")
+	//get identifier of user
+	id , _ := strconv.Atoi(c.Ctx.Input.Param(":id"))
 
-	user := models.FindUserByUsername(user_name)
-	user.Email = email
-	user.Name = name
+	u, err := c.getUser()
+	if err != nil {
+		flash.Error(err.Error())
+		flash.Store(&c.Controller)
+		c.Redirect("/users", 303)
+		return
+	}
 
-	user.Update()
+	u.ID = uint(id)
+	if !u.Exists() {
+		flash.Error("Incorrect user id")
+		flash.Store(&c.Controller)
+		c.Redirect("/users", 303)
+		return
+	}
 
-	//flash
+	err = utils.Validate(u)
+
+	//load the error, save the form fields and redirect
+	if err != nil {
+		flash.Error(err.Error())
+		flash.Store(&c.Controller)
+		c.SetSession("userInfo", u)
+		c.Redirect("/users/" + strconv.Itoa(id), 303)
+		return
+	}
+
+	//update the user
+	u.Update()
+
+	// load message success and redirect
+	flash.Success("You have update the user " + u.Name)
+	flash.Store(&c.Controller)
+	c.Redirect("/users", 302)
 }
 
 
@@ -84,18 +149,11 @@ func (c *UsersController) Delete() {
 
 	//get identifier of user
 	id , _ := strconv.Atoi(c.Ctx.Input.Param(":id"))
-	//error if id is not valid
-	/*if err != nil {
-		flash.Error("Wrong id")
-		flash.Store(&c.Controller)
-		c.Redirect("/users", 302)
-		return
-	}*/
 
 	var u models.User
 	u.ID = uint(id)
 	if !u.Exists() {
-		flash.Error("method")
+		flash.Error("Incorrect user id")
 		flash.Store(&c.Controller)
 		c.Redirect("/users", 303)
 		return
@@ -107,4 +165,20 @@ func (c *UsersController) Delete() {
 	flash.Success("You have deleted user")
 	flash.Store(&c.Controller)
 	c.Redirect("/users", 303)
+}
+
+func (c *UsersController) getUser() (models.User, error) {
+	u := models.User{
+		Username: c.GetString("username"),
+		Email: c.GetString("email"),
+		Name: c.GetString("name"),
+	}
+	u.SetPassword(c.GetString("password"))
+	roleID, err := c.GetInt("role")
+	if err != nil {
+		return u, err
+	}
+	u.RoleID = uint(roleID)
+
+	return u, nil
 }

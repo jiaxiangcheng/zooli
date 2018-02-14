@@ -19,11 +19,11 @@
         <div class="fields">
             <div class="ten wide field">
                 <label>Email</label>
-                <input name="email" type="email" placeholder="Email" required/>
+                <input name="email" value="{{.userForm.Email}}" type="email" placeholder="Email" required/>
             </div>
             <div class="six wide field">
                 <label>Name</label>
-                <input name="name" type="text" placeholder="Name" required/>
+                <input name="name" value="{{.userForm.Name}}" type="text" placeholder="Name" required/>
             </div>
         </div>
     </div>
@@ -31,7 +31,11 @@
         <label>Role</label>
         <select name="role" class="ui dropdown">
             {{ range .roles }}
-            <option value="{{.ID}}">{{.Name}}</option>
+                {{ if $.userForm }}
+                    <option value="{{.ID}}" {{ if eq .ID $.userForm.RoleID}} selected {{end}}>{{.Name}}</option>
+                 {{else}}
+                    <option value="{{.ID}}">{{.Name}}</option>
+                {{end}}
             {{end}}
         </select>
     </div>

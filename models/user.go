@@ -19,7 +19,7 @@ type User struct {
 	Name         string `gorm:"not null" valid:"required"`
 	Role         Role   `valid:"-" json:"-"`
 	RoleID       uint   `gorm:"not null" valid:"required"`
-	Store        Store  `gorm:"foreignkey:ManagerID" json:"-"`
+	Store        Store  `gorm:"foreignkey:ManagerID" valid:"-" json:"-"`
 }
 
 func (u *User) Insert() {
