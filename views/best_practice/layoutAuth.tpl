@@ -2,8 +2,8 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <!--meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1"-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>ZOOLI</title>
 
     {{ template "best_practice/common/header.tpl"}}
@@ -80,7 +80,7 @@
         </div>
     </div>
 </div>
-
+<script type="text/javascript" src="/static/js/canvas-nest.min.js"></script>
 </body>
 
 </html>
