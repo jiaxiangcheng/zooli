@@ -2,10 +2,10 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <!--meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1"-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>ZOOLI</title>
-
+    <link rel="shortcut icon" href="/static/img/logo/pear.ico">
     {{ template "best_practice/common/header.tpl"}}
     <link rel="stylesheet" href="/static/css/tmp.css"/>
     <script type="text/javascript" src="/static/js/nav.js"></script>
@@ -18,6 +18,8 @@
         <i class="large database icon"></i> Zooli
     </a>
     <div class="right menu">
+        <span class="item">Hi {{.user.Name}}</span>
+
         <a class="item" href="/help">
             <i class="help icon"></i> Help
         </a>
@@ -78,7 +80,7 @@
         </div>
     </div>
 </div>
-
+<script type="text/javascript" src="/static/js/canvas-nest.min.js"></script>
 </body>
 
 </html>

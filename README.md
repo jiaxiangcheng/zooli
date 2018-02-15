@@ -75,6 +75,8 @@ General
 * https://github.com/hacke2/hacke2.github.io/issues/1  front end resources
 * https://github.com/hacke2/hacke2.github.io/issues/3  front end resources
 * http://coderlmn.github.io/code-standards/ front end coding style
+* http://codeguide.bootcss.com/  html css code style
+* http://alloyteam.github.io/CodeGuide/#html  yes, code style again
 
 UI
 * https://beego.me/docs/mvc/view/tutorial.md  Go template guide
