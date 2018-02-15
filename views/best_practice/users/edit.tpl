@@ -1,7 +1,6 @@
-
 <form class="ui form">
-    <h2 class="title"><i class="user icon"></i>User Information</h2>
-        {{template "best_practice/users/form/body.tpl" .}}
+    {{template "best_practice/users/form/header.tpl" .}}
+    {{template "best_practice/users/form/body.tpl" .}}
     <button id="save" class="ui primary button" type="submit">Save</button>
     <button id="cancel" class="ui button" type="button">Cancel</button>
 </form>

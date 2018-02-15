@@ -1,8 +1,4 @@
 <div class="ui raised segment">
-    <h2 class="title1" id="title">
-        <i class="user icon"></i>
-        New user
-    </h2></br>
     <div class="ui error message"></div>
     {{template "best_practice/common/flash.tpl" .}}
     <div class="field">

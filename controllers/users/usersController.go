@@ -42,7 +42,7 @@ func (c *UsersController) Edit() {
 
 	c.Data["userForm"] = u
 	c.Data["roles"] = models.FindRoles()
-
+	c.Data["headerTitle"] = "User Information"
 	c.TplName = "best_practice/users/edit.tpl"
 }
 
@@ -58,6 +58,7 @@ func (c *UsersController) New() {
 	}
 
 	c.Data["roles"] = models.FindRoles()
+	c.Data["headerTitle"] = "New User"
 	c.TplName = "best_practice/users/new.tpl"
 }
 
