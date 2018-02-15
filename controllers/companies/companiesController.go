@@ -2,11 +2,6 @@ package controllers
 
 import (
 	"github.com/Qiaorui/zooli/controllers"
-	"github.com/Qiaorui/zooli/models"
-	"github.com/astaxie/beego"
-	"strconv"
-	utils "github.com/Qiaorui/zooli/controllers/utils"
-	"github.com/pkg/errors"
 )
 
 type CompaniesController struct {
