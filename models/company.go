@@ -52,7 +52,7 @@ func ExistCompanyByName(name string) bool {
 	return count > 0
 }
 
-func FindCompanys() []Company {
+func FindCompanies() []Company {
 	var c []Company
 	DB.Find(&c)
 	return c
