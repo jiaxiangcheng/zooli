@@ -9,7 +9,6 @@ import (
 
 func main() {
 
-
 	govalidator.SetFieldsRequiredByDefault(true)
 	if err := models.Connect(); err != nil {
 		models.Syncdb()
