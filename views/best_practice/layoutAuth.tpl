@@ -18,6 +18,8 @@
         <i class="large database icon"></i> Zooli
     </a>
     <div class="right menu">
+        <span class="item">Hi {{.user.Name}}</span>
+
         <a class="item" href="/help">
             <i class="help icon"></i> Help
         </a>
