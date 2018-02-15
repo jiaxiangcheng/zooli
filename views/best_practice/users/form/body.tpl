@@ -31,15 +31,18 @@
     </div>
     <div class="six wide field">
         <label>Role</label>
-        <select name="role" class="ui dropdown">
+        <div class="field">
+            <select name="role" class="ui fluid dropdown">
+                <option value="">Role</option>
             {{ range .roles }}
-                {{ if $.userForm }}
-                    <option value="{{.ID}}" {{ if eq .ID $.userForm.RoleID}} selected {{end}}>{{.Name}}</option>
-                 {{else}}
-                    <option value="{{.ID}}">{{.Name}}</option>
-                {{end}}
+            {{ if $.userForm }}
+                <option value="{{.ID}}" {{ if eq .ID $.userForm.RoleID}} selected {{end}}>{{.Name}}</option>
+            {{else}}
+                <option value="{{.ID}}">{{.Name}}</option>
             {{end}}
-        </select>
+            {{end}}
+            </select>
+        </div>
     </div>
 </div>
 
@@ -47,6 +50,7 @@
 <script>
     $(document)
             .ready(function() {
+                $('.dropdown').dropdown();
                 $('.ui.form')
                         .form({
                             fields: {
