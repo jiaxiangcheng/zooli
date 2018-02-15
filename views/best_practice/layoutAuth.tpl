@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>ZOOLI</title>
-
+    <link rel="shortcut icon" href="/static/img/logo/pear.ico">
     {{ template "best_practice/common/header.tpl"}}
     <link rel="stylesheet" href="/static/css/tmp.css"/>
     <script type="text/javascript" src="/static/js/nav.js"></script>
