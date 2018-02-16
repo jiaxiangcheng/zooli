@@ -5,6 +5,8 @@ import (
 	auth "github.com/Qiaorui/zooli/controllers/auth"
 	users "github.com/Qiaorui/zooli/controllers/users"
 	companies "github.com/Qiaorui/zooli/controllers/companies"
+	stores "github.com/Qiaorui/zooli/controllers/stores"
+	services "github.com/Qiaorui/zooli/controllers/services"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/context"
 )
@@ -29,6 +31,10 @@ func init() {
 	beego.Router("/companies/:id([0-9]+", &companies.CompaniesController{}, "get:Edit")
 	beego.Router("/companies/:id([0-9]+", &companies.CompaniesController{}, "post:Update")
 	beego.Router("/companies/:id([0-9]+", &companies.CompaniesController{}, "delete:Delete")
+
+	beego.Router("/stores", &stores.StoresController{}, "get:Get")
+
+	beego.Router("/services", &services.ServicesController{}, "get:Get")
 
 	beego.InsertFilter("*", beego.BeforeRouter, LoggedInFilter)
 }
