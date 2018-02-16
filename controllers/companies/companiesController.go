@@ -2,6 +2,8 @@ package controllers
 
 import (
 	"github.com/Qiaorui/zooli/controllers"
+    "github.com/Qiaorui/zooli/models"
+    "github.com/pkg/errors"
 )
 
 type CompaniesController struct {
@@ -9,7 +11,7 @@ type CompaniesController struct {
 }
 
 func (c *CompaniesController) Get() {
-	//c.Data["companies"] = models.FindCompanies()
+	c.Data["companies"] = models.FindCompanies()
 	c.TplName = "best_practice/companies/list.tpl"
 }
 /*
@@ -56,15 +58,14 @@ func (c *CompaniesController) New() {
 	c.TplName = "best_practice/companies/new.tpl"
 }
 
-/*
+
 func (c *CompaniesController) ExistUserIf() {
 	user_name := c.GetString("username")
 	existed := models.ExistUserByUsername(user_name)
 	c.Data["json"] = map[string]interface{}{"existed": existed}
 	c.ServeJSON()
 }
-*/
-/*
+
 func (c *CompaniesController) Create() {
 	flash := beego.NewFlash()
 
@@ -138,7 +139,6 @@ func (c *CompaniesController) Update() {
 	c.Redirect("/companies/" + strconv.Itoa(id), 302)
 }
 
-
 func (c *CompaniesController) Delete() {
 	flash := beego.NewFlash()
 
@@ -160,7 +160,7 @@ func (c *CompaniesController) Delete() {
 	flash.Success("You have deleted user")
 	flash.Store(&c.Controller)
 	c.Redirect("/companies", 303)
-}
+}*/
 
 func (c *CompaniesController) getUser() (models.User, error) {
 	u := models.User{
@@ -180,4 +180,4 @@ func (c *CompaniesController) getUser() (models.User, error) {
 	u.RoleID = uint(roleID)
 
 	return u, nil
-}*/
+}
