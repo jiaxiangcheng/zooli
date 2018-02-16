@@ -50,21 +50,19 @@
     Create company
 </button>
 
-
-
-<!--script type="text/javascript">
-    function newUser() {
+<script type="text/javascript">
+    function newCompany() {
         $.ajax({
             async: false,
             type: "get",
-            url: "/users/new",
+            url: "/companies/new",
             success: function (data) {
                 $('#main_content').html(data);
             }
         });
     }
 
-    function editUser(user_id) {
+    /*function editUser(user_id) {
         $.ajax({
             async: false,
             type: "get",
@@ -83,5 +81,5 @@
                 $('#main_content').html(data);
             }
         });
-    }
-</script-->
+    }*/
+</script>

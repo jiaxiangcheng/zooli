@@ -3,7 +3,8 @@ package controllers
 import (
 	"github.com/Qiaorui/zooli/controllers"
     "github.com/Qiaorui/zooli/models"
-    "github.com/pkg/errors"
+    "github.com/astaxie/beego"
+    utils "github.com/Qiaorui/zooli/controllers/utils"
 )
 
 type CompaniesController struct {
@@ -42,60 +43,60 @@ func (c *CompaniesController) Edit() {
 
 	c.TplName = "best_practice/companies/edit.tpl"
 }
-
+*/
 
 
 func (c *CompaniesController) New() {
 
 	//get the user session and load if exist
-	u := c.GetSession("companiesInfo")
-	if u != nil {
+	company := c.GetSession("companiesInfo")
+	if company != nil {
 		c.DelSession("companiesInfo")
-		c.Data["userForm"] = u.(models.User)
+		c.Data["companyForm"] = company.(models.Company)
 	}
 
-	c.Data["roles"] = models.FindRoles()
+    c.Data["headerTitle"] = "New Company"
 	c.TplName = "best_practice/companies/new.tpl"
 }
 
-
+/*
 func (c *CompaniesController) ExistUserIf() {
 	user_name := c.GetString("username")
 	existed := models.ExistUserByUsername(user_name)
 	c.Data["json"] = map[string]interface{}{"existed": existed}
 	c.ServeJSON()
-}
+}*/
 
 func (c *CompaniesController) Create() {
 	flash := beego.NewFlash()
 
-	u, err := c.getUser()
+	company, err := c.getCompany()
 	//load the error, save the form fields and redirect
 	if err != nil {
 		flash.Error(err.Error())
 		flash.Store(&c.Controller)
-		c.SetSession("companiesInfo", u)
+		c.SetSession("companiesInfo", company)
 		c.Redirect("/companies/new", 303)
 		return
 	}
 
-	err = utils.Validate(u)
+	err = utils.Validate(company)
 	if err != nil {
 		flash.Error(err.Error())
 		flash.Store(&c.Controller)
-		c.SetSession("companiesInfo", u)
+		c.SetSession("companiesInfo", company)
 		c.Redirect("/companies/new", 303)
 		return
 	}
 
-	u.Insert()
+	company.Insert()
 
 	// load message success and redirect
-	flash.Success("You have create the user " + u.Name)
+	flash.Success("You have create the company " + company.Name)
 	flash.Store(&c.Controller)
 	c.Redirect("/companies", 303)
 }
-
+/*
 func (c *CompaniesController) Update() {
 	//init object for error control
 	flash := beego.NewFlash()
@@ -162,22 +163,13 @@ func (c *CompaniesController) Delete() {
 	c.Redirect("/companies", 303)
 }*/
 
-func (c *CompaniesController) getUser() (models.User, error) {
-	u := models.User{
-		Username: c.GetString("username"),
-		Email: c.GetString("email"),
+func (c *CompaniesController) getCompany() (models.Company, error) {
+	company := models.Company{
 		Name: c.GetString("name"),
+        Contact: c.GetString("contact"),
+		Email: c.GetString("email"),
+		PhoneNumber: c.GetString("phonenumber"),
 	}
-	pwd := c.GetString("password")
-	if pwd == "" {
-		return u, errors.New("Password can not be empty")
-	}
-	u.SetPassword(pwd)
-	roleID, err := c.GetInt("role")
-	if err != nil {
-		return u, err
-	}
-	u.RoleID = uint(roleID)
 
-	return u, nil
+	return company, nil
 }
