@@ -56,25 +56,25 @@
             }
         });
     }
-    /*
-    function editServices(user_id) {
+
+    function editServices(service_id) {
         $.ajax({
             async: false,
             type: "get",
-            url: "/users/" + user_id,
+            url: "/services/" + service_id,
             success: function (data) {
                 $('#main_content').html(data);
             }
         });
     }
-    function deleteServices(user_id) {
+    function deleteServices(service_id) {
         $.ajax({
             async: false,
             type: "delete",
-            url: "/users/" + user_id,
+            url: "/services/" + service_id,
             success: function (data) {
                 $('#main_content').html(data);
             }
         });
-    }*/
+    }
 </script>

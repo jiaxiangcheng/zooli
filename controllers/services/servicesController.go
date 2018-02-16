@@ -4,6 +4,7 @@ import (
     "github.com/Qiaorui/zooli/controllers"
     "github.com/Qiaorui/zooli/models"
     "github.com/astaxie/beego"
+    "strconv"
     utils "github.com/Qiaorui/zooli/controllers/utils"
 )
 
@@ -16,7 +17,7 @@ func (c *ServicesController) Get() {
 	c.Data["services"] = models.FindServices()
 	c.TplName = "best_practice/services/list.tpl"
 }
-/*
+
 func (c *ServicesController) Edit() {
 
 	servicesession := c.GetSession("servicesInfo")
@@ -43,7 +44,7 @@ func (c *ServicesController) Edit() {
     c.Data["headerTitle"] = "Service Information"
 
 	c.TplName = "best_practice/services/edit.tpl"
-}*/
+}
 
 func (c *ServicesController) New() {
 
@@ -87,7 +88,7 @@ func (c *ServicesController) Create() {
 	flash.Store(&c.Controller)
 	c.Redirect("/services", 303)
 }
-/*
+
 func (c *ServicesController) Update() {
 	//init object for error control
 	flash := beego.NewFlash()
@@ -130,7 +131,6 @@ func (c *ServicesController) Update() {
 	flash.Store(&c.Controller)
 	c.Redirect("/services/" + strconv.Itoa(id), 302)
 }
-
 func (c *ServicesController) Delete() {
 	flash := beego.NewFlash()
 
@@ -152,7 +152,7 @@ func (c *ServicesController) Delete() {
 	flash.Success("You have deleted service")
 	flash.Store(&c.Controller)
 	c.Redirect("/services", 303)
-}*/
+}
 
 func (c *ServicesController) getService() (models.Service, error) {
 	service := models.Service{

@@ -37,6 +37,9 @@ func init() {
 	beego.Router("/services", &services.ServicesController{}, "get:Get")
 	beego.Router("/services/new", &services.ServicesController{}, "get:New")
 	beego.Router("/services/new", &services.ServicesController{}, "post:Create")
+	beego.Router("/services/:id([0-9]+", &services.ServicesController{}, "get:Edit")
+	beego.Router("/services/:id([0-9]+", &services.ServicesController{}, "post:Update")
+	beego.Router("/services/:id([0-9]+", &services.ServicesController{}, "delete:Delete")
 
 	beego.InsertFilter("*", beego.BeforeRouter, LoggedInFilter)
 }
