@@ -35,6 +35,8 @@ func init() {
 	beego.Router("/stores", &stores.StoresController{}, "get:Get")
 
 	beego.Router("/services", &services.ServicesController{}, "get:Get")
+	beego.Router("/services/new", &services.ServicesController{}, "get:New")
+	beego.Router("/services/new", &services.ServicesController{}, "post:Create")
 
 	beego.InsertFilter("*", beego.BeforeRouter, LoggedInFilter)
 }

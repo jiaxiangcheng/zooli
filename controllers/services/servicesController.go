@@ -3,6 +3,8 @@ package controllers
 import (
     "github.com/Qiaorui/zooli/controllers"
     "github.com/Qiaorui/zooli/models"
+    "github.com/astaxie/beego"
+    utils "github.com/Qiaorui/zooli/controllers/utils"
 )
 
 type ServicesController struct {
@@ -17,148 +19,144 @@ func (c *ServicesController) Get() {
 /*
 func (c *ServicesController) Edit() {
 
-	companysession := c.GetSession("companiesInfo")
+	servicesession := c.GetSession("servicesInfo")
 
-	var company models.Company
+	var service models.Service
 
-	if companysession != nil {
-		c.DelSession("companiesInfo")
-		company = companysession.(models.Company)
+	if servicesession != nil {
+		c.DelSession("servicesInfo")
+		service = servicesession.(models.Service)
 	} else {
 		id , _ := strconv.Atoi(c.Ctx.Input.Param(":id"))
-		// load company in DB
-		company = models.FindCompanyByID(uint(id))
+		// load service in DB
+		service = models.FindServiceByID(uint(id))
 	}
-	if !company.Exists() {
+	if !service.Exists() {
 		flash := beego.NewFlash()
-		flash.Error("Incorrect company id")
+		flash.Error("Incorrect service id")
 		flash.Store(&c.Controller)
-		c.Redirect("/settings/company/getList", 302)
+		c.Redirect("/settings/service/getList", 302)
 		return
 	}
 
-	c.Data["companyForm"] = company
-    c.Data["headerTitle"] = "Company Information"
+	c.Data["serviceForm"] = service
+    c.Data["headerTitle"] = "Service Information"
 
-	c.TplName = "best_practice/companies/edit.tpl"
-}
+	c.TplName = "best_practice/services/edit.tpl"
+}*/
 
 func (c *ServicesController) New() {
 
-	//get the company session and load if exist
-	company := c.GetSession("companiesInfo")
-	if company != nil {
-		c.DelSession("companiesInfo")
-		c.Data["companyForm"] = company.(models.Company)
+	//get the service session and load if exist
+	service := c.GetSession("servicesInfo")
+	if service != nil {
+		c.DelSession("servicesInfo")
+		c.Data["serviceForm"] = service.(models.Service)
 	}
 
-    c.Data["headerTitle"] = "New Company"
-	c.TplName = "best_practice/companies/new.tpl"
+    c.Data["headerTitle"] = "New Service"
+	c.TplName = "best_practice/services/new.tpl"
 }
 
 func (c *ServicesController) Create() {
 	flash := beego.NewFlash()
 
-	company, err := c.getCompany()
+	service, err := c.getService()
 	//load the error, save the form fields and redirect
 	if err != nil {
 		flash.Error(err.Error())
 		flash.Store(&c.Controller)
-		c.SetSession("companiesInfo", company)
-		c.Redirect("/companies/new", 303)
+		c.SetSession("servicesInfo", service)
+		c.Redirect("/services/new", 303)
 		return
 	}
 
-	err = utils.Validate(company)
+	err = utils.Validate(service)
 	if err != nil {
 		flash.Error(err.Error())
 		flash.Store(&c.Controller)
-		c.SetSession("companiesInfo", company)
-		c.Redirect("/companies/new", 303)
+		c.SetSession("servicesInfo", service)
+		c.Redirect("/services/new", 303)
 		return
 	}
 
-	company.Insert()
+	service.Insert()
 
 	// load message success and redirect
-	flash.Success("You have create the company " + company.Name)
+	flash.Success("You have create the service " + service.Name)
 	flash.Store(&c.Controller)
-	c.Redirect("/companies", 303)
+	c.Redirect("/services", 303)
 }
-
+/*
 func (c *ServicesController) Update() {
 	//init object for error control
 	flash := beego.NewFlash()
 
-	//get identifier of company
+	//get identifier of service
 	id , _ := strconv.Atoi(c.Ctx.Input.Param(":id"))
 
-	company, err := c.getCompany()
+	service, err := c.getService()
 	if err != nil {
 		flash.Error(err.Error())
 		flash.Store(&c.Controller)
-		c.Redirect("/companies/" + strconv.Itoa(id), 302)
+		c.Redirect("/services/" + strconv.Itoa(id), 302)
 		return
 	}
 
-	company.ID = uint(id)
-	if !company.Exists() {
-		flash.Error("Incorrect company id")
+	service.ID = uint(id)
+	if !service.Exists() {
+		flash.Error("Incorrect service id")
 		flash.Store(&c.Controller)
-		c.Redirect("/companies", 302)
+		c.Redirect("/services", 302)
 		return
 	}
 
-	err = utils.Validate(company)
+	err = utils.Validate(service)
 
 	//load the error, save the form fields and redirect
 	if err != nil {
 		flash.Error(err.Error())
 		flash.Store(&c.Controller)
-		c.SetSession("companiesInfo", company)
-		c.Redirect("/companies/" + strconv.Itoa(id), 302)
+		c.SetSession("servicesInfo", service)
+		c.Redirect("/services/" + strconv.Itoa(id), 302)
 		return
 	}
 
-	//update the company
-	company.Update()
+	//update the service
+	service.Update()
 
 	// load message success and redirect
-	flash.Success("You have update the company " + company.Name)
+	flash.Success("You have update the service " + service.Name)
 	flash.Store(&c.Controller)
-	c.Redirect("/companies/" + strconv.Itoa(id), 302)
+	c.Redirect("/services/" + strconv.Itoa(id), 302)
 }
 
 func (c *ServicesController) Delete() {
 	flash := beego.NewFlash()
 
-	//get identifier of company
+	//get identifier of service
 	id , _ := strconv.Atoi(c.Ctx.Input.Param(":id"))
 
-	var company models.Company
-	company.ID = uint(id)
-	if !company.Exists() {
-		flash.Error("Incorrect company id")
+	var service models.Service
+	service.ID = uint(id)
+	if !service.Exists() {
+		flash.Error("Incorrect service id")
 		flash.Store(&c.Controller)
-		c.Redirect("/companies", 303)
+		c.Redirect("/services", 303)
 		return
 	}
 
-	company.DeleteSoft()
+	service.DeleteSoft()
 
 	// load message success and redirect
-	flash.Success("You have deleted company")
+	flash.Success("You have deleted service")
 	flash.Store(&c.Controller)
-	c.Redirect("/companies", 303)
-}
-*/
-func (c *ServicesController) getCompany() (models.Company, error) {
-	company := models.Company{
-		Name: c.GetString("name"),
-        Contact: c.GetString("contact"),
-		Email: c.GetString("email"),
-		PhoneNumber: c.GetString("phonenumber"),
-	}
+	c.Redirect("/services", 303)
+}*/
 
-	return company, nil
+func (c *ServicesController) getService() (models.Service, error) {
+	service := models.Service{
+		Name: c.GetString("name"),
+	}
+	return service, nil
 }

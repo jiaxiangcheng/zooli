@@ -46,16 +46,17 @@
 
 
 <script type="text/javascript">
-    /*function newServices() {
+    function newServices() {
         $.ajax({
             async: false,
             type: "get",
-            url: "/users/new",
+            url: "/services/new",
             success: function (data) {
                 $('#main_content').html(data);
             }
         });
     }
+    /*
     function editServices(user_id) {
         $.ajax({
             async: false,
