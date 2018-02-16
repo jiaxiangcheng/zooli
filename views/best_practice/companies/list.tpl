@@ -62,16 +62,16 @@
         });
     }
 
-    /*function editUser(user_id) {
+    function editCompany(company_id) {
         $.ajax({
             async: false,
             type: "get",
-            url: "/users/" + user_id,
+            url: "/companies/" + company_id,
             success: function (data) {
                 $('#main_content').html(data);
             }
         });
-    }
+    }/*
     function deleteUser(user_id) {
         $.ajax({
             async: false,

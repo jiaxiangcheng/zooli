@@ -1,9 +1,10 @@
 package controllers
 
 import (
-	"github.com/Qiaorui/zooli/controllers"
+    "github.com/Qiaorui/zooli/controllers"
     "github.com/Qiaorui/zooli/models"
     "github.com/astaxie/beego"
+    "strconv"
     utils "github.com/Qiaorui/zooli/controllers/utils"
 )
 
@@ -15,40 +16,38 @@ func (c *CompaniesController) Get() {
 	c.Data["companies"] = models.FindCompanies()
 	c.TplName = "best_practice/companies/list.tpl"
 }
-/*
+
 func (c *CompaniesController) Edit() {
 
-	companiesession := c.GetSession("companiesInfo")
+	companysession := c.GetSession("companiesInfo")
 
-	var u models.User
+	var company models.Company
 
-	if companiesession != nil {
+	if companysession != nil {
 		c.DelSession("companiesInfo")
-		u = companiesession.(models.User)
+		company = companysession.(models.Company)
 	} else {
 		id , _ := strconv.Atoi(c.Ctx.Input.Param(":id"))
-		// load user in DB
-		u = models.FindUserByID(uint(id))
+		// load company in DB
+		company = models.FindCompanyByID(uint(id))
 	}
-	if !u.Exists() {
+	if !company.Exists() {
 		flash := beego.NewFlash()
-		flash.Error("Incorrect user id")
+		flash.Error("Incorrect company id")
 		flash.Store(&c.Controller)
-		c.Redirect("/settings/user/getList", 302)
+		c.Redirect("/settings/company/getList", 302)
 		return
 	}
 
-	c.Data["userForm"] = u
-	c.Data["roles"] = models.FindRoles()
+	c.Data["companyForm"] = company
+    c.Data["headerTitle"] = "Company Information"
 
 	c.TplName = "best_practice/companies/edit.tpl"
 }
-*/
-
 
 func (c *CompaniesController) New() {
 
-	//get the user session and load if exist
+	//get the company session and load if exist
 	company := c.GetSession("companiesInfo")
 	if company != nil {
 		c.DelSession("companiesInfo")
@@ -60,9 +59,9 @@ func (c *CompaniesController) New() {
 }
 
 /*
-func (c *CompaniesController) ExistUserIf() {
-	user_name := c.GetString("username")
-	existed := models.ExistUserByUsername(user_name)
+func (c *CompaniesController) ExistcompanyIf() {
+	company_name := c.GetString("companyname")
+	existed := models.ExistcompanyBycompanyname(company_name)
 	c.Data["json"] = map[string]interface{}{"existed": existed}
 	c.ServeJSON()
 }*/
@@ -96,15 +95,15 @@ func (c *CompaniesController) Create() {
 	flash.Store(&c.Controller)
 	c.Redirect("/companies", 303)
 }
-/*
+
 func (c *CompaniesController) Update() {
 	//init object for error control
 	flash := beego.NewFlash()
 
-	//get identifier of user
+	//get identifier of company
 	id , _ := strconv.Atoi(c.Ctx.Input.Param(":id"))
 
-	u, err := c.getUser()
+	company, err := c.getCompany()
 	if err != nil {
 		flash.Error(err.Error())
 		flash.Store(&c.Controller)
@@ -112,44 +111,44 @@ func (c *CompaniesController) Update() {
 		return
 	}
 
-	u.ID = uint(id)
-	if !u.Exists() {
-		flash.Error("Incorrect user id")
+	company.ID = uint(id)
+	if !company.Exists() {
+		flash.Error("Incorrect company id")
 		flash.Store(&c.Controller)
 		c.Redirect("/companies", 302)
 		return
 	}
 
-	err = utils.Validate(u)
+	err = utils.Validate(company)
 
 	//load the error, save the form fields and redirect
 	if err != nil {
 		flash.Error(err.Error())
 		flash.Store(&c.Controller)
-		c.SetSession("companiesInfo", u)
+		c.SetSession("companiesInfo", company)
 		c.Redirect("/companies/" + strconv.Itoa(id), 302)
 		return
 	}
 
-	//update the user
-	u.Update()
+	//update the company
+	company.Update()
 
 	// load message success and redirect
-	flash.Success("You have update the user " + u.Name)
+	flash.Success("You have update the company " + company.Name)
 	flash.Store(&c.Controller)
 	c.Redirect("/companies/" + strconv.Itoa(id), 302)
 }
-
+/*
 func (c *CompaniesController) Delete() {
 	flash := beego.NewFlash()
 
-	//get identifier of user
+	//get identifier of company
 	id , _ := strconv.Atoi(c.Ctx.Input.Param(":id"))
 
-	var u models.User
+	var u models.company
 	u.ID = uint(id)
 	if !u.Exists() {
-		flash.Error("Incorrect user id")
+		flash.Error("Incorrect company id")
 		flash.Store(&c.Controller)
 		c.Redirect("/companies", 303)
 		return
@@ -158,7 +157,7 @@ func (c *CompaniesController) Delete() {
 	u.DeleteSoft()
 
 	// load message success and redirect
-	flash.Success("You have deleted user")
+	flash.Success("You have deleted company")
 	flash.Store(&c.Controller)
 	c.Redirect("/companies", 303)
 }*/
