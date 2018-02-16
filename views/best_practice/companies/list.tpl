@@ -26,7 +26,7 @@
                 View
             </button>
         </td>
-        <!-->{{if ne $.user.ID .ID}}
+        {{if ne $.user.ID .ID}}
         <td class="center aligned">
             <button type="button"
                     class="ui negative button"
@@ -36,7 +36,7 @@
                 Delete
             </button>
         </td>
-        {{end}}<-->
+        {{end}}
     </tr>
     {{ end }}
     </tbody>
@@ -71,15 +71,15 @@
                 $('#main_content').html(data);
             }
         });
-    }/*
-    function deleteUser(user_id) {
+    }
+    function deleteCompany(company_id) {
         $.ajax({
             async: false,
             type: "delete",
-            url: "/users/" + user_id,
+            url: "/companies/" + company_id,
             success: function (data) {
                 $('#main_content').html(data);
             }
         });
-    }*/
+    }
 </script>

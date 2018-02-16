@@ -138,29 +138,29 @@ func (c *CompaniesController) Update() {
 	flash.Store(&c.Controller)
 	c.Redirect("/companies/" + strconv.Itoa(id), 302)
 }
-/*
+
 func (c *CompaniesController) Delete() {
 	flash := beego.NewFlash()
 
 	//get identifier of company
 	id , _ := strconv.Atoi(c.Ctx.Input.Param(":id"))
 
-	var u models.company
-	u.ID = uint(id)
-	if !u.Exists() {
+	var company models.Company
+	company.ID = uint(id)
+	if !company.Exists() {
 		flash.Error("Incorrect company id")
 		flash.Store(&c.Controller)
 		c.Redirect("/companies", 303)
 		return
 	}
 
-	u.DeleteSoft()
+	company.DeleteSoft()
 
 	// load message success and redirect
 	flash.Success("You have deleted company")
 	flash.Store(&c.Controller)
 	c.Redirect("/companies", 303)
-}*/
+}
 
 func (c *CompaniesController) getCompany() (models.Company, error) {
 	company := models.Company{

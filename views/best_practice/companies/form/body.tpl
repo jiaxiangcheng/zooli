@@ -1,4 +1,4 @@
-<div class="ui raised segment">
+<div class="ui five wid raised segment">
     <div class="ui error message"></div>
     {{template "best_practice/common/flash.tpl" .}}
     <div class="field">

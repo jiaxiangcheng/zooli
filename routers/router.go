@@ -28,6 +28,7 @@ func init() {
 	beego.Router("/companies/new", &companies.CompaniesController{}, "post:Create")
 	beego.Router("/companies/:id([0-9]+", &companies.CompaniesController{}, "get:Edit")
 	beego.Router("/companies/:id([0-9]+", &companies.CompaniesController{}, "post:Update")
+	beego.Router("/companies/:id([0-9]+", &companies.CompaniesController{}, "delete:Delete")
 
 	beego.InsertFilter("*", beego.BeforeRouter, LoggedInFilter)
 }
