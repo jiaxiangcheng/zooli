@@ -35,7 +35,7 @@ func (u *User) Exists() bool {
 
 func (u *User) ExistsUsername() bool {
 	count := 0
-	DB.Where("username = ? and id <> ?", u.Username, u.ID).Find(&User{}).Count(&count)
+	DB.Unscoped().Where("username = ? and id <> ?", u.Username, u.ID).Find(&User{}).Count(&count)
 	return count > 0
 }
 

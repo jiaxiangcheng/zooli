@@ -14,7 +14,7 @@ type StoresController struct {
 }
 
 func (c *StoresController) Get() {
-	//c.Data["stores"] = models.FindStores()
+	c.Data["stores"] = models.FindStores()
 	c.TplName = "best_practice/stores/list.tpl"
 }
 

@@ -23,7 +23,7 @@
         <td class="center aligned">{{ .Latitude}}</td>
         <td class="center aligned">{{ .Longitude}}</td>
         <td class="center aligned">{{ .PhoneNumber}}</td>
-        <td class="center aligned">{{ .Company.CompanyID}}</td>
+        <td class="center aligned">{{ .Company.Name}}</td>
         <td class="center aligned">{{ .ManagerID}}</td>
         <td class="center aligned">{{ .Services}}</td>
         <td class="center aligned">
@@ -33,7 +33,7 @@
                 View
             </button>
         </td>
-        {{if ne $.store.ID .ID}}
+
         <td class="center aligned">
             <button type="button"
                     class="ui negative button"
@@ -43,7 +43,7 @@
                 Delete
             </button>
         </td>
-        {{end}}
+
     </tr>
     {{ end }}
     </tbody>

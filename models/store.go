@@ -11,8 +11,8 @@ type Store struct {
 	gorm.Model  `valid:"-"`
 	Name        string    `gorm:"not null" valid:"required"`
 	Address     string    `valid:"-"`
-	Latitude    float64   `gorm:"not null" valid:"latitude,required"`
-	Longitude   float64   `gorm:"not null" valid:"longitude,required"`
+	Latitude    float64   `gorm:"not null" valid:"required"`
+	Longitude   float64   `gorm:"not null" valid:"required"`
 	PhoneNumber string    `valid:"numeric,optional"`
 	Image       string    `valid:"url,optional"`
 	Company     Company   `valid:"-" json:"-"`
@@ -40,7 +40,7 @@ func FindStoreByID(id uint) Store {
 
 func FindStores() []Store {
 	var s []Store
-	DB.Find(&s)
+	DB.Preload("Company").Find(&s)
 	return s
 }
 
