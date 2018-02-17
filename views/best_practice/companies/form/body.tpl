@@ -61,6 +61,15 @@
                                         }
                                     ]
                                 },
+                                phone: {
+                                    identifier  : 'phonenumber',
+                                    rules: [
+                                        {
+                                            type   : 'number',
+                                            prompt : 'Incorrect phone number format'
+                                        }
+                                    ]
+                                }
                             }
                         });
             });

@@ -3,10 +3,10 @@ package routers
 import (
 	"github.com/Qiaorui/zooli/controllers"
 	auth "github.com/Qiaorui/zooli/controllers/auth"
-	users "github.com/Qiaorui/zooli/controllers/users"
 	companies "github.com/Qiaorui/zooli/controllers/companies"
-	stores "github.com/Qiaorui/zooli/controllers/stores"
 	services "github.com/Qiaorui/zooli/controllers/services"
+	stores "github.com/Qiaorui/zooli/controllers/stores"
+	users "github.com/Qiaorui/zooli/controllers/users"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/context"
 )
@@ -33,6 +33,11 @@ func init() {
 	beego.Router("/companies/:id([0-9]+", &companies.CompaniesController{}, "delete:Delete")
 
 	beego.Router("/stores", &stores.StoresController{}, "get:Get")
+	beego.Router("/stores/new", &stores.StoresController{}, "get:New")
+	beego.Router("/stores/new", &stores.StoresController{}, "post:Create")
+	beego.Router("/stores/:id([0-9]+", &stores.StoresController{}, "get:Edit")
+	beego.Router("/stores/:id([0-9]+", &stores.StoresController{}, "post:Update")
+	beego.Router("/stores/:id([0-9]+", &stores.StoresController{}, "delete:Delete")
 
 	beego.Router("/services", &services.ServicesController{}, "get:Get")
 	beego.Router("/services/new", &services.ServicesController{}, "get:New")

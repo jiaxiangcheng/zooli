@@ -7,11 +7,9 @@
         <th class="center aligned">Address</th>
         <th class="center aligned">Latitude</th>
         <th class="center aligned">Longitude</th>
-        <th class="center aligned">PhoneNumber</th>
-        <th class="center aligned">Image</th>
-        <th class="center aligned">Company</th>
-        <th class="center aligned">CompanyID</th>
-        <th class="center aligned">ManagerID</th>
+        <th class="center aligned">Phone number</th>
+        <th class="center aligned">Company name</th>
+        <th class="center aligned">Manager name</th>
         <th class="center aligned">Services</th>
         <th class="center aligned"></th>
         <th></th>
@@ -25,9 +23,7 @@
         <td class="center aligned">{{ .Latitude}}</td>
         <td class="center aligned">{{ .Longitude}}</td>
         <td class="center aligned">{{ .PhoneNumber}}</td>
-        <td class="center aligned">{{ .Image}}</td>
-        <td class="center aligned">{{ .Company}}</td>
-        <td class="center aligned">{{ .CompanyID}}</td>
+        <td class="center aligned">{{ .Company.CompanyID}}</td>
         <td class="center aligned">{{ .ManagerID}}</td>
         <td class="center aligned">{{ .Services}}</td>
         <td class="center aligned">
@@ -63,7 +59,7 @@
 
 
 
-<!--script type="text/javascript">
+<script type="text/javascript">
     function newstore() {
         $.ajax({
             async: false,
@@ -94,4 +90,4 @@
             }
         });
     }
-</script-->
+</script>

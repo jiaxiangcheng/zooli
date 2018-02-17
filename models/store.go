@@ -1,25 +1,25 @@
 package models
 
 import (
-	"github.com/jinzhu/gorm"
-	"github.com/astaxie/beego"
 	"encoding/json"
+
+	"github.com/astaxie/beego"
+	"github.com/jinzhu/gorm"
 )
 
 type Store struct {
-	gorm.Model				`valid:"-"`
-	Name		string		`gorm:"not null" valid:"required"`
-	Address		string		`valid:"-"`
-	Latitude	float64		`gorm:"not null" valid:"latitude,required"`
-	Longitude	float64		`gorm:"not null" valid:"longitude,required"`
-	PhoneNumber	string		`valid:"numeric,optional"`
-	Image		string		`valid:"url,optional"`
-	Company		Company		`valid:"-" json:"-"`
-	CompanyID	uint		`gorm:"not null" valid:"required"`
-	ManagerID	uint		`valid:"-"`
-	Services	[]Service	`gorm:"many2many:store_services;" valid:"-" json:"-"`
+	gorm.Model  `valid:"-"`
+	Name        string    `gorm:"not null" valid:"required"`
+	Address     string    `valid:"-"`
+	Latitude    float64   `gorm:"not null" valid:"latitude,required"`
+	Longitude   float64   `gorm:"not null" valid:"longitude,required"`
+	PhoneNumber string    `valid:"numeric,optional"`
+	Image       string    `valid:"url,optional"`
+	Company     Company   `valid:"-" json:"-"`
+	CompanyID   uint      `gorm:"not null" valid:"required"`
+	ManagerID   uint      `valid:"-"`
+	Services    []Service `gorm:"many2many:store_services;" valid:"-" json:"-"`
 }
-
 
 func (s *Store) Insert() {
 	DB.Create(&s)

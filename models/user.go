@@ -64,6 +64,12 @@ func FindUsers() []User {
 	return u
 }
 
+func FindUsersByRole(roleId uint) []User {
+	var u []User
+	DB.Preload("Role").Where("role_id = ?", roleId).Find(&u)
+	return u
+}
+
 func (u *User) Update() {
 	var uDB User
 	uDB.ID = u.ID

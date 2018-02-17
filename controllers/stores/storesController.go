@@ -1,8 +1,12 @@
 package controllers
 
 import (
-    "github.com/Qiaorui/zooli/controllers"
-    "github.com/Qiaorui/zooli/models"
+	"strconv"
+
+	"github.com/Qiaorui/zooli/controllers"
+	utils "github.com/Qiaorui/zooli/controllers/utils"
+	"github.com/Qiaorui/zooli/models"
+	"github.com/astaxie/beego"
 )
 
 type StoresController struct {
@@ -13,151 +17,173 @@ func (c *StoresController) Get() {
 	//c.Data["stores"] = models.FindStores()
 	c.TplName = "best_practice/stores/list.tpl"
 }
-/*
+
 func (c *StoresController) Edit() {
+	var store models.Store
 
-	companysession := c.GetSession("companiesInfo")
+	id, _ := strconv.Atoi(c.Ctx.Input.Param(":id"))
+	// load store in DB
+	store = models.FindStoreByID(uint(id))
 
-	var company models.Company
-
-	if companysession != nil {
-		c.DelSession("companiesInfo")
-		company = companysession.(models.Company)
-	} else {
-		id , _ := strconv.Atoi(c.Ctx.Input.Param(":id"))
-		// load company in DB
-		company = models.FindCompanyByID(uint(id))
-	}
-	if !company.Exists() {
+	if !store.Exists() {
 		flash := beego.NewFlash()
-		flash.Error("Incorrect company id")
+		flash.Error("Incorrect store id")
 		flash.Store(&c.Controller)
-		c.Redirect("/settings/company/getList", 302)
+		c.Redirect("/settings/store/getList", 302)
 		return
 	}
 
-	c.Data["companyForm"] = company
-    c.Data["headerTitle"] = "Company Information"
+	c.Data["storeForm"] = store
+	c.Data["headerTitle"] = "Store Information"
 
-	c.TplName = "best_practice/companies/edit.tpl"
+	c.TplName = "best_practice/store/edit.tpl"
+}
+
+func (c *StoresController) findManagers() []models.User {
+	var managers []models.User
+	managers = models.FindUsersByRole(2)
+	return managers
 }
 
 func (c *StoresController) New() {
+	c.Data["companies"] = models.FindCompanies()
+	c.Data["managers"] = c.findManagers()
 
-	//get the company session and load if exist
-	company := c.GetSession("companiesInfo")
-	if company != nil {
-		c.DelSession("companiesInfo")
-		c.Data["companyForm"] = company.(models.Company)
-	}
-
-    c.Data["headerTitle"] = "New Company"
-	c.TplName = "best_practice/companies/new.tpl"
+	c.Data["headerTitle"] = "New Store"
+	c.TplName = "best_practice/stores/new.tpl"
 }
 
 func (c *StoresController) Create() {
 	flash := beego.NewFlash()
 
-	company, err := c.getCompany()
+	store, err := c.getStore()
 	//load the error, save the form fields and redirect
 	if err != nil {
 		flash.Error(err.Error())
 		flash.Store(&c.Controller)
-		c.SetSession("companiesInfo", company)
-		c.Redirect("/companies/new", 303)
+		c.Redirect("/stores/new", 303)
 		return
 	}
 
-	err = utils.Validate(company)
+	err = utils.Validate(store)
 	if err != nil {
 		flash.Error(err.Error())
 		flash.Store(&c.Controller)
-		c.SetSession("companiesInfo", company)
-		c.Redirect("/companies/new", 303)
+		c.Redirect("/stores/new", 303)
 		return
 	}
 
-	company.Insert()
+	store.Insert()
 
 	// load message success and redirect
-	flash.Success("You have create the company " + company.Name)
+	flash.Success("You have create the stores " + store.Name)
 	flash.Store(&c.Controller)
-	c.Redirect("/companies", 303)
+	c.Redirect("/stores", 303)
 }
 
 func (c *StoresController) Update() {
 	//init object for error control
 	flash := beego.NewFlash()
 
-	//get identifier of company
-	id , _ := strconv.Atoi(c.Ctx.Input.Param(":id"))
+	//get identifier of store
+	id, _ := strconv.Atoi(c.Ctx.Input.Param(":id"))
 
-	company, err := c.getCompany()
+	store, err := c.getStore()
 	if err != nil {
 		flash.Error(err.Error())
 		flash.Store(&c.Controller)
-		c.Redirect("/companies/" + strconv.Itoa(id), 302)
+		c.Redirect("/stores/"+strconv.Itoa(id), 302)
 		return
 	}
 
-	company.ID = uint(id)
-	if !company.Exists() {
-		flash.Error("Incorrect company id")
+	store.ID = uint(id)
+	if !store.Exists() {
+		flash.Error("Incorrect store id")
 		flash.Store(&c.Controller)
-		c.Redirect("/companies", 302)
+		c.Redirect("/stores", 302)
 		return
 	}
 
-	err = utils.Validate(company)
+	err = utils.Validate(store)
 
 	//load the error, save the form fields and redirect
 	if err != nil {
 		flash.Error(err.Error())
 		flash.Store(&c.Controller)
-		c.SetSession("companiesInfo", company)
-		c.Redirect("/companies/" + strconv.Itoa(id), 302)
+		c.Redirect("/stores/"+strconv.Itoa(id), 302)
 		return
 	}
 
-	//update the company
-	company.Update()
+	//update the store
+	store.Update()
 
 	// load message success and redirect
-	flash.Success("You have update the company " + company.Name)
+	flash.Success("You have update the store " + store.Name)
 	flash.Store(&c.Controller)
-	c.Redirect("/companies/" + strconv.Itoa(id), 302)
+	c.Redirect("/stores/"+strconv.Itoa(id), 302)
 }
 
 func (c *StoresController) Delete() {
 	flash := beego.NewFlash()
 
-	//get identifier of company
-	id , _ := strconv.Atoi(c.Ctx.Input.Param(":id"))
+	//get identifier of store
+	id, _ := strconv.Atoi(c.Ctx.Input.Param(":id"))
 
-	var company models.Company
-	company.ID = uint(id)
-	if !company.Exists() {
-		flash.Error("Incorrect company id")
+	var store models.Store
+	store.ID = uint(id)
+	if !store.Exists() {
+		flash.Error("Incorrect store id")
 		flash.Store(&c.Controller)
-		c.Redirect("/companies", 303)
+		c.Redirect("/stores", 303)
 		return
 	}
 
-	company.DeleteSoft()
+	store.DeleteSoft()
 
 	// load message success and redirect
-	flash.Success("You have deleted company")
+	flash.Success("You have deleted store")
 	flash.Store(&c.Controller)
-	c.Redirect("/companies", 303)
+	c.Redirect("/stores", 303)
 }
-*/
-func (c *StoresController) getCompany() (models.Company, error) {
-	company := models.Company{
-		Name: c.GetString("name"),
-        Contact: c.GetString("contact"),
-		Email: c.GetString("email"),
-		PhoneNumber: c.GetString("phonenumber"),
+
+func (c *StoresController) getStore() (models.Store, error) {
+
+	store := models.Store{
+		Address:     c.GetString("address"),
+		Name:        c.GetString("name"),
+		PhoneNumber: c.GetString("phone"),
 	}
 
-	return company, nil
+	latitude, err := c.GetFloat("latitude")
+	beego.Debug(latitude)
+
+	if err != nil {
+		return store, err
+	}
+
+	store.Latitude = latitude
+
+	longitude, err := c.GetFloat("longitude")
+	beego.Debug(longitude)
+
+	if err != nil {
+		return store, err
+	}
+
+	store.Longitude = longitude
+
+	companyID, err := c.GetInt("company")
+	if err != nil {
+		return store, err
+	}
+
+	managerID, err := c.GetInt("manager")
+	if err != nil {
+		return store, err
+	}
+
+	store.CompanyID = uint(companyID)
+	store.ManagerID = uint(managerID)
+
+	return store, nil
 }
