@@ -24,7 +24,7 @@
         <td class="center aligned">{{ .Longitude}}</td>
         <td class="center aligned">{{ .PhoneNumber}}</td>
         <td class="center aligned">{{ .Company.Name}}</td>
-        <td class="center aligned">{{ .ManagerID}}</td>
+        <td class="center aligned">{{ .ManagerName}}</td>
         <td class="center aligned">{{ .Services}}</td>
         <td class="center aligned">
             <button type="button"

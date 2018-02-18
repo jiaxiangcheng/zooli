@@ -9,7 +9,7 @@
                 </div>
                 <div class="ten wide field">
                     <label>Address</label>
-                    <input name="address" type="text" placeholder="Address"/>
+                    <input name="address" value="{{.storeForm.Address}}" type="text" placeholder="Address"/>
                 </div>
                 
             </div>
@@ -18,7 +18,7 @@
             <div class="three fields">
                 <div class="field">
                     <label>Phone number</label>
-                    <input name="phone" type="text" placeholder="Phone number"/>
+                    <input name="phone" value="{{.storeForm.PhoneNumber}}" type="text" placeholder="Phone number"/>
                 </div>
                 <div class="field">
                     <label>Latitude</label>

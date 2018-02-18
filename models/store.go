@@ -18,6 +18,7 @@ type Store struct {
 	Company     Company   `valid:"-" json:"-"`
 	CompanyID   uint      `gorm:"not null" valid:"required"`
 	ManagerID   uint      `valid:"-"`
+	ManagerName string    `valid:"-"`
 	Services    []Service `gorm:"many2many:store_services;" valid:"-" json:"-"`
 }
 
@@ -57,6 +58,7 @@ func (s *Store) Update() {
 	sDB.Image = s.Image
 	sDB.CompanyID = s.CompanyID
 	sDB.ManagerID = s.ManagerID
+	sDB.ManagerName = s.ManagerName
 	DB.Model(&sDB).Association("Services").Replace(s.Services)
 
 	DB.Save(&sDB)

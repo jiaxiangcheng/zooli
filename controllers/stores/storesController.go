@@ -33,21 +33,29 @@ func (c *StoresController) Edit() {
 		return
 	}
 
+	var myManager = models.FindUserByID(store.ManagerID)
+	c.Data["companies"] = models.FindCompanies()
+	c.Data["managers"] = append(c.findManagersWithouStoreAssgined(), myManager)
 	c.Data["storeForm"] = store
 	c.Data["headerTitle"] = "Store Information"
 
-	c.TplName = "best_practice/store/edit.tpl"
+	c.TplName = "best_practice/stores/edit.tpl"
 }
 
-func (c *StoresController) findManagers() []models.User {
-	var managers []models.User
-	managers = models.FindUsersByRole(2)
-	return managers
+func (c *StoresController) findManagersWithouStoreAssgined() []models.User {
+	//var managers []models.User
+	var usersWithoutStore []models.User
+
+	// users which has role managar and doesn't have any store assigned
+	//managers = models.FindUsersByRole(2)
+	usersWithoutStore = models.FindManagersWithoutStore()
+
+	return usersWithoutStore
 }
 
 func (c *StoresController) New() {
 	c.Data["companies"] = models.FindCompanies()
-	c.Data["managers"] = c.findManagers()
+	c.Data["managers"] = c.findManagersWithouStoreAssgined()
 
 	c.Data["headerTitle"] = "New Store"
 	c.TplName = "best_practice/stores/new.tpl"
@@ -75,6 +83,12 @@ func (c *StoresController) Create() {
 
 	store.Insert()
 
+	// relate store with user
+	var user = models.FindUserByID(store.ManagerID)
+	user.Store = store
+	user.StoreID = store.ID
+	user.Update()
+
 	// load message success and redirect
 	flash.Success("You have create the stores " + store.Name)
 	flash.Store(&c.Controller)
@@ -94,6 +108,14 @@ func (c *StoresController) Update() {
 		flash.Store(&c.Controller)
 		c.Redirect("/stores/"+strconv.Itoa(id), 302)
 		return
+	}
+
+	// update old manager if exists
+	var oldStore = models.FindStoreByID(uint(id))
+	if oldStore.ManagerID != 0 {
+		var oldManager = models.FindUserByID(oldStore.ManagerID)
+		oldManager.StoreID = 0
+		oldManager.Update()
 	}
 
 	store.ID = uint(id)
@@ -116,6 +138,12 @@ func (c *StoresController) Update() {
 
 	//update the store
 	store.Update()
+
+	// relate user
+	var user = models.FindUserByID(store.ManagerID)
+
+	user.StoreID = store.ID
+	user.Update()
 
 	// load message success and redirect
 	flash.Success("You have update the store " + store.Name)
@@ -185,5 +213,8 @@ func (c *StoresController) getStore() (models.Store, error) {
 	store.CompanyID = uint(companyID)
 	store.ManagerID = uint(managerID)
 
+	var manager = models.FindUserByID(store.ManagerID)
+
+	store.ManagerName = manager.Username
 	return store, nil
 }
