@@ -25,7 +25,7 @@
         <td class="center aligned">{{ .PhoneNumber}}</td>
         <td class="center aligned">{{ .Company.Name}}</td>
         <td class="center aligned">
-            <div class="ui {{if .Manager.Name}}primary{{else}}negative{{end}} basic animated fade button" tabindex="0">
+            <div class="ui {{if .Manager.Name}}primary{{else}}negative{{end}} basic animated fade button" tabindex="0" onclick="openAssignmentModal({{.ID}},{{.Manager.ID}})">
                 <div class="visible content">{{.Manager.Name}}</div>
                 <div class="hidden content">
             {{if .Manager.Name}}Change{{else}}Assign{{end}}
@@ -55,6 +55,13 @@
     {{ end }}
     </tbody>
 </table>
+<div class="ui modal" id="user_modal">
+    <div class="header">Pick a manager</div>
+    <div class="scrolling content">
+        <p>Very long content goes here</p>
+    </div>
+</div>
+
 <button type="button"
         title="View store"
         class="ui basic big button"
@@ -96,5 +103,8 @@
                 $('#main_content').html(data);
             }
         });
+    }
+    function openAssignmentModal(storeID, userID) {
+        $('#user_modal').modal("show");
     }
 </script>

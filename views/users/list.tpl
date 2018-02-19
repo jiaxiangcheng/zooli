@@ -31,7 +31,7 @@
         <td class="center aligned">
             <button type="button"
                     class="ui negative button"
-                    onclick="showModal('{{ .ID}}');">
+                    onclick="openDeleteModal('{{ .ID}}');">
                 Delete
             </button>
         </td>
@@ -86,14 +86,15 @@
         });
     }
 
-    function showModal(user_id) {
-        userId = user_id;
+    function openDeleteModal(user_id) {
         $('#mini_modal .header').html("Alert");
         $('#mini_modal .content').html("Are you sure to delete user?");
-        $('#mini_modal').modal('show');
-    }
-
-    function accept() {
-        deleteUser(userId);
+        $('#mini_modal')
+                .modal({
+                    onApprove : function() {
+                        deleteUser(user_id)
+                    }
+                })
+                .modal('show');
     }
 </script>
