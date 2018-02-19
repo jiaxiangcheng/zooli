@@ -52,9 +52,6 @@
 
 
 <script type="text/javascript">
-
-    var userId;
-
     function newUser() {
         $.ajax({
             async: false,

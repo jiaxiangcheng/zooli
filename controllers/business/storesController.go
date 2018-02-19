@@ -15,6 +15,9 @@ type StoresController struct {
 }
 
 func (c *StoresController) Get() {
+	m := models.FindRoleByName(models.ROLE_MANAGER)
+	managers := models.FindUsersByRoleID(m.ID)
+	c.Data["managers"] = managers
 	c.Data["stores"] = models.FindStores()
 	c.TplName = "stores/list.tpl"
 }
@@ -50,7 +53,7 @@ func (c *StoresController) findManagersWithoutStoreAssigned() []models.User {
 	var usersWithoutStore []models.User
 
 	// users which has role managar and doesn't have any store assigned
-	//managers = models.FindUsersByRole(2)
+	//managers = models.FindUsersByRoleID(2)
 	//usersWithoutStore = models.FindManagersWithoutStore()
 
 	return usersWithoutStore

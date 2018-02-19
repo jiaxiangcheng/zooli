@@ -64,7 +64,7 @@ func FindUsers() []User {
 	return u
 }
 
-func FindUsersByRole(roleId uint) []User {
+func FindUsersByRoleID(roleId uint) []User {
 	var u []User
 	DB.Preload("Role").Where("role_id = ?", roleId).Find(&u)
 	return u
@@ -92,6 +92,14 @@ func (u *User) Update() {
 	DB.Save(&uDB)
 	beego.Debug("Update User:", u)
 }
+
+func (u *User) AssignStore(storeID uint) {
+	u.StoreID = storeID
+	DB.Save(&u)
+	beego.Debug("Update User:", u)
+}
+
+
 
 func (u *User) DeleteSoft() {
 	DB.Delete(&u)

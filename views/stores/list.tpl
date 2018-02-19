@@ -55,10 +55,25 @@
     {{ end }}
     </tbody>
 </table>
-<div class="ui modal" id="user_modal">
+<div class="ui tiny modal" id="user_modal">
+    <i class="close icon"></i>
     <div class="header">Pick a manager</div>
     <div class="scrolling content">
-        <p>Very long content goes here</p>
+        <div style="min-height:400px;" >
+            <div class="ui grid container">
+                {{range .managers}}
+                    <div class="four wide column"><span>{{.Name}}</span></div>
+                {{end}}
+            </div>
+        </div>
+    </div>
+    <div class="actions">
+        <div class="ui deny button">
+            Cancel
+        </div>
+        <div class="ui positive button">
+            Save
+        </div>
     </div>
 </div>
 
@@ -74,6 +89,12 @@
 
 
 <script type="text/javascript">
+    $(document)
+            .ready(function() {
+
+            });
+
+
     function newStore() {
         $.ajax({
             async: false,
@@ -105,6 +126,12 @@
         });
     }
     function openAssignmentModal(storeID, userID) {
-        $('#user_modal').modal("show");
+        $('#user_modal')
+                .modal({
+                    onVisible: function () {
+
+                    }
+                })
+                .modal("show");
     }
 </script>
