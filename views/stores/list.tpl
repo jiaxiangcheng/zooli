@@ -24,7 +24,14 @@
         <td class="center aligned">{{ .Longitude}}</td>
         <td class="center aligned">{{ .PhoneNumber}}</td>
         <td class="center aligned">{{ .Company.Name}}</td>
-        <td class="center aligned">{{ .Manager.Name}}</td>
+        <td class="center aligned">
+            <div class="ui {{if .Manager.Name}}primary{{else}}negative{{end}} basic animated fade button" tabindex="0">
+                <div class="visible content">{{.Manager.Name}}</div>
+                <div class="hidden content">
+            {{if .Manager.Name}}Change{{else}}Assign{{end}}
+                </div>
+            </div>
+        </td>
         <td class="center aligned">{{range .Services}} <a class="ui blue label">{{.Name}}</a> {{end}}</td>
         <td class="center aligned">
             <button type="button"
