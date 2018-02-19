@@ -125,3 +125,11 @@ func (u User) String() string {
 	}
 	return string(out)
 }
+
+func NumUsers() int {
+	var count int = 0
+	var u []User
+	DB.Find(&u).Count(&count)
+	beego.Info(count)
+	return count
+}
