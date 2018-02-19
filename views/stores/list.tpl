@@ -1,6 +1,6 @@
-<h1 class="ui header">Stores</h1>
+<h1 class="ui header" style="text-align:center;">Stores</h1>
 {{template "common/flash.tpl" .}}
-<table class="ui single line striped collapsing table">
+<table class="ui single line striped collapsing table" id="table_list">
     <thead>
     <tr>
         <th class="center aligned">Name</th>
@@ -55,6 +55,7 @@
     {{ end }}
     </tbody>
 </table>
+
 <div class="ui modal" id="user_modal">
     <div class="header">Pick a manager</div>
     <div class="scrolling content">
@@ -62,16 +63,23 @@
     </div>
 </div>
 
-<button type="button"
-        title="View store"
-        class="ui basic big button"
-        onclick="newStore();"
-        style="margin: 10px 10px">
-    <i class="add store icon"></i>
-    Create store
-</button>
+</br>
+<div class="ui middle aligned center aligned grid">
+    <button type="button"
+            title="View store"
+            class="ui basic big button"
+            onclick="newStore();">
+        <i class="add store icon"></i>
+        Create store
+    </button>
+</div>
 
-
+<style>
+    #table_list {
+       margin-left:auto;
+       margin-right:auto;
+     }
+</style>
 
 <script type="text/javascript">
     function newStore() {

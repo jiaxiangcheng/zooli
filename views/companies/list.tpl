@@ -1,7 +1,6 @@
-
-<h1 class="ui header">Companies</h1>
+<h1 class="ui header" style="text-align:center;">Companies</h1>
 {{template "common/flash.tpl" .}}
-<table class="ui single line striped collapsing table">
+<table class="ui single line striped collapsing table" id="table_list">
     <thead>
     <tr>
         <th class="center aligned">Name</th>
@@ -39,14 +38,23 @@
     {{ end }}
     </tbody>
 </table>
-<button type="button"
-        title="View company"
-        class="ui basic big button"
-        onclick="newCompany();"
-        style="margin: 10px 10px">
-    <i class="add company icon"></i>
-    Create company
-</button>
+</br>
+
+<div class="ui middle aligned center aligned grid">
+    <button type="button"
+            title="View company"
+            class="ui basic big button"
+            onclick="newCompany();">
+        <i class="add company icon"></i>
+        Create company
+    </button>
+</div>
+<style>
+    #table_list {
+       margin-left:auto;
+       margin-right:auto;
+     }
+</style>
 
 <script type="text/javascript">
     function newCompany() {

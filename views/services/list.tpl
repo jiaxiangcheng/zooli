@@ -1,6 +1,6 @@
-<h1 class="ui header">Services</h1>
+<h1 class="ui header" style="text-align:center;">Services</h1>
 {{template "common/flash.tpl" .}}
-<table class="ui single line striped collapsing table">
+<table class="ui single line striped collapsing table" id="table_list">
     <thead>
     <tr>
         <th class="center aligned">Name</th>
@@ -32,16 +32,24 @@
     {{ end }}
     </tbody>
 </table>
-<button type="button"
-        title="View user"
-        class="ui basic big button"
-        onclick="newServices();"
-        style="margin: 10px 10px">
-    <i class="add service icon"></i>
-    Create service
-</button>
+</br>
 
+<div class="ui middle aligned center aligned grid">
+    <button type="button"
+            title="View user"
+            class="ui basic big button"
+            onclick="newServices();">
+        <i class="add service icon"></i>
+        Create service
+    </button>
+</div>
 
+<style>
+    #table_list {
+       margin-left:auto;
+       margin-right:auto;
+     }
+</style>
 
 <script type="text/javascript">
     function newServices() {

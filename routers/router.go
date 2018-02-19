@@ -45,6 +45,9 @@ func init() {
 	beego.Router("/services/:id([0-9]+", &business.ServicesController{}, "post:Update")
 	beego.Router("/services/:id([0-9]+", &business.ServicesController{}, "delete:Delete")
 
+	beego.Router("/orders", &business.OrdersController{}, "get:Get")
+	beego.Router("/products", &business.ProductsController{}, "get:Get")
+
 	beego.InsertFilter("*", beego.BeforeRouter, LoggedInFilter)
 }
 
