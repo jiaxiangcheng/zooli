@@ -6,8 +6,8 @@ import (
 	"encoding/json"
 )
 
-const ROLE_ADMIN = "admin"
-const ROLE_MANAGER = "manager"
+const ROLE_ADMIN = "Admin"
+const ROLE_MANAGER = "Manager"
 
 type Role struct {
 	gorm.Model			`valid:"-"`
