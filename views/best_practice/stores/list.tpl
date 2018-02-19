@@ -9,7 +9,7 @@
         <th class="center aligned">Longitude</th>
         <th class="center aligned">Phone number</th>
         <th class="center aligned">Company name</th>
-        <th class="center aligned">Manager name</th>
+        <th class="center aligned">Manager</th>
         <th class="center aligned">Services</th>
         <th class="center aligned"></th>
         <th></th>
@@ -24,12 +24,12 @@
         <td class="center aligned">{{ .Longitude}}</td>
         <td class="center aligned">{{ .PhoneNumber}}</td>
         <td class="center aligned">{{ .Company.Name}}</td>
-        <td class="center aligned">{{ .ManagerName}}</td>
+        <td class="center aligned">{{ .Manager.Name}}</td>
         <td class="center aligned">{{ .Services}}</td>
         <td class="center aligned">
             <button type="button"
                     class="ui basic button"
-                    onclick="editstore('{{ .ID}}');">
+                    onclick="editStore('{{ .ID}}');">
                 View
             </button>
         </td>
@@ -51,7 +51,7 @@
 <button type="button"
         title="View store"
         class="ui basic big button"
-        onclick="newstore();"
+        onclick="newStore();"
         style="margin: 10px 10px">
     <i class="add store icon"></i>
     Create store
@@ -60,7 +60,7 @@
 
 
 <script type="text/javascript">
-    function newstore() {
+    function newStore() {
         $.ajax({
             async: false,
             type: "get",
@@ -70,7 +70,7 @@
             }
         });
     }
-    function editstore(store_id) {
+    function editStore(store_id) {
         $.ajax({
             async: false,
             type: "get",
@@ -80,7 +80,7 @@
             }
         });
     }
-    function deletestore(store_id) {
+    function deleteStore(store_id) {
         $.ajax({
             async: false,
             type: "delete",

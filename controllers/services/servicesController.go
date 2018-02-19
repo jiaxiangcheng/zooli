@@ -13,20 +13,19 @@ type ServicesController struct {
 }
 
 func (c *ServicesController) Get() {
-
 	c.Data["services"] = models.FindServices()
 	c.TplName = "best_practice/services/list.tpl"
 }
 
 func (c *ServicesController) Edit() {
 
-	servicesession := c.GetSession("servicesInfo")
+	serviceSession := c.GetSession("servicesInfo")
 
 	var service models.Service
 
-	if servicesession != nil {
-		c.DelSession("servicesInfo")
-		service = servicesession.(models.Service)
+	if serviceSession != nil {
+		c.DelSession("serviceInfo")
+		service = serviceSession.(models.Service)
 	} else {
 		id , _ := strconv.Atoi(c.Ctx.Input.Param(":id"))
 		// load service in DB
@@ -36,26 +35,23 @@ func (c *ServicesController) Edit() {
 		flash := beego.NewFlash()
 		flash.Error("Incorrect service id")
 		flash.Store(&c.Controller)
-		c.Redirect("/settings/service/getList", 302)
+		c.Redirect("/services", 302)
 		return
 	}
 
 	c.Data["serviceForm"] = service
-    c.Data["headerTitle"] = "Service Information"
-
 	c.TplName = "best_practice/services/edit.tpl"
 }
 
 func (c *ServicesController) New() {
 
 	//get the service session and load if exist
-	service := c.GetSession("servicesInfo")
+	service := c.GetSession("serviceInfo")
 	if service != nil {
-		c.DelSession("servicesInfo")
+		c.DelSession("serviceInfo")
 		c.Data["serviceForm"] = service.(models.Service)
 	}
 
-    c.Data["headerTitle"] = "New Service"
 	c.TplName = "best_practice/services/new.tpl"
 }
 
@@ -67,7 +63,7 @@ func (c *ServicesController) Create() {
 	if err != nil {
 		flash.Error(err.Error())
 		flash.Store(&c.Controller)
-		c.SetSession("servicesInfo", service)
+		c.SetSession("serviceInfo", service)
 		c.Redirect("/services/new", 303)
 		return
 	}
@@ -76,7 +72,7 @@ func (c *ServicesController) Create() {
 	if err != nil {
 		flash.Error(err.Error())
 		flash.Store(&c.Controller)
-		c.SetSession("servicesInfo", service)
+		c.SetSession("serviceInfo", service)
 		c.Redirect("/services/new", 303)
 		return
 	}
@@ -84,7 +80,7 @@ func (c *ServicesController) Create() {
 	service.Insert()
 
 	// load message success and redirect
-	flash.Success("You have create the service " + service.Name)
+	flash.Success("You have created the service " + service.Name)
 	flash.Store(&c.Controller)
 	c.Redirect("/services", 303)
 }
@@ -118,7 +114,7 @@ func (c *ServicesController) Update() {
 	if err != nil {
 		flash.Error(err.Error())
 		flash.Store(&c.Controller)
-		c.SetSession("servicesInfo", service)
+		c.SetSession("serviceInfo", service)
 		c.Redirect("/services/" + strconv.Itoa(id), 302)
 		return
 	}
@@ -127,10 +123,12 @@ func (c *ServicesController) Update() {
 	service.Update()
 
 	// load message success and redirect
-	flash.Success("You have update the service " + service.Name)
+	flash.Success("You have updated the service " + service.Name)
 	flash.Store(&c.Controller)
 	c.Redirect("/services/" + strconv.Itoa(id), 302)
 }
+
+
 func (c *ServicesController) Delete() {
 	flash := beego.NewFlash()
 

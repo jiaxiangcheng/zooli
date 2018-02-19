@@ -1,5 +1,8 @@
 <form class="ui form">
-    {{template "best_practice/users/form/header.tpl" .}}
+    <h2 id="title">
+        <i class="user icon"></i>
+        New User
+    </h2>
     {{template "best_practice/users/form/body.tpl" .}}
     <button id="save" class="ui primary button" type="submit">Create</button>
     <button id="cancel" class="ui button" type="button">Cancel</button>

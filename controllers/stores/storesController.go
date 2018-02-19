@@ -19,45 +19,50 @@ func (c *StoresController) Get() {
 }
 
 func (c *StoresController) Edit() {
-	var store models.Store
+	storeSession := c.GetSession("storeInfo")
+	var s models.Store
 
-	id, _ := strconv.Atoi(c.Ctx.Input.Param(":id"))
-	// load store in DB
-	store = models.FindStoreByID(uint(id))
+	if storeSession != nil {
+		c.DelSession("storeInfo")
+		s = storeSession.(models.Store)
+	} else {
+		id, _ := strconv.Atoi(c.Ctx.Input.Param(":id"))
+		s = models.FindStoreByID(uint(id))
+	}
 
-	if !store.Exists() {
+	if !s.Exists() {
 		flash := beego.NewFlash()
 		flash.Error("Incorrect store id")
 		flash.Store(&c.Controller)
-		c.Redirect("/settings/store/getList", 302)
+		c.Redirect("/stores", 302)
 		return
 	}
 
-	var myManager = models.FindUserByID(store.ManagerID)
 	c.Data["companies"] = models.FindCompanies()
-	c.Data["managers"] = append(c.findManagersWithouStoreAssgined(), myManager)
-	c.Data["storeForm"] = store
-	c.Data["headerTitle"] = "Store Information"
-
+	c.Data["storeForm"] = s
 	c.TplName = "best_practice/stores/edit.tpl"
 }
 
-func (c *StoresController) findManagersWithouStoreAssgined() []models.User {
+func (c *StoresController) findManagersWithoutStoreAssigned() []models.User {
 	//var managers []models.User
 	var usersWithoutStore []models.User
 
 	// users which has role managar and doesn't have any store assigned
 	//managers = models.FindUsersByRole(2)
-	usersWithoutStore = models.FindManagersWithoutStore()
+	//usersWithoutStore = models.FindManagersWithoutStore()
 
 	return usersWithoutStore
 }
 
 func (c *StoresController) New() {
-	c.Data["companies"] = models.FindCompanies()
-	c.Data["managers"] = c.findManagersWithouStoreAssgined()
+	s := c.GetSession("storeInfo")
+	if s != nil {
+		c.DelSession("storeInfo")
+		c.Data["storeForm"] = s.(models.Store)
+	}
 
-	c.Data["headerTitle"] = "New Store"
+	c.Data["companies"] = models.FindCompanies()
+	//c.Data["managers"] = c.findManagersWithouStoreAssgined()
 	c.TplName = "best_practice/stores/new.tpl"
 }
 
@@ -84,10 +89,10 @@ func (c *StoresController) Create() {
 	store.Insert()
 
 	// relate store with user
-	var user = models.FindUserByID(store.ManagerID)
-	user.Store = store
-	user.StoreID = store.ID
-	user.Update()
+	//var user = models.FindUserByID(store.ManagerID)
+	//user.Store = store
+	//user.StoreID = store.ID
+	//user.Update()
 
 	// load message success and redirect
 	flash.Success("You have create the stores " + store.Name)
@@ -111,12 +116,14 @@ func (c *StoresController) Update() {
 	}
 
 	// update old manager if exists
+	/*
 	var oldStore = models.FindStoreByID(uint(id))
 	if oldStore.ManagerID != 0 {
 		var oldManager = models.FindUserByID(oldStore.ManagerID)
 		oldManager.StoreID = 0
 		oldManager.Update()
 	}
+	*/
 
 	store.ID = uint(id)
 	if !store.Exists() {
@@ -140,10 +147,12 @@ func (c *StoresController) Update() {
 	store.Update()
 
 	// relate user
+	/*
 	var user = models.FindUserByID(store.ManagerID)
 
 	user.StoreID = store.ID
 	user.Update()
+	*/
 
 	// load message success and redirect
 	flash.Success("You have update the store " + store.Name)
@@ -205,16 +214,7 @@ func (c *StoresController) getStore() (models.Store, error) {
 		return store, err
 	}
 
-	managerID, err := c.GetInt("manager")
-	if err != nil {
-		return store, err
-	}
-
 	store.CompanyID = uint(companyID)
-	store.ManagerID = uint(managerID)
 
-	var manager = models.FindUserByID(store.ManagerID)
-
-	store.ManagerName = manager.Username
 	return store, nil
 }

@@ -19,13 +19,13 @@ func (c *CompaniesController) Get() {
 
 func (c *CompaniesController) Edit() {
 
-	companysession := c.GetSession("companiesInfo")
+	companySession := c.GetSession("companyInfo")
 
 	var company models.Company
 
-	if companysession != nil {
-		c.DelSession("companiesInfo")
-		company = companysession.(models.Company)
+	if companySession != nil {
+		c.DelSession("companyInfo")
+		company = companySession.(models.Company)
 	} else {
 		id , _ := strconv.Atoi(c.Ctx.Input.Param(":id"))
 		// load company in DB
@@ -35,12 +35,11 @@ func (c *CompaniesController) Edit() {
 		flash := beego.NewFlash()
 		flash.Error("Incorrect company id")
 		flash.Store(&c.Controller)
-		c.Redirect("/settings/company/getList", 302)
+		c.Redirect("/companies", 302)
 		return
 	}
 
 	c.Data["companyForm"] = company
-    c.Data["headerTitle"] = "Company Information"
 
 	c.TplName = "best_practice/companies/edit.tpl"
 }
@@ -48,23 +47,15 @@ func (c *CompaniesController) Edit() {
 func (c *CompaniesController) New() {
 
 	//get the company session and load if exist
-	company := c.GetSession("companiesInfo")
+	company := c.GetSession("companyInfo")
 	if company != nil {
-		c.DelSession("companiesInfo")
+		c.DelSession("companyInfo")
 		c.Data["companyForm"] = company.(models.Company)
 	}
 
-    c.Data["headerTitle"] = "New Company"
 	c.TplName = "best_practice/companies/new.tpl"
 }
 
-/*
-func (c *CompaniesController) ExistcompanyIf() {
-	company_name := c.GetString("companyname")
-	existed := models.ExistcompanyBycompanyname(company_name)
-	c.Data["json"] = map[string]interface{}{"existed": existed}
-	c.ServeJSON()
-}*/
 
 func (c *CompaniesController) Create() {
 	flash := beego.NewFlash()
@@ -83,7 +74,7 @@ func (c *CompaniesController) Create() {
 	if err != nil {
 		flash.Error(err.Error())
 		flash.Store(&c.Controller)
-		c.SetSession("companiesInfo", company)
+		c.SetSession("companyInfo", company)
 		c.Redirect("/companies/new", 303)
 		return
 	}
@@ -91,7 +82,7 @@ func (c *CompaniesController) Create() {
 	company.Insert()
 
 	// load message success and redirect
-	flash.Success("You have create the company " + company.Name)
+	flash.Success("You have created the company " + company.Name)
 	flash.Store(&c.Controller)
 	c.Redirect("/companies", 303)
 }
@@ -125,7 +116,7 @@ func (c *CompaniesController) Update() {
 	if err != nil {
 		flash.Error(err.Error())
 		flash.Store(&c.Controller)
-		c.SetSession("companiesInfo", company)
+		c.SetSession("companyInfo", company)
 		c.Redirect("/companies/" + strconv.Itoa(id), 302)
 		return
 	}
@@ -134,7 +125,7 @@ func (c *CompaniesController) Update() {
 	company.Update()
 
 	// load message success and redirect
-	flash.Success("You have update the company " + company.Name)
+	flash.Success("You have updated the company " + company.Name)
 	flash.Store(&c.Controller)
 	c.Redirect("/companies/" + strconv.Itoa(id), 302)
 }
@@ -167,7 +158,7 @@ func (c *CompaniesController) getCompany() (models.Company, error) {
 		Name: c.GetString("name"),
         Contact: c.GetString("contact"),
 		Email: c.GetString("email"),
-		PhoneNumber: c.GetString("phonenumber"),
+		PhoneNumber: c.GetString("phoneNumber"),
 	}
 
 	return company, nil

@@ -27,7 +27,7 @@ func (r *Role) Exists() bool {
 
 func (r *Role) ExistsName() bool {
 	count := 0
-	DB.Where("name = ? and id <> ?", r.Name, r.ID).Find(&Role{}).Count(&count)
+	DB.Unscoped().Where("name = ? and id <> ?", r.Name, r.ID).Find(&Role{}).Count(&count)
 	return count > 0
 
 }

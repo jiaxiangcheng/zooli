@@ -17,7 +17,7 @@
         <div class="fields">
             <div class="six wide field">
                 <label>Phone number</label>
-                <input name="phonenumber" value="{{.companyForm.PhoneNumber}}" type="text" placeholder="Phone number"/>
+                <input name="phoneNumber" value="{{.companyForm.PhoneNumber}}" type="text" placeholder="Phone number"/>
             </div>
             <div class="ten wide field">
                 <label>Email</label>
@@ -62,7 +62,7 @@
                                     ]
                                 },
                                 phone: {
-                                    identifier  : 'phonenumber',
+                                    identifier  : 'phoneNumber',
                                     rules: [
                                         {
                                             type   : 'number',

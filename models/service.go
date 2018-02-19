@@ -24,7 +24,7 @@ func (s *Service) Exists() bool {
 
 func (s *Service) ExistsName() bool {
 	count := 0
-	DB.Where("name = ? and id <> ?", s.Name, s.ID).Find(&Service{}).Count(&count)
+	DB.Unscoped().Where("name = ? and id <> ?", s.Name, s.ID).Find(&Service{}).Count(&count)
 	return count > 0
 
 }

@@ -31,7 +31,7 @@ func (v *Vehicle) Exists() bool {
 
 func (v *Vehicle) ExistsPlate() bool {
 	count := 0
-	DB.Where("plate = ? and id <> ?", v.Plate, v.ID).Find(&Vehicle{}).Count(&count)
+	DB.Unscoped().Where("plate = ? and id <> ?", v.Plate, v.ID).Find(&Vehicle{}).Count(&count)
 	return count > 0
 }
 

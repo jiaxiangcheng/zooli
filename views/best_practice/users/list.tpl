@@ -1,7 +1,7 @@
 
+{{template "best_practice/common/modal.tpl" .}}
 <h1 class="ui header">Users</h1>
 {{template "best_practice/common/flash.tpl" .}}
-{{template "best_practice/common/modal.tpl" .}}
 <table class="ui single line striped collapsing table">
     <thead>
     <tr>
@@ -88,9 +88,9 @@
 
     function showModal(user_id) {
         userId = user_id;
-        $('.header').html("Alert");
-        $('.content').html("Are you sure to delete user?");
-        $('.ui.tiny.modal').modal('show');
+        $('#mini_modal .header').html("Alert");
+        $('#mini_modal .content').html("Are you sure to delete user?");
+        $('#mini_modal').modal('show');
     }
 
     function accept() {

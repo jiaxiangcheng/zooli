@@ -1,5 +1,9 @@
 <form class="ui form">
-    {{template "best_practice/companies/form/header.tpl" .}}
+    <h2 id="title">
+        <i class="world icon"></i>
+        New Company
+    </h2>
+
     {{template "best_practice/companies/form/body.tpl" .}}
     <button id="save" class="ui primary button" type="submit">Create</button>
     <button id="cancel" class="ui button" type="button">Cancel</button>

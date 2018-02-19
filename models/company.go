@@ -29,7 +29,7 @@ func (c *Company) Exists() bool {
 
 func (c *Company) ExistsName() bool {
 	count := 0
-	DB.Where("name = ? and id <> ?", c.Name, c.ID).Find(&Company{}).Count(&count)
+	DB.Unscoped().Where("name = ? and id <> ?", c.Name, c.ID).Find(&Company{}).Count(&count)
 	return count > 0
 }
 

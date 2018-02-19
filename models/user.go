@@ -12,15 +12,14 @@ import (
 )
 
 type User struct {
-	gorm.Model   `valid:"-"`
-	Username     string `gorm:"not null;unique" valid:"alphanum,required"`
-	PasswordHash string `gorm:"not null" valid:"required,alphanum"`
-	Email        string `valid:"email,optional"`
-	Name         string `gorm:"not null" valid:"required"`
-	Role         Role   `valid:"-" json:"-"`
-	RoleID       uint   `gorm:"not null" valid:"required"`
-	Store        Store  `gorm:"foreignkey:ManagerID" valid:"-" json:"-"`
-	StoreID      uint   `valid:"-" json:"-"`
+	gorm.Model				`valid:"-"`
+	Username		string	`gorm:"not null;unique" valid:"alphanum,required"`
+	PasswordHash	string	`gorm:"not null" valid:"required,alphanum"`
+	Email			string	`valid:"email,optional"`
+	Name			string	`gorm:"not null" valid:"required"`
+	Role			Role	`valid:"-" json:"-"`
+	RoleID			uint	`gorm:"not null" valid:"required"`
+	StoreID			uint	`valid:"-"`
 }
 
 func (u *User) Insert() {
@@ -71,11 +70,13 @@ func FindUsersByRole(roleId uint) []User {
 	return u
 }
 
+/*
 func FindManagersWithoutStore() []User {
 	var u []User
-	DB.Preload("Role").Where("role_id = ? and store_id = ?", 2, 0).Find(&u)
+	DB.Where("role_id = ? and store_id = ?", 2, 0).Preload("Role").Find(&u)
 	return u
 }
+*/
 
 func (u *User) Update() {
 	var uDB User
@@ -87,7 +88,6 @@ func (u *User) Update() {
 	uDB.Email = u.Email
 	uDB.Name = u.Name
 	uDB.RoleID = u.RoleID
-	uDB.StoreID = u.StoreID
 
 	DB.Save(&uDB)
 	beego.Debug("Update User:", u)

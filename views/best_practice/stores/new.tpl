@@ -1,5 +1,8 @@
 <form class="ui form">
-    {{template "best_practice/stores/form/header.tpl" .}}
+    <h2 id="title">
+        <i class="shopping bag icon"></i>
+        New Store
+    </h2>
     {{template "best_practice/stores/form/body.tpl" .}}
     <button id="save" class="ui primary button" type="submit">Create</button>
     <button id="cancel" class="ui button" type="button">Cancel</button>

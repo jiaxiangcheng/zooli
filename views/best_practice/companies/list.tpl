@@ -26,7 +26,6 @@
                 View
             </button>
         </td>
-        {{if ne $.user.ID .ID}}
         <td class="center aligned">
             <button type="button"
                     class="ui negative button"
@@ -36,7 +35,6 @@
                 Delete
             </button>
         </td>
-        {{end}}
     </tr>
     {{ end }}
     </tbody>

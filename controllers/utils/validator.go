@@ -35,7 +35,7 @@ func Validate(obj interface{}, validatePK ...bool) error {
 	case models.Store:
 		//
 	case models.Product:
-		found := false;
+		found := false
 		availableServices := models.FindStoreByID(obj.ServiceID).Services
 		for _, s := range availableServices {
 			if s.ID == obj.ServiceID {

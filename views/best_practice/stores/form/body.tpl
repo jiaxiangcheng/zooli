@@ -46,21 +46,6 @@
                     </select>
                 </div>
             </div>
-            <div class="six wide field">
-                <label>Manager</label>
-                <div class="field">
-                    <select name="manager" class="ui fluid dropdown">
-                            <option value="">Manager</option>
-                        {{ range .managers }}
-                        {{ if $.storeForm }}
-                            <option value="{{.ID}}" {{ if eq .ID $.storeForm.ManagerID}} selected {{end}}>{{.Username}}</option>
-                        {{else}}
-                            <option value="{{.ID}}">{{.Username}}</option>
-                        {{end}}
-                        {{end}}
-                    </select>
-                </div>
-            </div>
         </div>
     </div>
     
@@ -105,15 +90,6 @@
                                             {
                                                 type   : 'empty',
                                                 prompt : 'Please select a company'
-                                            }
-                                        ]
-                                    },
-                                    manager: {
-                                        identifier  : 'manager',
-                                        rules: [
-                                            {
-                                                type   : 'empty',
-                                                prompt : 'Please select a manager'
                                             }
                                         ]
                                     },

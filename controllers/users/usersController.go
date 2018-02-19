@@ -36,13 +36,12 @@ func (c *UsersController) Edit() {
 		flash := beego.NewFlash()
 		flash.Error("Incorrect user id")
 		flash.Store(&c.Controller)
-		c.Redirect("/settings/user/getList", 302)
+		c.Redirect("/users", 302)
 		return
 	}
 
 	c.Data["userForm"] = u
 	c.Data["roles"] = models.FindRoles()
-	c.Data["headerTitle"] = "User Information"
 	c.TplName = "best_practice/users/edit.tpl"
 }
 
@@ -58,18 +57,9 @@ func (c *UsersController) New() {
 	}
 
 	c.Data["roles"] = models.FindRoles()
-	c.Data["headerTitle"] = "New User"
 	c.TplName = "best_practice/users/new.tpl"
 }
 
-/*
-func (c *UsersController) ExistUserIf() {
-	user_name := c.GetString("username")
-	existed := models.ExistUserByUsername(user_name)
-	c.Data["json"] = map[string]interface{}{"existed": existed}
-	c.ServeJSON()
-}
-*/
 
 func (c *UsersController) Create() {
 	flash := beego.NewFlash()
@@ -96,7 +86,7 @@ func (c *UsersController) Create() {
 	u.Insert()
 
 	// load message success and redirect
-	flash.Success("You have create the user " + u.Name)
+	flash.Success("You have created the user " + u.Name)
 	flash.Store(&c.Controller)
 	c.Redirect("/users", 303)
 }
@@ -139,7 +129,7 @@ func (c *UsersController) Update() {
 	u.Update()
 
 	// load message success and redirect
-	flash.Success("You have update the user " + u.Name)
+	flash.Success("You have updated the user " + u.Name)
 	flash.Store(&c.Controller)
 	c.Redirect("/users/" + strconv.Itoa(id), 302)
 }
