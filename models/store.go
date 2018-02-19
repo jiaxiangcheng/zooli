@@ -17,7 +17,7 @@ type Store struct {
 	Image       string		`valid:"url,optional"`
 	Company     Company		`valid:"-" json:"-"`
 	CompanyID   uint		`gorm:"not null" valid:"required"`
-	Manager		User		`valid:"-"`
+	Manager		User		`valid:"-" json:"-"`
 	Services    []Service	`gorm:"many2many:store_services;" valid:"-" json:"-"`
 }
 

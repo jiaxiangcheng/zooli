@@ -26,7 +26,6 @@
                 $('#cancel')
                         .on('click', function () {
                             $.ajax({
-                                async: false,
                                 type: "get",
                                 url: "/stores",
                                 success: function (data) {
