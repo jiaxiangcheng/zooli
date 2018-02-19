@@ -7,13 +7,13 @@ import (
 )
 
 type Order struct {
-	gorm.Model				`valid:"-"`
-	Client		Client		`valid:"-" json:"-"`
-	ClientID	uint		`gorm:"not null" valid:"required,alphanum"`
-	Product		Product		`valid:"-" json:"-"`
-	ProductID	uint		`gorm:"not null" valid:"required,alphanum"`
-	Status		int			`gorm:"not null" valid:"required,alphanum"`
-	Price		float64		`valid:"-"`
+	gorm.Model        `valid:"-"`
+	Client    Client  `valid:"-" json:"-"`
+	ClientID  uint    `gorm:"not null" valid:"required,alphanum"`
+	Product   Product `valid:"-" json:"-"`
+	ProductID uint    `gorm:"not null" valid:"required,alphanum"`
+	Status    int     `gorm:"not null" valid:"required,alphanum"`
+	Fee       float64 `valid:"-"`
 }
 
 
@@ -47,7 +47,7 @@ func (o *Order) Update() {
 	DB.Where(&oDB).First(&oDB)
 
 	oDB.Status = o.Status
-	oDB.Price = o.Price
+	oDB.Fee = o.Fee
 
 	DB.Save(&oDB)
 	beego.Debug("Update Order:", o)
