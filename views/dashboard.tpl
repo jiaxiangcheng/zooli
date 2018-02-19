@@ -1,4 +1,5 @@
 <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 </head>
 
 <body>
@@ -66,8 +67,64 @@
             </div>
         </div>
     </div>
+
+    <div class="ui divider"></div>
+    <div class="ui two column grid">
+        <div class="column">
+            <div class="chart-container" style="position: relative; height:400px; width:500px">
+                <canvas id="income"></canvas>
+            </div>
+        </div>
+        <div class="column">
+            <div class="chart-container" style="position: relative; height:400px; width:500px">
+                <canvas id="most_used_services"></canvas>
+            </div>
+        </div>
+    </div>
 </body>
 
+<script>
+    var ctx = document.getElementById('income').getContext('2d');
+    var chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'line',
+
+    // The data for our dataset
+    data: {
+        labels: ["January", "February", "March", "April", "May", "June", "July"],
+        datasets: [{
+            label: "Income history",
+            backgroundColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(255, 99, 132)',
+            data: [0, 10, 5, 2, 20, 30, 45],
+        }]
+    },
+
+    // Configuration options go here
+    options: {}
+    });
+
+    var ctx = document.getElementById('most_used_services').getContext('2d');
+    var chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'bar',
+
+    // The data for our dataset
+    data: {
+        labels: ["January", "February", "March", "April", "May", "June", "July"],
+        datasets: [{
+            label: "Most used services",
+            backgroundColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(255, 99, 132)',
+            data: [0, 10, 5, 2, 20, 30, 45],
+        }]
+    },
+
+    // Configuration options go here
+    options: {}
+    });
+
+</script>
 
 <style>
 
