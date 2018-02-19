@@ -1,4 +1,5 @@
 <h1 class="ui header" style="text-align:center;">Companies</h1>
+{{template "common/modal.tpl" .}}
 {{template "common/flash.tpl" .}}
 <table class="ui single line striped collapsing table" id="table_list">
     <thead>
@@ -28,9 +29,7 @@
         <td class="center aligned">
             <button type="button"
                     class="ui negative button"
-                    data-toggle="modal"
-                    data-target=".bs-example-modal-sm"
-                    onclick="deleteCompany('{{ .ID}}');">
+                    onclick="openDeleteModal('{{ .ID}}');">
                 Delete
             </button>
         </td>
@@ -78,6 +77,7 @@
             }
         });
     }
+
     function deleteCompany(company_id) {
         $.ajax({
             async: false,
@@ -87,5 +87,17 @@
                 $('#main_content').html(data);
             }
         });
+    }
+
+    function openDeleteModal(company_id) {
+        $('#mini_modal .header').html("Alert");
+        $('#mini_modal .content').html("Are you sure to delete company?");
+        $('#mini_modal')
+                .modal({
+                    onApprove : function() {
+                        deleteCompany(company_id)
+                    }
+                })
+                .modal('show');
     }
 </script>

@@ -148,7 +148,7 @@ func (c *CompaniesController) Delete() {
 	company.DeleteSoft()
 
 	// load message success and redirect
-	flash.Success("You have deleted company")
+	flash.Success("You have deleted company " + company.Name)
 	flash.Store(&c.Controller)
 	c.Redirect("/companies", 303)
 }

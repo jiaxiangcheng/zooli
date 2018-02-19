@@ -147,7 +147,7 @@ func (c *ServicesController) Delete() {
 	service.DeleteSoft()
 
 	// load message success and redirect
-	flash.Success("You have deleted service")
+	flash.Success("You have deleted service " + service.Name)
 	flash.Store(&c.Controller)
 	c.Redirect("/services", 303)
 }

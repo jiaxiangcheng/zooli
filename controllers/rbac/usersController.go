@@ -153,7 +153,7 @@ func (c *UsersController) Delete() {
 	u.DeleteSoft()
 
 	// load message success and redirect
-	flash.Success("You have deleted user")
+	flash.Success("You have deleted user " + u.Name)
 	flash.Store(&c.Controller)
 	c.Redirect("/users", 303)
 }

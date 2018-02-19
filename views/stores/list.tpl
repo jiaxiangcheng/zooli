@@ -1,4 +1,5 @@
 <h1 class="ui header" style="text-align:center;">Stores</h1>
+{{template "common/modal.tpl" .}}
 {{template "common/flash.tpl" .}}
 <table class="ui single line striped collapsing table" id="table_list">
     <thead>
@@ -62,9 +63,7 @@
         <td class="center aligned">
             <button type="button"
                     class="ui negative button"
-                    data-toggle="modal"
-                    data-target=".bs-example-modal-sm"
-                    onclick="deleteStore('{{ .ID}}');">
+                    onclick="openDeleteModal('{{ .ID}}');">
                 Delete
             </button>
         </td>
@@ -117,19 +116,19 @@
     $(document)
             .ready(function() {
                 $('.dropdown')
-                        .dropdown({
-                            action: function(text, value) {
-                                args = value.split(",");
-                                $.ajax({
-                                    type: "post",
-                                    url: "/users/" + args[0] + "/assign",
-                                    data: {"storeID": args[1]},
-                                    success: function (data) {
-                                        $('#main_content').html(data);
-                                    }
-                                });
-                            }
-                        });
+                    .dropdown({
+                        action: function(text, value) {
+                            args = value.split(",");
+                            $.ajax({
+                                type: "post",
+                                url: "/users/" + args[0] + "/assign",
+                                data: {"storeID": args[1]},
+                                success: function (data) {
+                                    $('#main_content').html(data);
+                                }
+                            });
+                        }
+                    });
             });
 
 
@@ -153,6 +152,7 @@
             }
         });
     }
+
     function deleteStore(store_id) {
         $.ajax({
             async: false,
@@ -163,13 +163,26 @@
             }
         });
     }
+
+    function openDeleteModal(store_id) {
+        $('#mini_modal .header').html("Alert");
+        $('#mini_modal .content').html("Are you sure to delete store?");
+        $('#mini_modal')
+            .modal({
+                onApprove : function() {
+                    deleteStore(store_id)
+                }
+            })
+            .modal('show');
+    }
+
     function openAssignmentModal(storeID, userID) {
         $('#user_modal')
-                .modal({
-                    onVisible: function () {
+            .modal({
+                onVisible: function () {
 
-                    }
-                })
-                .modal("show");
+                }
+            })
+            .modal("show");
     }
 </script>
