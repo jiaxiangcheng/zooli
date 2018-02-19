@@ -15,9 +15,7 @@ type StoresController struct {
 }
 
 func (c *StoresController) Get() {
-	m := models.FindRoleByName(models.ROLE_MANAGER)
-	managers := models.FindUsersByRoleID(m.ID)
-	c.Data["managers"] = managers
+
 	c.Data["stores"] = models.FindStores()
 	c.TplName = "stores/list.tpl"
 }
@@ -42,6 +40,9 @@ func (c *StoresController) Edit() {
 		return
 	}
 
+	m := models.FindRoleByName(models.ROLE_MANAGER)
+	managers := models.FindUsersByRoleID(m.ID)
+	c.Data["managers"] = managers
 	c.Data["companies"] = models.FindCompanies()
 	c.Data["services"] = models.FindServices()
 	c.Data["storeForm"] = s
@@ -66,6 +67,9 @@ func (c *StoresController) New() {
 		c.Data["storeForm"] = s.(models.Store)
 	}
 
+	m := models.FindRoleByName(models.ROLE_MANAGER)
+	managers := models.FindUsersByRoleID(m.ID)
+	c.Data["managers"] = managers
 	c.Data["companies"] = models.FindCompanies()
 	c.Data["services"] = models.FindServices()
 	//c.Data["managers"] = c.findManagersWithouStoreAssgined()
@@ -94,12 +98,6 @@ func (c *StoresController) Create() {
 
 	store.Insert()
 
-	// relate store with user
-	//var user = models.FindUserByID(store.ManagerID)
-	//user.Store = store
-	//user.StoreID = store.ID
-	//user.Update()
-
 	// load message success and redirect
 	flash.Success("You have create the stores " + store.Name)
 	flash.Store(&c.Controller)
@@ -121,16 +119,6 @@ func (c *StoresController) Update() {
 		return
 	}
 
-	// update old manager if exists
-	/*
-	var oldStore = models.FindStoreByID(uint(id))
-	if oldStore.ManagerID != 0 {
-		var oldManager = models.FindUserByID(oldStore.ManagerID)
-		oldManager.StoreID = 0
-		oldManager.Update()
-	}
-	*/
-
 	store.ID = uint(id)
 	if !store.Exists() {
 		flash.Error("Incorrect store id")
@@ -151,14 +139,6 @@ func (c *StoresController) Update() {
 
 	//update the store
 	store.Update()
-
-	// relate user
-	/*
-	var user = models.FindUserByID(store.ManagerID)
-
-	user.StoreID = store.ID
-	user.Update()
-	*/
 
 	// load message success and redirect
 	flash.Success("You have update the store " + store.Name)
@@ -218,11 +198,29 @@ func (c *StoresController) getStore() (models.Store, error) {
 	store.CompanyID = uint(companyID)
 
 	// get services
-	services := strings.Split(c.GetString("services"), ",")
-	for _, serviceName := range services {
-		s := models.FindServiceByName(serviceName)
-		store.Services = append(store.Services, s)
+	str := c.GetString("services")
+	if str != "" {
+		services := strings.Split(str, ",")
+		for _, serviceName := range services {
+			s := models.FindServiceByName(serviceName)
+			store.Services = append(store.Services, s)
+		}
 	}
+
+	// get managers
+	str = c.GetString("managers")
+	if str != "" {
+		managers := strings.Split(str, ",")
+		for _, managerID := range managers {
+			i, err := strconv.Atoi(managerID)
+			if err != nil {
+				return store, err
+			}
+			m := models.FindUserByID(uint(i))
+			store.Managers = append(store.Managers, m)
+		}
+	}
+
 
 	// get image
 	_, _, err = c.GetFile("image")

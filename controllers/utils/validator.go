@@ -38,7 +38,11 @@ func Validate(obj interface{}, validatePK ...bool) error {
 				err = errors.New("Invalid Service")
 			}
 		}
-
+		for _, m := range obj.Managers {
+			if !m.Exists() {
+				err = errors.New("Invalid Manager")
+			}
+		}
 
 	case models.Product:
 		found := false
