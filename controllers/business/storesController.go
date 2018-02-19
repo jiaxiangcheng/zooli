@@ -39,6 +39,7 @@ func (c *StoresController) Edit() {
 	}
 
 	c.Data["companies"] = models.FindCompanies()
+	c.Data["services"] = models.FindServices()
 	c.Data["storeForm"] = s
 	c.TplName = "stores/edit.tpl"
 }
@@ -62,6 +63,7 @@ func (c *StoresController) New() {
 	}
 
 	c.Data["companies"] = models.FindCompanies()
+	c.Data["services"] = models.FindServices()
 	//c.Data["managers"] = c.findManagersWithouStoreAssgined()
 	c.TplName = "stores/new.tpl"
 }
