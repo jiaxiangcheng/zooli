@@ -1,6 +1,18 @@
 <div class="ui raised segment">
     <div class="ui error message"></div>
 {{template "common/flash.tpl" .}}
+
+
+    <div class="field">
+        <div style="width:100%;float:left;position:relative;display: none;">
+            <img class="ui fluid image" id="preview" src="" style="width:100%;max-height:100%;"/>
+            <i id="imgCloser" class="close icon" style="position: absolute;top:15px;right:15px;cursor: pointer;"></i>
+            <input type="hidden" id="oldImage" name="oldImage" value="{{.storeForm.Image}}">
+        </div>
+        <input type="file" accept="image/*" name="image" id="poster">
+    </div>
+
+
     <div class="field">
         <div class="two fields">
             <div class="field">
@@ -132,4 +144,35 @@
                             }
                         });
             });
+</script>
+
+
+
+<script>
+    $(document).ready( function () {
+        var preview = document.getElementById('preview');
+
+        if ({{.storeForm.Image}}) {
+            preview.src = {{.storeForm.Image}};
+            preview.parentNode.style.display = 'inline';
+            $('#oldImage').val({{.StoreForm.Image}});
+        }
+        $("#imgcloser").click(function () {
+            $('#poster').val('');
+            $('#oldImage').val("");
+            preview.src = "";
+            preview.parentNode.style.display = 'none';
+        });
+
+        $("#poster").change(function () {
+            if (event.target.files.length > 0) {
+                preview.src = URL.createObjectURL(event.target.files[0]);
+                preview.parentNode.style.display = 'inline';
+            } else {
+                preview.src = "";
+                preview.parentNode.style.display = 'none';
+            }
+        });
+
+    });
 </script>
