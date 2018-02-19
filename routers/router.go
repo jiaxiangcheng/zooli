@@ -2,7 +2,7 @@ package routers
 
 import (
 	"github.com/Qiaorui/zooli/controllers"
-	auth "github.com/Qiaorui/zooli/controllers/auth"
+	"github.com/Qiaorui/zooli/controllers/auth"
 
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/context"
