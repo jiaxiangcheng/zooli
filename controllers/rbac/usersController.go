@@ -1,11 +1,12 @@
 package rbac
 
 import (
+	"strconv"
+
 	"github.com/Qiaorui/zooli/controllers"
+	utils "github.com/Qiaorui/zooli/controllers/utils"
 	"github.com/Qiaorui/zooli/models"
 	"github.com/astaxie/beego"
-	"strconv"
-	utils "github.com/Qiaorui/zooli/controllers/utils"
 	"github.com/pkg/errors"
 )
 
@@ -28,7 +29,7 @@ func (c *UsersController) Edit() {
 		c.DelSession("userInfo")
 		u = userSession.(models.User)
 	} else {
-		id , _ := strconv.Atoi(c.Ctx.Input.Param(":id"))
+		id, _ := strconv.Atoi(c.Ctx.Input.Param(":id"))
 		// load user in DB
 		u = models.FindUserByID(uint(id))
 	}
@@ -42,10 +43,9 @@ func (c *UsersController) Edit() {
 
 	c.Data["userForm"] = u
 	c.Data["roles"] = models.FindRoles()
+	c.Data["stores"] = models.FindStores()
 	c.TplName = "users/edit.tpl"
 }
-
-
 
 func (c *UsersController) New() {
 
@@ -56,10 +56,10 @@ func (c *UsersController) New() {
 		c.Data["userForm"] = u.(models.User)
 	}
 
+	c.Data["stores"] = models.FindStores()
 	c.Data["roles"] = models.FindRoles()
 	c.TplName = "users/new.tpl"
 }
-
 
 func (c *UsersController) Create() {
 	flash := beego.NewFlash()
@@ -96,13 +96,13 @@ func (c *UsersController) Update() {
 	flash := beego.NewFlash()
 
 	//get identifier of user
-	id , _ := strconv.Atoi(c.Ctx.Input.Param(":id"))
+	id, _ := strconv.Atoi(c.Ctx.Input.Param(":id"))
 
 	u, err := c.getUser()
 	if err != nil {
 		flash.Error(err.Error())
 		flash.Store(&c.Controller)
-		c.Redirect("/users/" + strconv.Itoa(id), 302)
+		c.Redirect("/users/"+strconv.Itoa(id), 302)
 		return
 	}
 
@@ -121,25 +121,34 @@ func (c *UsersController) Update() {
 		flash.Error(err.Error())
 		flash.Store(&c.Controller)
 		c.SetSession("userInfo", u)
-		c.Redirect("/users/" + strconv.Itoa(id), 302)
+		c.Redirect("/users/"+strconv.Itoa(id), 302)
 		return
 	}
 
 	//update the user
 	u.Update()
 
+	store := models.FindStoreByID(u.StoreID)
+	if !store.Exists() {
+		flash.Error("Store selected not existed")
+		flash.Store(&c.Controller)
+		c.Redirect("/users", 302)
+		return
+	}
+
+	u.AssignStore(store)
+
 	// load message success and redirect
 	flash.Success("You have updated the user " + u.Name)
 	flash.Store(&c.Controller)
-	c.Redirect("/users/" + strconv.Itoa(id), 302)
+	c.Redirect("/users/"+strconv.Itoa(id), 302)
 }
-
 
 func (c *UsersController) Delete() {
 	flash := beego.NewFlash()
 
 	//get identifier of user
-	id , _ := strconv.Atoi(c.Ctx.Input.Param(":id"))
+	id, _ := strconv.Atoi(c.Ctx.Input.Param(":id"))
 
 	var u models.User
 	u.ID = uint(id)
@@ -158,11 +167,10 @@ func (c *UsersController) Delete() {
 	c.Redirect("/users", 303)
 }
 
-
-func (c *UsersController) AssignStore(){
+func (c *UsersController) AssignStore() {
 	flash := beego.NewFlash()
 	//get identifier of user
-	id , _ := strconv.Atoi(c.Ctx.Input.Param(":id"))
+	id, _ := strconv.Atoi(c.Ctx.Input.Param(":id"))
 	u := models.FindUserByID(uint(id))
 	if !u.Exists() {
 		flash.Error("Incorrect user id")
@@ -194,12 +202,11 @@ func (c *UsersController) AssignStore(){
 	c.Redirect("/stores", 303)
 }
 
-
 func (c *UsersController) getUser() (models.User, error) {
 	u := models.User{
 		Username: c.GetString("username"),
-		Email: c.GetString("email"),
-		Name: c.GetString("name"),
+		Email:    c.GetString("email"),
+		Name:     c.GetString("name"),
 	}
 	pwd := c.GetString("password")
 	if pwd == "" {
@@ -212,5 +219,12 @@ func (c *UsersController) getUser() (models.User, error) {
 	}
 	u.RoleID = uint(roleID)
 
+	storeID, err := c.GetInt("store")
+	beego.Info(storeID)
+	if err != nil {
+		return u, err
+	}
+
+	u.StoreID = uint(storeID)
 	return u, nil
 }
