@@ -158,6 +158,43 @@ func (c *UsersController) Delete() {
 	c.Redirect("/users", 303)
 }
 
+
+func (c *UsersController) AssignStore(){
+	flash := beego.NewFlash()
+	//get identifier of user
+	id , _ := strconv.Atoi(c.Ctx.Input.Param(":id"))
+	u := models.FindUserByID(uint(id))
+	if !u.Exists() {
+		flash.Error("Incorrect user id")
+		flash.Store(&c.Controller)
+		c.Redirect("/stores", 303)
+		return
+	}
+
+	storeID, err := c.GetInt("storeID")
+	if err != nil {
+		flash.Error(err.Error())
+		flash.Store(&c.Controller)
+		c.Redirect("/stores", 303)
+		return
+	}
+
+	s := models.FindStoreByID(uint(storeID))
+	if !s.Exists() {
+		flash.Error("Incorrect store id")
+		flash.Store(&c.Controller)
+		c.Redirect("/stores", 303)
+		return
+	}
+
+	u.AssignStore(s)
+
+	flash.Success("You have assigned User " + u.Name + " to Store " + s.Name)
+	flash.Store(&c.Controller)
+	c.Redirect("/stores", 303)
+}
+
+
 func (c *UsersController) getUser() (models.User, error) {
 	u := models.User{
 		Username: c.GetString("username"),
