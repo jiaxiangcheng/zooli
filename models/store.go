@@ -17,7 +17,7 @@ type Store struct {
 	Image       string		`valid:"url,optional"`
 	Company     Company		`valid:"-" json:"-"`
 	CompanyID   uint		`gorm:"not null" valid:"required"`
-	Manager		User		`valid:"-" json:"-"`
+	Managers	[]User		`valid:"-" json:"-"`
 	Services    []Service	`gorm:"many2many:store_services;" valid:"-" json:"-"`
 }
 
@@ -34,13 +34,13 @@ func (s *Store) Exists() bool {
 
 func FindStoreByID(id uint) Store {
 	var s Store
-	DB.Where("id = ?", id).Preload("Manager").Preload("Services").Find(&s)
+	DB.Where("id = ?", id).Preload("Managers").Preload("Services").Find(&s)
 	return s
 }
 
 func FindStores() []Store {
 	var s []Store
-	DB.Preload("Services").Preload("Manager").Preload("Company").Find(&s)
+	DB.Preload("Services").Preload("Managers").Preload("Company").Find(&s)
 	return s
 }
 
@@ -57,6 +57,7 @@ func (s *Store) Update() {
 	sDB.Image = s.Image
 	sDB.CompanyID = s.CompanyID
 	DB.Model(&sDB).Association("Services").Replace(s.Services)
+	DB.Model(&sDB).Association("Managers").Replace(s.Managers)
 
 	DB.Save(&sDB)
 	beego.Debug("Update Store:", s)

@@ -43,7 +43,7 @@
         </div>
     </div>
     <div class="two fields">
-        <div class="six wide field">
+        <div class="field">
             <label>Company</label>
             <div class="field">
                 <select name="company" class="ui fluid dropdown">
@@ -61,7 +61,7 @@
         <div class="field">
             <label>Services</label>
             <div class="field">
-                <div class="ui multiple selection dropdown">
+                <div class="ui multiple selection dropdown" id="services">
                     <!-- This will receive comma separated value like 1,2,3 !-->
                     <input name="services" type="hidden" >
                     <i class="dropdown icon"></i>
@@ -74,9 +74,30 @@
                 </div>
             </div>
         </div>
-
-
     </div>
+    <div class="field">
+        <label>Managers</label>
+        <div class="ui fluid multiple selection dropdown" id="managers">
+            <input name="managers" type="hidden">
+            <i class="dropdown icon"></i>
+            <span class="default text">Managers</span>
+            <div class="menu">
+                <div class="ui icon search input">
+                    <i class="search icon"></i>
+                    <input type="text" placeholder="Search managers...">
+                </div>
+                <div class="scrolling menu">
+                {{range $.managers}}
+                    <div class="item" data-value="{{.ID}}">
+                        <span class="text">{{.Username}} ({{.Name}})</span>
+                    </div>
+                {{end}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 </div>
 
 
@@ -85,9 +106,11 @@
             .ready(function() {
                 $('.dropdown').dropdown();
                 {{if .storeForm}}
-                    $('.multiple.selection.dropdown').dropdown('set selected', [{{range $i, $s := .storeForm.Services}}{{if $i}},{{end}}{{$s.Name}}{{end}}]);
+                    $('#services').dropdown('set selected', [{{range $i, $s := .storeForm.Services}}{{if $i}},{{end}}{{$s.Name}}{{end}}]);
                 {{end}}
-
+                {{if .storeForm}}
+                    $('#managers').dropdown('set selected', [{{range $i, $s := .storeForm.Managers}}{{if $i}},{{end}}"{{$s.ID}}"{{end}}]);
+                {{end}}
 
                 $('.ui.form')
                         .form({

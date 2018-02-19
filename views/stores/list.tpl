@@ -24,32 +24,7 @@
         <td class="center aligned">{{ .Longitude}}</td>
         <td class="center aligned">{{ .PhoneNumber}}</td>
         <td class="center aligned">{{ .Company.Name}}</td>
-        <td class="center aligned">
-            <div class="ui {{if .Manager.Name}}green{{else}}yellow{{end}} floating dropdown icon button">
-                {{if .Manager.Name}} {{else}} <i class="add user icon"></i> {{end}}
-                <span class="text">{{.Manager.Name}}</span>
-                <div class="menu">
-                    <div class="ui icon search input">
-                        <i class="search icon"></i>
-                        <input type="text" placeholder="Search managers...">
-                    </div>
-                    <div class="scrolling menu">
-                        {{range $.managers}}
-                        <div class="item" data-value="{{.ID}},{{$s.ID}}">
-                            <span class="text">{{.Username}}</span>
-                            <span class="text">({{.Name}})</span>
-                        </div>
-                         {{end}}
-                    </div>
-                </div>
-            </div>
-            <!--div class="ui {{if .Manager.Name}}primary{{else}}negative{{end}} basic animated fade button" tabindex="0" onclick="openAssignmentModal({{.ID}},{{.Manager.ID}})">
-                <div class="visible content">{{.Manager.Name}}</div>
-                <div class="hidden content">
-            {{if .Manager.Name}}Change{{else}}Assign{{end}}
-                </div>
-            </div-->
-        </td>
+        <td class="center aligned">{{range .Managers}} <a class="ui olive label">{{.Name}}</a>{{end}}</td>
         <td class="center aligned">{{range .Services}} <a class="ui blue label">{{.Name}}</a> {{end}}</td>
         <td class="center aligned">
             <button type="button"
@@ -73,29 +48,8 @@
     {{ end }}
     </tbody>
 </table>
-<!--div class="ui tiny modal" id="user_modal">
-    <i class="close icon"></i>
-    <div class="header">Pick a manager</div>
-    <div class="scrolling content">
-        <div style="min-height:400px;" >
-            <div class="ui grid container">
-                {{range .managers}}
-                    <div class="four wide column"><span>{{.Name}}</span></div>
-                {{end}}
-            </div>
-        </div>
-    </div>
-    <div class="actions">
-        <div class="ui deny button">
-            Cancel
-        </div>
-        <div class="ui positive button">
-            Save
-        </div>
-    </div>
-</div-->
 
-</br>
+
 <div class="ui middle aligned center aligned grid">
     <button type="button"
             title="View store"
@@ -116,7 +70,7 @@
 <script type="text/javascript">
     $(document)
             .ready(function() {
-                $('.dropdown')
+               /*$('.dropdown')
                         .dropdown({
                             action: function(text, value) {
                                 args = value.split(",");
@@ -129,7 +83,7 @@
                                     }
                                 });
                             }
-                        });
+                        });*/
             });
 
 
@@ -163,13 +117,5 @@
             }
         });
     }
-    function openAssignmentModal(storeID, userID) {
-        $('#user_modal')
-                .modal({
-                    onVisible: function () {
 
-                    }
-                })
-                .modal("show");
-    }
 </script>
