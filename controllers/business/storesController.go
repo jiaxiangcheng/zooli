@@ -7,6 +7,7 @@ import (
 	utils "github.com/Qiaorui/zooli/controllers/utils"
 	"github.com/Qiaorui/zooli/models"
 	"github.com/astaxie/beego"
+	"strings"
 )
 
 type StoresController struct {
@@ -195,28 +196,44 @@ func (c *StoresController) getStore() (models.Store, error) {
 
 	latitude, err := c.GetFloat("latitude")
 	beego.Debug(latitude)
-
 	if err != nil {
 		return store, err
 	}
-
 	store.Latitude = latitude
 
 	longitude, err := c.GetFloat("longitude")
 	beego.Debug(longitude)
-
 	if err != nil {
 		return store, err
 	}
-
 	store.Longitude = longitude
 
 	companyID, err := c.GetInt("company")
 	if err != nil {
 		return store, err
 	}
-
 	store.CompanyID = uint(companyID)
+
+	// get services
+	services := strings.Split(c.GetString("services"), ",")
+	for _, serviceName := range services {
+		s := models.FindServiceByName(serviceName)
+		store.Services = append(store.Services, s)
+	}
+
+	// get image
+	_, _, err = c.GetFile("image")
+	if err != nil {
+		store.Image = c.GetString("oldImage")
+	} else {
+		path, err := c.UploadFile("image", "image")
+		if err != nil {
+			return store, err
+		} else {
+			store.Image = c.Ctx.Input.Site() + ":" + strconv.Itoa(c.Ctx.Input.Port()) + "/" + path
+		}
+	}
+
 
 	return store, nil
 }

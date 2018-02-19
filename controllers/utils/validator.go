@@ -33,7 +33,13 @@ func Validate(obj interface{}, validatePK ...bool) error {
 			err = errors.New("company name already exists")
 		}
 	case models.Store:
-		//
+		for _, s := range obj.Services {
+			if !s.Exists() {
+				err = errors.New("Invalid Service")
+			}
+		}
+
+
 	case models.Product:
 		found := false
 		availableServices := models.FindStoreByID(obj.ServiceID).Services

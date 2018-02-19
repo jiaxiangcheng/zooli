@@ -63,12 +63,12 @@
             <div class="field">
                 <div class="ui multiple selection dropdown">
                     <!-- This will receive comma separated value like 1,2,3 !-->
-                    <input name="services" type="hidden">
+                    <input name="services" type="hidden" >
                     <i class="dropdown icon"></i>
                     <div class="default text">Services</div>
                     <div class="menu">
                     {{ range .services }}
-                        <div class="item" data-value="{{.ID}}">{{.Name}}</div>
+                        <div class="item" data-value="{{.Name}}">{{.Name}}</div>
                     {{end}}
                     </div>
                 </div>
@@ -84,6 +84,11 @@
     $(document)
             .ready(function() {
                 $('.dropdown').dropdown();
+                {{if .storeForm}}
+                    $('.multiple.selection.dropdown').dropdown('set selected', [{{range $i, $s := .storeForm.Services}}{{if $i}},{{end}}{{$s.Name}}{{end}}]);
+                {{end}}
+
+
                 $('.ui.form')
                         .form({
                             fields: {
@@ -173,6 +178,8 @@
                 preview.parentNode.style.display = 'none';
             }
         });
+
+
 
     });
 </script>

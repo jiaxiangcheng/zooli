@@ -1,4 +1,4 @@
-<form class="ui form">
+<form class="ui form" enctype="multipart/form-data">
     <h2 id="title">
         <i class="shopping bag icon"></i>
         New Store

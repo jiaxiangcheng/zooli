@@ -25,7 +25,7 @@
         <td class="center aligned">{{ .PhoneNumber}}</td>
         <td class="center aligned">{{ .Company.Name}}</td>
         <td class="center aligned">{{ .Manager.Name}}</td>
-        <td class="center aligned">{{ .Services}}</td>
+        <td class="center aligned">{{range .Services}} <a class="ui blue label">{{.Name}}</a> {{end}}</td>
         <td class="center aligned">
             <button type="button"
                     class="ui basic button"
