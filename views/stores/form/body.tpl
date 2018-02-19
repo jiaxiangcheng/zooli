@@ -157,7 +157,7 @@
             preview.parentNode.style.display = 'inline';
             $('#oldImage').val({{.StoreForm.Image}});
         }
-        $("#imgcloser").click(function () {
+        $("#imgCloser").click(function () {
             $('#poster').val('');
             $('#oldImage').val("");
             preview.src = "";
