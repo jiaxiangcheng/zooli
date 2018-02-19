@@ -93,8 +93,8 @@ func (u *User) Update() {
 	beego.Debug("Update User:", u)
 }
 
-func (u *User) AssignStore(storeID uint) {
-	u.StoreID = storeID
+func (u *User) AssignStore(store Store) {
+	u.StoreID = store.ID
 	DB.Save(&u)
 	beego.Debug("Update User:", u)
 }
