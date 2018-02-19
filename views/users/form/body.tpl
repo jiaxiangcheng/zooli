@@ -1,6 +1,6 @@
 <div class="ui raised segment">
     <div class="ui error message"></div>
-    {{template "best_practice/common/flash.tpl" .}}
+    {{template "common/flash.tpl" .}}
     <div class="field">
         <div class="two fields">
             <div class="field">

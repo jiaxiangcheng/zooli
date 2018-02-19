@@ -14,7 +14,7 @@ type ServicesController struct {
 
 func (c *ServicesController) Get() {
 	c.Data["services"] = models.FindServices()
-	c.TplName = "best_practice/services/list.tpl"
+	c.TplName = "services/list.tpl"
 }
 
 func (c *ServicesController) Edit() {
@@ -40,7 +40,7 @@ func (c *ServicesController) Edit() {
 	}
 
 	c.Data["serviceForm"] = service
-	c.TplName = "best_practice/services/edit.tpl"
+	c.TplName = "services/edit.tpl"
 }
 
 func (c *ServicesController) New() {
@@ -52,7 +52,7 @@ func (c *ServicesController) New() {
 		c.Data["serviceForm"] = service.(models.Service)
 	}
 
-	c.TplName = "best_practice/services/new.tpl"
+	c.TplName = "services/new.tpl"
 }
 
 func (c *ServicesController) Create() {

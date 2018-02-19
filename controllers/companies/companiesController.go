@@ -14,7 +14,7 @@ type CompaniesController struct {
 
 func (c *CompaniesController) Get() {
 	c.Data["companies"] = models.FindCompanies()
-	c.TplName = "best_practice/companies/list.tpl"
+	c.TplName = "companies/list.tpl"
 }
 
 func (c *CompaniesController) Edit() {
@@ -41,7 +41,7 @@ func (c *CompaniesController) Edit() {
 
 	c.Data["companyForm"] = company
 
-	c.TplName = "best_practice/companies/edit.tpl"
+	c.TplName = "companies/edit.tpl"
 }
 
 func (c *CompaniesController) New() {
@@ -53,7 +53,7 @@ func (c *CompaniesController) New() {
 		c.Data["companyForm"] = company.(models.Company)
 	}
 
-	c.TplName = "best_practice/companies/new.tpl"
+	c.TplName = "companies/new.tpl"
 }
 
 

@@ -1,5 +1,5 @@
 <h1 class="ui header">Services</h1>
-{{template "best_practice/common/flash.tpl" .}}
+{{template "common/flash.tpl" .}}
 <table class="ui single line striped collapsing table">
     <thead>
     <tr>

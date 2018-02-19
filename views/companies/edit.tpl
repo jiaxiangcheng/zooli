@@ -1,10 +1,11 @@
 <form class="ui form">
     <h2 id="title">
-        <i class="user icon"></i>
-        New Service
+        <i class="world icon"></i>
+        Company Information
     </h2>
-    {{template "best_practice/services/form/body.tpl" .}}
-    <button id="save" class="ui primary button" type="submit">Create</button>
+
+    {{template "companies/form/body.tpl" .}}
+    <button id="save" class="ui primary button" type="submit">Save</button>
     <button id="cancel" class="ui button" type="button">Cancel</button>
 </form>
 
@@ -13,7 +14,7 @@
             .ready(function() {
                 $('.ui.form')
                         .api({
-                            url : '/services/new',
+                            url : "/companies/{{.companyForm.ID}}",
                             method : 'POST',
                             serializeForm : true,
                             onSuccess    : function(response) {
@@ -28,7 +29,7 @@
                             $.ajax({
                                 async: false,
                                 type: "get",
-                                url: "/services",
+                                url: "/companies",
                                 success: function (data) {
                                     $('#main_content').html(data);
                                 }

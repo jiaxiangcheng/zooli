@@ -10,5 +10,5 @@ func (c *MainController) Prepare() {
 
 func (c *MainController) Get() {
 
-	c.TplName = "best_practice/dashboard.tpl"
+	c.TplName = "dashboard.tpl"
 }

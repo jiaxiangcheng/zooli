@@ -15,7 +15,7 @@ type UsersController struct {
 
 func (c *UsersController) Get() {
 	c.Data["users"] = models.FindUsers()
-	c.TplName = "best_practice/users/list.tpl"
+	c.TplName = "users/list.tpl"
 }
 
 func (c *UsersController) Edit() {
@@ -42,7 +42,7 @@ func (c *UsersController) Edit() {
 
 	c.Data["userForm"] = u
 	c.Data["roles"] = models.FindRoles()
-	c.TplName = "best_practice/users/edit.tpl"
+	c.TplName = "users/edit.tpl"
 }
 
 
@@ -57,7 +57,7 @@ func (c *UsersController) New() {
 	}
 
 	c.Data["roles"] = models.FindRoles()
-	c.TplName = "best_practice/users/new.tpl"
+	c.TplName = "users/new.tpl"
 }
 
 

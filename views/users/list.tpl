@@ -1,7 +1,7 @@
 
-{{template "best_practice/common/modal.tpl" .}}
+{{template "common/modal.tpl" .}}
 <h1 class="ui header">Users</h1>
-{{template "best_practice/common/flash.tpl" .}}
+{{template "common/flash.tpl" .}}
 <table class="ui single line striped collapsing table">
     <thead>
     <tr>

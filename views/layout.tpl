@@ -7,7 +7,7 @@
         <title>ZOOLI</title>
         <link rel="shortcut icon" href="/static/img/logo/pear.ico">
 
-    {{ template "best_practice/common/header.tpl"}}
+    {{ template "common/header.tpl"}}
 
     </head>
     <body>

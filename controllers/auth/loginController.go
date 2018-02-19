@@ -16,8 +16,8 @@ func (c *LoginController) LoginForm() {
 		c.Data["userForm"] = u.(models.User)
 	}
 
-	c.Layout = "best_practice/layout.tpl"
-	c.TplName = "best_practice/login.tpl"
+	c.Layout = "layout.tpl"
+	c.TplName = "login.tpl"
 }
 
 func (c *LoginController) Login() {

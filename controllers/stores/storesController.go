@@ -15,7 +15,7 @@ type StoresController struct {
 
 func (c *StoresController) Get() {
 	c.Data["stores"] = models.FindStores()
-	c.TplName = "best_practice/stores/list.tpl"
+	c.TplName = "stores/list.tpl"
 }
 
 func (c *StoresController) Edit() {
@@ -40,7 +40,7 @@ func (c *StoresController) Edit() {
 
 	c.Data["companies"] = models.FindCompanies()
 	c.Data["storeForm"] = s
-	c.TplName = "best_practice/stores/edit.tpl"
+	c.TplName = "stores/edit.tpl"
 }
 
 func (c *StoresController) findManagersWithoutStoreAssigned() []models.User {
@@ -63,7 +63,7 @@ func (c *StoresController) New() {
 
 	c.Data["companies"] = models.FindCompanies()
 	//c.Data["managers"] = c.findManagersWithouStoreAssgined()
-	c.TplName = "best_practice/stores/new.tpl"
+	c.TplName = "stores/new.tpl"
 }
 
 func (c *StoresController) Create() {

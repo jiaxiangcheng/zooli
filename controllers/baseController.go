@@ -28,7 +28,7 @@ func (c *BaseController) Prepare() {
 	c.Data["roleAdmin"] = models.ROLE_ADMIN
 
 	if !c.IsAjax() {
-		c.Layout = "best_practice/layoutAuth.tpl"
+		c.Layout = "layoutAuth.tpl"
 	}
 }
 

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>ZOOLI</title>
     <link rel="shortcut icon" href="/static/img/logo/pear.ico">
-    {{ template "best_practice/common/header.tpl"}}
+    {{ template "common/header.tpl"}}
     <link rel="stylesheet" href="/static/css/menu.css"/>
     <script type="text/javascript" src="/static/js/nav.js"></script>
 
