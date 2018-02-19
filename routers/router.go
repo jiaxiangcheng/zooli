@@ -23,6 +23,7 @@ func init() {
 	beego.Router("/users/:id([0-9]+", &rbac.UsersController{}, "delete:Delete")
 	beego.Router("/users/new", &rbac.UsersController{}, "get:New")
 	beego.Router("/users/new", &rbac.UsersController{}, "post:Create")
+	beego.Router("/users/:id([0-9]+/assign", &rbac.UsersController{}, "post:AssignStore")
 
 	beego.Router("/companies", &business.CompaniesController{}, "get:Get")
 	beego.Router("/companies/new", &business.CompaniesController{}, "get:New")
