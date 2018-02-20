@@ -77,6 +77,11 @@ func Connect() error {
 	if err == nil {
 		DB = db
 		LoadlibDB(db)
+		if len(FindRoles()) == 0 {
+			insertRoles()
+			insertUser()
+		}
+
 	} else {
 		beego.Warning(err)
 	}
