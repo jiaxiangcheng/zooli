@@ -25,16 +25,32 @@
             </div>
         </div>
     </div>
-    <div>
-        <div class="two field">
+    <div class="two fields">
+        <div class="field">
+            <label>Role</label>
             <div class="field">
-                <label>Role</label>
+                <select name="role" class="ui fluid dropdown">
+                    <option value="">Role</option>
+                {{ range .roles }}
+                    {{ if $.userForm }}
+                        <option value="{{.ID}}" {{ if eq .ID $.userForm.RoleID}} selected {{end}}>{{.Name}}</option>
+                    {{else}}
+                        <option value="{{.ID}}">{{.Name}}</option>
+                    {{end}}
+                {{end}}
+                </select>
+            </div>
+        </div>
+
+        {{ if ne .userForm.Role.Name .roleAdmin}}
+            <div class="field">
+                <label>Store</label>
                 <div class="field">
-                    <select name="role" class="ui fluid dropdown">
-                        <option value="">Role</option>
-                    {{ range .roles }}
+                    <select name="store" class="ui fluid dropdown">
+                        <option value="">Store</option>
+                    {{ range .stores }}
                         {{ if $.userForm }}
-                            <option value="{{.ID}}" {{ if eq .ID $.userForm.RoleID}} selected {{end}}>{{.Name}}</option>
+                            <option value="{{.ID}}" {{ if eq .ID $.userForm.StoreID}} selected {{end}}>{{.Name}}</option>
                         {{else}}
                             <option value="{{.ID}}">{{.Name}}</option>
                         {{end}}
@@ -42,27 +58,8 @@
                     </select>
                 </div>
             </div>
-    
-            {{ if ne .userForm.Role.Name .roleAdmin}}
-                <div class="field">
-                    <label>Store</label>
-                    <div class="field">
-                        <select name="store" class="ui fluid dropdown">
-                            <option value="">Store</option>
-                        {{ range .stores }}
-                            {{ if $.userForm }}
-                                <option value="{{.ID}}" {{ if eq .ID $.userForm.StoreID}} selected {{end}}>{{.Name}}</option>
-                            {{else}}
-                                <option value="{{.ID}}">{{.Name}}</option>
-                            {{end}}
-                        {{end}}
-                        </select>
-                    </div>
-                </div>
-            {{end}}
-        </div>
+        {{end}}
     </div>
-    
 </div>
 
 

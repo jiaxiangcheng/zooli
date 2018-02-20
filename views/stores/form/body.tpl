@@ -46,58 +46,67 @@
         <div class="field">
             <label>Company</label>
             <div class="field">
-                <select name="company" class="ui fluid dropdown">
-                    <option value="">Company</option>
-                {{ range .companies }}
-                {{ if $.storeForm }}
-                    <option value="{{.ID}}" {{ if eq .ID $.storeForm.CompanyID}} selected {{end}}>{{.Name}}</option>
+                {{ if eq .user.Role.Name .roleAdmin}} 
+                    <select name="company" class="ui fluid dropdown">
+                        <option value="">Company</option>
+                        {{ range .companies }}
+                            {{ if $.storeForm }}
+                                <option value="{{.ID}}" {{ if eq .ID $.storeForm.CompanyID}} selected {{end}}>{{.Name}}</option>
+                            {{else}}
+                                <option value="{{.ID}}">{{.Name}}</option>
+                            {{end}}
+                        {{end}}
+                    </select>
                 {{else}}
-                    <option value="{{.ID}}">{{.Name}}</option>
+                    <div>{{.company.Name}}</div>
                 {{end}}
-                {{end}}
-                </select>
+                
             </div>
         </div>
         <div class="field">
             <label>Services</label>
             <div class="field">
-                <div class="ui multiple selection dropdown" id="services">
-                    <!-- This will receive comma separated value like 1,2,3 !-->
-                    <input name="services" type="hidden" >
-                    <i class="dropdown icon"></i>
-                    <div class="default text">Services</div>
-                    <div class="menu">
-                    {{ range .services }}
-                        <div class="item" data-value="{{.Name}}">{{.Name}}</div>
+                {{ if eq .user.Role.Name .roleAdmin}} 
+                    <div class="ui multiple selection dropdown" id="services">
+                        <!-- This will receive comma separated value like 1,2,3 !-->
+                        <input name="services" type="hidden" >
+                        <i class="dropdown icon"></i>
+                        <div class="default text">Services</div>
+                        <div class="menu">
+                        {{ range .services }}
+                            <div class="item" data-value="{{.Name}}">{{.Name}}</div>
+                        {{end}}
+                        </div>
+                    </div>
+                {{else}}
+                    <div>{{range .services}} <a class="ui blue label">{{.Name}}</a> {{end}}</div>
+                {{end}}
+            </div>
+        </div>
+    </div>
+    {{ if eq .user.Role.Name .roleAdmin}} 
+        <div class="field">
+            <label>Managers</label>
+            <div class="ui fluid multiple selection dropdown" id="managers">
+                <input name="managers" type="hidden">
+                <i class="dropdown icon"></i>
+                <span class="default text">Managers</span>
+                <div class="menu">
+                    <div class="ui icon search input">
+                        <i class="search icon"></i>
+                        <input type="text" placeholder="Search managers...">
+                    </div>
+                    <div class="scrolling menu">
+                    {{range $.managers}}
+                        <div class="item" data-value="{{.ID}}">
+                            <span class="text">{{.Username}} ({{.Name}})</span>
+                        </div>
                     {{end}}
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="field">
-        <label>Managers</label>
-        <div class="ui fluid multiple selection dropdown" id="managers">
-            <input name="managers" type="hidden">
-            <i class="dropdown icon"></i>
-            <span class="default text">Managers</span>
-            <div class="menu">
-                <div class="ui icon search input">
-                    <i class="search icon"></i>
-                    <input type="text" placeholder="Search managers...">
-                </div>
-                <div class="scrolling menu">
-                {{range $.managers}}
-                    <div class="item" data-value="{{.ID}}">
-                        <span class="text">{{.Username}} ({{.Name}})</span>
-                    </div>
-                {{end}}
-                </div>
-            </div>
-        </div>
-    </div>
-
-
+    {{end}}
 </div>
 
 

@@ -3,11 +3,12 @@ package business
 import (
 	"strconv"
 
+	"strings"
+
 	"github.com/Qiaorui/zooli/controllers"
 	utils "github.com/Qiaorui/zooli/controllers/utils"
 	"github.com/Qiaorui/zooli/models"
 	"github.com/astaxie/beego"
-	"strings"
 )
 
 type StoresController struct {
@@ -40,11 +41,18 @@ func (c *StoresController) Edit() {
 		return
 	}
 
+	// admin
 	m := models.FindRoleByName(models.ROLE_MANAGER)
 	managers := models.FindUsersByRoleID(m.ID)
 	c.Data["managers"] = managers
 	c.Data["companies"] = models.FindCompanies()
 	c.Data["services"] = models.FindServices()
+
+	// manager
+
+	company := models.FindCompanyByID(s.CompanyID)
+	c.Data["company"] = company
+
 	c.Data["storeForm"] = s
 	c.TplName = "stores/edit.tpl"
 }
@@ -221,7 +229,6 @@ func (c *StoresController) getStore() (models.Store, error) {
 		}
 	}
 
-
 	// get image
 	_, _, err = c.GetFile("image")
 	if err != nil {
@@ -234,7 +241,6 @@ func (c *StoresController) getStore() (models.Store, error) {
 			store.Image = c.Ctx.Input.Site() + ":" + strconv.Itoa(c.Ctx.Input.Port()) + "/" + path
 		}
 	}
-
 
 	return store, nil
 }
