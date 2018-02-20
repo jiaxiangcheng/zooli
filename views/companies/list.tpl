@@ -37,13 +37,13 @@
     {{ end }}
     </tbody>
 </table>
-</br>
 
 <div class="ui middle aligned center aligned grid">
     <button type="button"
             title="View company"
             class="ui basic big button"
-            onclick="newCompany();">
+            onclick="newCompany();"
+            style="margin: 15px;">
         <i class="add company icon"></i>
         Create company
     </button>
@@ -56,6 +56,7 @@
 </style>
 
 <script type="text/javascript">
+
     function newCompany() {
         $.ajax({
             async: false,

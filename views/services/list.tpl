@@ -31,13 +31,13 @@
     {{ end }}
     </tbody>
 </table>
-</br>
 
 <div class="ui middle aligned center aligned grid">
     <button type="button"
             title="View user"
             class="ui basic big button"
-            onclick="newServices();">
+            onclick="newServices();"
+            style="margin: 15px;">
         <i class="add service icon"></i>
         Create service
     </button>

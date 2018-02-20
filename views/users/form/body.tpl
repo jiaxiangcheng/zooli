@@ -42,7 +42,7 @@
             </div>
         </div>
 
-        {{ if ne .userForm.Role.Name .roleAdmin}}
+        {{ if ne .user.Role.Name .roleAdmin}}
             <div class="field">
                 <label>Store</label>
                 <div class="field">

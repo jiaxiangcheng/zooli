@@ -79,3 +79,10 @@ func (s Service) String() string {
 	}
 	return string(out)
 }
+
+func NumServices() int {
+	var count int = 0
+	var s []Service
+	DB.Find(&s).Count(&count)
+	return count
+}

@@ -85,3 +85,10 @@ func (c Company) String() string {
 	}
 	return string(out)
 }
+
+func NumCompanies() int {
+	var count int = 0
+	var c []Company
+	DB.Find(&c).Count(&count)
+	return count
+}

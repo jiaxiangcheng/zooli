@@ -38,14 +38,13 @@
     {{ end }}
     </tbody>
 </table>
-</br>
 
 <div class="ui middle aligned center aligned grid">
     <button type="button"
             title="View user"
             class="ui basic big button"
             onclick="newOrders();"
-            style="margin: 10px 10px">
+            style="margin: 15px;">
         <i class="add order icon"></i>
         Create order
     </button>

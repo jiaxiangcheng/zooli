@@ -76,3 +76,10 @@ func (s Store) String() string {
 	}
 	return string(out)
 }
+
+func NumStores() int {
+	var count int = 0
+	var st []Service
+	DB.Find(&st).Count(&count)
+	return count
+}

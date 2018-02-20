@@ -2,6 +2,7 @@
     {{template "common/flash.tpl" .}}
     {{template "common/modal.tpl" .}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+    <script src="static\js\custom-todo.js"></script>
 </head>
 
 <body>
@@ -56,11 +57,11 @@
             <div class="column">
                 <div class="title">
                     <i class="shopping bag icon"></i>
-                    {{.storecount}}
+                    Total Stores
                 </div>
                 <div class="ui statistic">
                     <div class="value">
-                        5000
+                        {{.storecount}}
                     </div>
                     <div class="label">
                         Stores
@@ -83,6 +84,7 @@
             </div>
         </div>
     </div>
+
 </body>
 
 <script>
@@ -113,14 +115,12 @@
 
     // The data for our dataset
     data: {
-        {{ range .services }}
-            labels.push("{{.Name}}");
-        {{end}}
+        labels: ["January", "February", "March", "April", "May", "June", "July"],
         datasets: [{
             label: "Most used services",
             backgroundColor: 'rgb(255, 99, 132)',
             borderColor: 'rgb(255, 99, 132)',
-            data: [0, 10],
+            data: [0, 10, 5, 2, 20, 30, 45],
         }]
     },
 

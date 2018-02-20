@@ -219,12 +219,11 @@ func (c *UsersController) getUser() (models.User, error) {
 	}
 	u.RoleID = uint(roleID)
 
-	storeID, err := c.GetInt("store")
+	/*storeID, err := c.GetInt("store")
 	beego.Info(storeID)
 	if err != nil {
 		return u, err
 	}
-
-	u.StoreID = uint(storeID)
+	u.StoreID = uint(storeID)*/
 	return u, nil
 }

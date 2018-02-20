@@ -39,14 +39,14 @@
     {{ end }}
     </tbody>
 </table>
-</br>
 
 <div class="ui middle aligned center aligned grid">
     <button type="button"
             title="View user"
             id="create_btn"
             class="ui basic big button"
-            onclick="newUser();">
+            onclick="newUser();"
+            style="margin: 15px;">
         <i class="add user icon"></i>
         Create user
     </button>

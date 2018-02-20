@@ -48,12 +48,12 @@
     </tbody>
 </table>
 
-
 <div class="ui middle aligned center aligned grid">
     <button type="button"
             title="View store"
             class="ui basic big button"
-            onclick="newStore();">
+            onclick="newStore();"
+            style="margin: 15px;">
         <i class="add store icon"></i>
         Create store
     </button>
