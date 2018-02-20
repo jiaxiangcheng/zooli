@@ -1,4 +1,6 @@
 <head>
+    {{template "common/flash.tpl" .}}
+    {{template "common/modal.tpl" .}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 </head>
 
@@ -30,7 +32,7 @@
                 </div>
                 <div class="ui statistic">
                     <div class="value">
-                        5000
+                        {{.companycount}}
                     </div>
                     <div class="label">
                         Companies
@@ -44,7 +46,7 @@
                 </div>
                 <div class="ui statistic">
                     <div class="value">
-                        5000
+                        {{.servicecount}}
                     </div>
                     <div class="label">
                         Services
@@ -54,7 +56,7 @@
             <div class="column">
                 <div class="title">
                     <i class="shopping bag icon"></i>
-                    Total Stores
+                    {{.storecount}}
                 </div>
                 <div class="ui statistic">
                     <div class="value">
@@ -111,12 +113,14 @@
 
     // The data for our dataset
     data: {
-        labels: ["January", "February", "March", "April", "May", "June", "July"],
+        {{ range .services }}
+            labels.push("{{.Name}}");
+        {{end}}
         datasets: [{
             label: "Most used services",
             backgroundColor: 'rgb(255, 99, 132)',
             borderColor: 'rgb(255, 99, 132)',
-            data: [0, 10, 5, 2, 20, 30, 45],
+            data: [0, 10],
         }]
     },
 
