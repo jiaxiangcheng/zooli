@@ -49,6 +49,8 @@ func (s *Store) Update() {
 	sDB.ID = s.ID
 	DB.Where(&sDB).First(&sDB)
 
+	DB.Model(&sDB).Association("Services").Replace(s.Services)
+	DB.Model(&sDB).Association("Managers").Replace(s.Managers)
 	sDB.Name = s.Name
 	sDB.Address = s.Address
 	sDB.Latitude = s.Latitude
@@ -56,11 +58,9 @@ func (s *Store) Update() {
 	sDB.PhoneNumber = s.PhoneNumber
 	sDB.Image = s.Image
 	sDB.CompanyID = s.CompanyID
-	DB.Model(&sDB).Association("Services").Replace(s.Services)
-	DB.Model(&sDB).Association("Managers").Replace(s.Managers)
 
 	DB.Save(&sDB)
-	beego.Debug("Update Store:", s)
+	beego.Debug("Update Store:", sDB)
 }
 
 func (s *Store) DeleteSoft() {

@@ -13,7 +13,7 @@ func main() {
 	if err := models.Connect(); err != nil {
 		models.Syncdb()
 	}
-	models.DB.LogMode(true)
+	//models.DB.LogMode(true)
 
 	beego.Run()
 }
