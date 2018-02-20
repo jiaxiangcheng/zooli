@@ -12,14 +12,14 @@ import (
 )
 
 type User struct {
-	gorm.Model				`valid:"-"`
-	Username		string	`gorm:"not null;unique" valid:"alphanum,required"`
-	PasswordHash	string	`gorm:"not null" valid:"required,alphanum"`
-	Email			string	`valid:"email,optional"`
-	Name			string	`gorm:"not null" valid:"required"`
-	Role			Role	`valid:"-" json:"-"`
-	RoleID			uint	`gorm:"not null" valid:"required"`
-	StoreID			uint	`valid:"-"`
+	gorm.Model   `valid:"-"`
+	Username     string `gorm:"not null;unique" valid:"alphanum,required"`
+	PasswordHash string `gorm:"not null" valid:"required,alphanum"`
+	Email        string `valid:"email,optional"`
+	Name         string `gorm:"not null" valid:"required"`
+	Role         Role   `valid:"-" json:"-"`
+	RoleID       uint   `gorm:"not null" valid:"required"`
+	StoreID      uint   `valid:"-"`
 }
 
 func (u *User) Insert() {
@@ -98,8 +98,6 @@ func (u *User) AssignStore(store Store) {
 	DB.Save(&u)
 	beego.Debug("Update User:", u)
 }
-
-
 
 func (u *User) DeleteSoft() {
 	DB.Delete(&u)

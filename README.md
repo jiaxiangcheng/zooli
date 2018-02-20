@@ -94,6 +94,11 @@ Jquery
 * https://www.w3schools.com/jquery/default.asp
 
 ### Docker
+Training
+* https://www.katacoda.com/courses/docker
+* https://training.docker.com/
+* https://hackr.io/tutorials/learn-docker
+
 Web
 * https://github.com/wsargent/docker-cheat-sheet/tree/master/zh-cn#docker-cheat-sheet
 * https://github.com/widuu/chinese_docker
@@ -111,7 +116,7 @@ and some products that belong to one service. The client can order a product and
 Each store will have some manager (user) who using this application to monitoring the workflow and receive money.
 For now we are putting all kinds of user (admin, manager) in the same User table, differ by Role. This is easiest way to do so, but not correct.
 
-![alt text](https://image.ibb.co/j9uyFn/uml.png "class diagram")
+![alt text](https://image.ibb.co/cxeQax/network.png "class diagram")
 
 Following we define some use cases. The necessary fields to create a model are defined in Go source code file under **/model** directory.
 

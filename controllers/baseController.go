@@ -1,14 +1,15 @@
 package controllers
 
 import (
-	"github.com/astaxie/beego"
-	"strings"
+	"errors"
 	"net/http"
 	"os"
 	"strconv"
+	"strings"
 	"time"
-	"errors"
+
 	"github.com/Qiaorui/zooli/models"
+	"github.com/astaxie/beego"
 )
 
 const EXTERNAL_FILE_STORAGE = "static/storage/"
@@ -33,14 +34,14 @@ func (c *BaseController) Prepare() {
 }
 
 func (c *BaseController) GetString(key string, def ...string) string {
-	str := c.Controller.GetString(key, def ...)
+	str := c.Controller.GetString(key, def...)
 	return strings.TrimSpace(str)
 }
 
 /*
 Using form key and specify format to upload a file.
 Return path and error if exists.
- */
+*/
 func (c *BaseController) UploadFile(key string, format string) (string, error) {
 	path := ""
 	f, header, err := c.GetFile(key)

@@ -1,0 +1,22 @@
+package: github.com/Qiaorui/zooli
+import:
+- package: github.com/asaskevich/govalidator
+- package: github.com/astaxie/beego
+  subpackages:
+  - context
+- package: github.com/jinzhu/gorm
+  subpackages:
+  - dialects/mysql
+  - inflection
+- package: golang.org/x/crypto
+  subpackages:
+  - bcrypt
+- package: github.com/pkg/errors
+- package: github.com/mailgun/mailgun-go
+- package: github.com/go-sql-driver/mysql
+- package: github.com/jinzhu/inflection
+testImport:
+- package: github.com/smartystreets/goconvey
+  subpackages:
+  - convey
+

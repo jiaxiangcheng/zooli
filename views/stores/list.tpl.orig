@@ -69,7 +69,8 @@
 <script type="text/javascript">
     $(document)
             .ready(function() {
-               /*$('.dropdown')
+<<<<<<< HEAD
+                $('.dropdown')
                     .dropdown({
                         action: function(text, value) {
                             args = value.split(",");
@@ -82,7 +83,23 @@
                                 }
                             });
                         }
+                    });
+=======
+               /*$('.dropdown')
+                        .dropdown({
+                            action: function(text, value) {
+                                args = value.split(",");
+                                $.ajax({
+                                    type: "post",
+                                    url: "/users/" + args[0] + "/assign",
+                                    data: {"storeID": args[1]},
+                                    success: function (data) {
+                                        $('#main_content').html(data);
+                                    }
+                                });
+                            }
                         });*/
+>>>>>>> master
             });
 
 
@@ -117,6 +134,7 @@
             }
         });
     }
+<<<<<<< HEAD
 
     function openDeleteModal(store_id) {
         $('#mini_modal .header').html("Alert");
@@ -130,5 +148,16 @@
             .modal('show');
     }
 
+    function openAssignmentModal(storeID, userID) {
+        $('#user_modal')
+            .modal({
+                onVisible: function () {
 
+                }
+            })
+            .modal("show");
+    }
+=======
+
+>>>>>>> master
 </script>

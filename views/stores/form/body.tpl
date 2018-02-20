@@ -4,8 +4,8 @@
 
 
     <div class="field">
-        <div style="width:100%;float:left;position:relative;display: none;">
-            <img class="ui fluid image" id="preview" src="" style="width:100%;max-height:100%;"/>
+        <div style="width:100%;float:left;position:relative;display:{{if .storeForm.Image}}inline{{else}}none{{end}};">
+            <img class="ui fluid image" id="preview" src="{{.storeForm.Image}}" style="width:100%;max-height:100%;"/>
             <i id="imgCloser" class="close icon" style="position: absolute;top:15px;right:15px;cursor: pointer;"></i>
             <input type="hidden" id="oldImage" name="oldImage" value="{{.storeForm.Image}}">
         </div>
@@ -46,58 +46,67 @@
         <div class="field">
             <label>Company</label>
             <div class="field">
-                <select name="company" class="ui fluid dropdown">
-                    <option value="">Company</option>
-                {{ range .companies }}
-                {{ if $.storeForm }}
-                    <option value="{{.ID}}" {{ if eq .ID $.storeForm.CompanyID}} selected {{end}}>{{.Name}}</option>
+                {{ if eq .user.Role.Name .roleAdmin}} 
+                    <select name="company" class="ui fluid dropdown">
+                        <option value="">Company</option>
+                        {{ range .companies }}
+                            {{ if $.storeForm }}
+                                <option value="{{.ID}}" {{ if eq .ID $.storeForm.CompanyID}} selected {{end}}>{{.Name}}</option>
+                            {{else}}
+                                <option value="{{.ID}}">{{.Name}}</option>
+                            {{end}}
+                        {{end}}
+                    </select>
                 {{else}}
-                    <option value="{{.ID}}">{{.Name}}</option>
+                    <div>{{.company.Name}}</div>
                 {{end}}
-                {{end}}
-                </select>
+                
             </div>
         </div>
         <div class="field">
             <label>Services</label>
             <div class="field">
-                <div class="ui multiple selection dropdown" id="services">
-                    <!-- This will receive comma separated value like 1,2,3 !-->
-                    <input name="services" type="hidden" >
-                    <i class="dropdown icon"></i>
-                    <div class="default text">Services</div>
-                    <div class="menu">
-                    {{ range .services }}
-                        <div class="item" data-value="{{.Name}}">{{.Name}}</div>
+                {{ if eq .user.Role.Name .roleAdmin}} 
+                    <div class="ui multiple selection dropdown" id="services">
+                        <!-- This will receive comma separated value like 1,2,3 !-->
+                        <input name="services" type="hidden" >
+                        <i class="dropdown icon"></i>
+                        <div class="default text">Services</div>
+                        <div class="menu">
+                        {{ range .services }}
+                            <div class="item" data-value="{{.Name}}">{{.Name}}</div>
+                        {{end}}
+                        </div>
+                    </div>
+                {{else}}
+                    <div>{{range .services}} <a class="ui blue label">{{.Name}}</a> {{end}}</div>
+                {{end}}
+            </div>
+        </div>
+    </div>
+    {{ if eq .user.Role.Name .roleAdmin}} 
+        <div class="field">
+            <label>Managers</label>
+            <div class="ui fluid multiple selection dropdown" id="managers">
+                <input name="managers" type="hidden">
+                <i class="dropdown icon"></i>
+                <span class="default text">Managers</span>
+                <div class="menu">
+                    <div class="ui icon search input">
+                        <i class="search icon"></i>
+                        <input type="text" placeholder="Search managers...">
+                    </div>
+                    <div class="scrolling menu">
+                    {{range $.managers}}
+                        <div class="item" data-value="{{.ID}}">
+                            <span class="text">{{.Username}} ({{.Name}})</span>
+                        </div>
                     {{end}}
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="field">
-        <label>Managers</label>
-        <div class="ui fluid multiple selection dropdown" id="managers">
-            <input name="managers" type="hidden">
-            <i class="dropdown icon"></i>
-            <span class="default text">Managers</span>
-            <div class="menu">
-                <div class="ui icon search input">
-                    <i class="search icon"></i>
-                    <input type="text" placeholder="Search managers...">
-                </div>
-                <div class="scrolling menu">
-                {{range $.managers}}
-                    <div class="item" data-value="{{.ID}}">
-                        <span class="text">{{.Username}} ({{.Name}})</span>
-                    </div>
-                {{end}}
-                </div>
-            </div>
-        </div>
-    </div>
-
-
+    {{end}}
 </div>
 
 
@@ -179,12 +188,6 @@
 <script>
     $(document).ready( function () {
         var preview = document.getElementById('preview');
-
-        if ({{.storeForm.Image}}) {
-            preview.src = {{.storeForm.Image}};
-            preview.parentNode.style.display = 'inline';
-            $('#oldImage').val({{.StoreForm.Image}});
-        }
         $("#imgCloser").click(function () {
             $('#poster').val('');
             $('#oldImage').val("");
