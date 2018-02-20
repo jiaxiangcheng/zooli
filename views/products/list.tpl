@@ -3,10 +3,11 @@
 <table class="ui single line striped collapsing table" id="table_list">
     <thead>
     <tr>
-        <th class="center aligned">Client</th>
-        <th class="center aligned">Product</th>
-        <th class="center aligned">Status</th>
-        <th class="center aligned">Fee</th>
+        <th class="center aligned">Name</th>
+        <th class="center aligned">Description</th>
+        <th class="center aligned">Value</th>
+        <th class="center aligned">Image</th>
+        <th class="center aligned">Service</th>
         <th class="center aligned"></th>
         <th></th>
     </tr>
@@ -14,10 +15,11 @@
     <tbody>
     {{ range .products }}
     <tr>
-        <td class="center aligned">{{ .Client.Name}}</td>
-        <td class="center aligned">{{ .Product.Name}}</td>
-        <td class="center aligned">{{ .Status}}</td>
-        <td class="center aligned">{{ .Fee}}</td>
+        <td class="center aligned">{{ .Name}}</td>
+        <td class="center aligned">{{ .Description}}</td>
+        <td class="center aligned">{{ .Value}}</td>
+        <td class="center aligned"></td>
+        <td class="center aligned">{{ .Service.Name}}</td>
         <td class="center aligned">
             <button type="button"
                     class="ui basic button"
@@ -67,7 +69,7 @@
                 $('#main_content').html(data);
             }
         });
-    }
+    }*/
 
     function editProducts(product_id) {
         $.ajax({
@@ -79,6 +81,7 @@
             }
         });
     }
+    /*
     function deleteProducts(product_id) {
         $.ajax({
             async: false,

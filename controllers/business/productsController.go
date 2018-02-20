@@ -3,6 +3,9 @@ package business
 import (
     "github.com/Qiaorui/zooli/controllers"
     "github.com/Qiaorui/zooli/models"
+    "github.com/astaxie/beego"
+    "strconv"
+    utils "github.com/Qiaorui/zooli/controllers/utils"
 )
 
 type ProductsController struct {
@@ -13,20 +16,20 @@ func (c *ProductsController) Get() {
 	c.Data["products"] = models.FindProducts()
 	c.TplName = "products/list.tpl"
 }
-/*
+
 func (c *ProductsController) Edit() {
 
 	productSession := c.GetSession("productsInfo")
 
-	var product models.Order
+	var product models.Product
 
 	if productSession != nil {
 		c.DelSession("productInfo")
-		product = productSession.(models.Order)
+		product = productSession.(models.Product)
 	} else {
 		id , _ := strconv.Atoi(c.Ctx.Input.Param(":id"))
 		// load product in DB
-		product = models.FindOrderByID(uint(id))
+		product = models.FindProductByID(uint(id))
 	}
 	if !product.Exists() {
 		flash := beego.NewFlash()
@@ -39,14 +42,14 @@ func (c *ProductsController) Edit() {
 	c.Data["productForm"] = product
 	c.TplName = "products/edit.tpl"
 }
-
+/*
 func (c *ProductsController) New() {
 
 	//get the product session and load if exist
 	product := c.GetSession("productInfo")
 	if product != nil {
 		c.DelSession("productInfo")
-		c.Data["productForm"] = product.(models.Order)
+		c.Data["productForm"] = product.(models.Product)
 	}
 
 	c.TplName = "products/new.tpl"
@@ -55,7 +58,7 @@ func (c *ProductsController) New() {
 func (c *ProductsController) Create() {
 	flash := beego.NewFlash()
 
-	product, err := c.getOrder()
+	product, err := c.getProduct()
 	//load the error, save the form fields and redirect
 	if err != nil {
 		flash.Error(err.Error())
@@ -81,7 +84,7 @@ func (c *ProductsController) Create() {
 	flash.Store(&c.Controller)
 	c.Redirect("/products", 303)
 }
-
+*/
 func (c *ProductsController) Update() {
 	//init object for error control
 	flash := beego.NewFlash()
@@ -89,7 +92,7 @@ func (c *ProductsController) Update() {
 	//get identifier of product
 	id , _ := strconv.Atoi(c.Ctx.Input.Param(":id"))
 
-	product, err := c.getOrder()
+	product, err := c.getProduct()
 	if err != nil {
 		flash.Error(err.Error())
 		flash.Store(&c.Controller)
@@ -125,14 +128,14 @@ func (c *ProductsController) Update() {
 	c.Redirect("/products/" + strconv.Itoa(id), 302)
 }
 
-
+/*
 func (c *ProductsController) Delete() {
 	flash := beego.NewFlash()
 
 	//get identifier of product
 	id , _ := strconv.Atoi(c.Ctx.Input.Param(":id"))
 
-	var product models.Order
+	var product models.Product
 	product.ID = uint(id)
 	if !product.Exists() {
 		flash.Error("Incorrect product id")
@@ -147,12 +150,23 @@ func (c *ProductsController) Delete() {
 	flash.Success("You have deleted product")
 	flash.Store(&c.Controller)
 	c.Redirect("/products", 303)
-}*/
+}
+*/
 
-/*
-func (c *ProductsController) getOrder() (models.Order, error) {
-	product := models.Order{
+func (c *ProductsController) getProduct() (models.Product, error) {
+	product := models.Product{
 		Name: c.GetString("name"),
+        Description: c.GetString("description"),
+
+        Image: c.GetString("image"),
+        //falta get del service
 	}
+
+    value, err := c.GetFloat("value")
+	beego.Debug(value)
+	if err != nil {
+		return product, err
+	}
+	product.Value = value
 	return product, nil
-}*/
+}

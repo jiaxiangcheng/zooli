@@ -59,7 +59,6 @@
                 {{end}}
 
                 {{ if eq .user.Role.Name .roleManager}}
-                    {{if .hasStore}}
                         <a class="item" href="/stores/{{.user.StoreID}}">
                             <span><i class="world icon"></i>My Store</span>
                         </a>
@@ -71,7 +70,6 @@
                         <a class="item" href="/products">
                             <span><i class="cubes icon"></i>Products</span>
                         </a>
-                    {{end}}
                 {{end}}
             </div>
         </div>
