@@ -94,6 +94,11 @@ Jquery
 * https://www.w3schools.com/jquery/default.asp
 
 ### Docker
+Training
+* https://www.katacoda.com/courses/docker
+* https://training.docker.com/
+* https://hackr.io/tutorials/learn-docker
+
 Web
 * https://github.com/wsargent/docker-cheat-sheet/tree/master/zh-cn#docker-cheat-sheet
 * https://github.com/widuu/chinese_docker
