@@ -14,6 +14,8 @@ type Product struct {
 	Image			string		`valid:"url,optional"`
 	Service			Service		`valid:"-" json:"-"`
 	ServiceID		uint		`gorm:"not null" valid:"required"`
+	Store			Store		`valid:"-" json:"-"`
+	StoreID			uint		`gorm:"not null" valid:"required"`
 }
 
 
@@ -37,7 +39,7 @@ func (p *Product) ExistsName() bool {
 
 func FindProductByID(id uint) Product {
 	var p Product
-	DB.Where("id = ?", id).Find(&p)
+	DB.Where("id = ?", id).Preload("Service").Preload("Store").Find(&p)
 	return p
 }
 
@@ -50,7 +52,7 @@ func ExistProductByName(name string) bool {
 
 func FindProducts() []Product {
 	var p []Product
-	DB.Find(&p)
+	DB.Preload("Service").Preload("Store").Find(&p)
 	return p
 }
 
@@ -64,9 +66,10 @@ func (p *Product) Update() {
 	pDB.Value = p.Value
 	pDB.Image = p.Image
 	pDB.ServiceID = p.ServiceID
+	pDB.StoreID = p.StoreID
 
 	DB.Save(&pDB)
-	beego.Debug("Update Product:", p)
+	beego.Debug("Update Product:", pDB)
 }
 
 func (p *Product) DeleteSoft() {
