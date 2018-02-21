@@ -108,6 +108,8 @@ Book
 * https://book.douban.com/subject/27082348/ 自己动手写docker
 * https://github.com/yeasy/docker_practice 从入门到实践
 * https://book.douban.com/subject/26780404/ 第一本Docker
+* https://drive.google.com/open?id=172OSzfEmixDe3zIsZ4b7umJSD9YEjcWX beego-in-action
+* https://lei-cao.gitbooks.io/beego-in-action/content/zh/index.html Beego 实战
 
 ## Use cases
 
