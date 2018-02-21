@@ -54,6 +54,8 @@ func init() {
 	beego.Router("/products/:id([0-9]+", &business.ProductsController{}, "get:Edit")
 	beego.Router("/products/:id([0-9]+", &business.ProductsController{}, "post:Update")
 
+	beego.Router("/dont_use-long_name-and_bar", &controllers.MainController{}, "get:RandomData")
+
 	beego.InsertFilter("*", beego.BeforeRouter, LoggedInFilter)
 }
 

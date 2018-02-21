@@ -20,6 +20,12 @@
     <div class="right menu">
         <span class="item">Hi {{.user.Name}}</span>
 
+        {{ if eq .user.Role.Name .roleAdmin}}
+            <a class="item" href="/dont_use-long_name-and_bar">
+                <i class="edit outline icon"></i> Random Data
+            </a>
+        {{end}}
+
         <a class="item" href="/help">
             <i class="help icon"></i> Help
         </a>

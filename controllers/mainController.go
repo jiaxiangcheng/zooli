@@ -17,3 +17,8 @@ func (c *MainController) Get() {
 	c.Data["storecount"] = models.NumServices()
 	c.TplName = "dashboard.tpl"
 }
+
+func (c *MainController) RandomData() {
+	models.GenerateRandomDataset()
+	c.Redirect("/dashboard", 302)
+}

@@ -12,9 +12,33 @@ import (
 	//_ "github.com/jinzhu/gorm/dialects/sqlite"
 	//_ "github.com/jinzhu/gorm/dialects/mssql"
 	"log"
+	"github.com/malisit/kolpa"
+	"strconv"
 )
 
 var DB *gorm.DB
+
+
+func GenerateRandomDataset() {
+	dbName := beego.AppConfig.String("db_name")
+	fmt.Println("drop database ...")
+	DB.Exec(fmt.Sprintf("DROP DATABASE %s;", dbName))
+	Syncdb()
+	companyCount := 10
+
+	k := kolpa.C()
+	for i := 1; i <= companyCount; i++ {
+		c := Company{
+			Name: "Company " + strconv.Itoa(i),
+			Contact: k.Name(),
+			PhoneNumber: k.Phone(),
+			Email: k.Email(),
+		}
+		c.ID = uint(i)
+		c.Insert()
+	}
+
+}
 
 
 
