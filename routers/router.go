@@ -4,10 +4,10 @@ import (
 	"github.com/Qiaorui/zooli/controllers"
 	"github.com/Qiaorui/zooli/controllers/auth"
 
-	"github.com/astaxie/beego"
-	"github.com/astaxie/beego/context"
 	"github.com/Qiaorui/zooli/controllers/business"
 	"github.com/Qiaorui/zooli/controllers/rbac"
+	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/context"
 )
 
 func init() {
@@ -38,6 +38,9 @@ func init() {
 	beego.Router("/stores/:id([0-9]+", &business.StoresController{}, "get:Edit")
 	beego.Router("/stores/:id([0-9]+", &business.StoresController{}, "post:Update")
 	beego.Router("/stores/:id([0-9]+", &business.StoresController{}, "delete:Delete")
+
+	beego.Router("/manager-store", &business.ManagersStoreController{}, "get:Edit")
+	beego.Router("/manager-store", &business.ManagersStoreController{}, "post:Update")
 
 	beego.Router("/services", &business.ServicesController{}, "get:Get")
 	beego.Router("/services/new", &business.ServicesController{}, "get:New")

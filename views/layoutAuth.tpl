@@ -59,17 +59,17 @@
                 {{end}}
 
                 {{ if eq .user.Role.Name .roleManager}}
-                        <a class="item" href="/stores/{{.user.StoreID}}">
-                            <span><i class="world icon"></i>My Store</span>
-                        </a>
+                    <a class="item" href="/manager-store">
+                        <span><i class="world icon"></i>My Store</span>
+                    </a>
 
-                        <a class="item" href="/orders">
-                            <span><i class="payment icon"></i>Orders</span>
-                        </a>
+                    <a class="item" href="/orders">
+                        <span><i class="payment icon"></i>Orders</span>
+                    </a>
 
-                        <a class="item" href="/products">
-                            <span><i class="cubes icon"></i>Products</span>
-                        </a>
+                    <a class="item" href="/products">
+                        <span><i class="cubes icon"></i>Products</span>
+                    </a>
                 {{end}}
             </div>
         </div>

@@ -42,7 +42,7 @@
             </div>
         </div>
 
-        {{ if ne .user.Role.Name .roleAdmin}}
+        <!-- {{ if eq .user.Role.Name .roleManager}}
             <div class="field">
                 <label>Store</label>
                 <div class="field">
@@ -58,7 +58,7 @@
                     </select>
                 </div>
             </div>
-        {{end}}
+        {{end}} -->
     </div>
 </div>
 

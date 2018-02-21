@@ -41,32 +41,26 @@ func (c *StoresController) Edit() {
 		return
 	}
 
-	// admin
 	m := models.FindRoleByName(models.ROLE_MANAGER)
 	managers := models.FindUsersByRoleID(m.ID)
 	c.Data["managers"] = managers
 	c.Data["companies"] = models.FindCompanies()
 	c.Data["services"] = models.FindServices()
 
-	// manager
-
-	company := models.FindCompanyByID(s.CompanyID)
-	c.Data["company"] = company
-
 	c.Data["storeForm"] = s
 	c.TplName = "stores/edit.tpl"
 }
 
-func (c *StoresController) findManagersWithoutStoreAssigned() []models.User {
-	//var managers []models.User
-	var usersWithoutStore []models.User
+// func (c *StoresController) findManagersWithoutStoreAssigned() []models.User {
+// 	//var managers []models.User
+// 	var usersWithoutStore []models.User
 
-	// users which has role managar and doesn't have any store assigned
-	//managers = models.FindUsersByRoleID(2)
-	//usersWithoutStore = models.FindManagersWithoutStore()
+// 	// users which has role managar and doesn't have any store assigned
+// 	//managers = models.FindUsersByRoleID(2)
+// 	//usersWithoutStore = models.FindManagersWithoutStore()
 
-	return usersWithoutStore
-}
+// 	return usersWithoutStore
+// }
 
 func (c *StoresController) New() {
 	s := c.GetSession("storeInfo")
@@ -80,7 +74,6 @@ func (c *StoresController) New() {
 	c.Data["managers"] = managers
 	c.Data["companies"] = models.FindCompanies()
 	c.Data["services"] = models.FindServices()
-	//c.Data["managers"] = c.findManagersWithouStoreAssgined()
 	c.TplName = "stores/new.tpl"
 }
 
