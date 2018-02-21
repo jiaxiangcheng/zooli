@@ -9,12 +9,7 @@
         Generating Random data set
     </div>
     <div class="content">
-        <div class="ui segment">
-            <div class="ui active dimmer">
-                <div class="ui indeterminate huge text loader">Generating...</div>
-            </div>
-            <p>It may takes minutes</p>
-        </div>
+        <div class="ui active centered inline loader"></div>
     </div>
 </div>
 
