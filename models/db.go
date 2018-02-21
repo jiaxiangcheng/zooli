@@ -14,10 +14,22 @@ import (
 	"log"
 	"github.com/malisit/kolpa"
 	"strconv"
+	"math/rand"
+	"time"
 )
 
 var DB *gorm.DB
 
+
+func Shuffle(vals []Service) []Service {
+	r := rand.New(rand.NewSource(time.Now().Unix()))
+	ret := make([]Service, len(vals))
+	perm := r.Perm(len(vals))
+	for i, randIndex := range perm {
+		ret[i] = vals[randIndex]
+	}
+	return ret
+}
 
 func GenerateRandomDataset() {
 	dbName := beego.AppConfig.String("db_name")
@@ -25,8 +37,18 @@ func GenerateRandomDataset() {
 	DB.Exec(fmt.Sprintf("DROP DATABASE %s;", dbName))
 	Syncdb()
 	companyCount := 10
+	managerCount := 400
+	storeCount := 200
+	var services []Service
 
 	k := kolpa.C()
+
+	for _, i := range [...]string{"Maintenance", "Wash", "Rent", "Repair", "Gas", "Restaurant", "Hotel"} {
+		s := Service{Name:i}
+		s.Insert()
+		services = append(services, s)
+	}
+
 	for i := 1; i <= companyCount; i++ {
 		c := Company{
 			Name: "Company " + strconv.Itoa(i),
@@ -36,7 +58,49 @@ func GenerateRandomDataset() {
 		}
 		c.ID = uint(i)
 		c.Insert()
+		source := rand.NewSource(time.Now().UnixNano())
+		ran := rand.New(source)
+		sc := ran.Intn(3) + 1
+		ss := Shuffle(services)[:sc]
+
+		for j := 0; j < storeCount/companyCount; j++ {
+			source = rand.NewSource(time.Now().UnixNano())
+			ran = rand.New(source)
+			s := Store{
+				Name: "Store " + strconv.Itoa(i),
+				Address: k.Address(),
+				Latitude: ran.Float64()*90,
+				Longitude: ran.Float64()*180,
+				PhoneNumber: k.Phone(),
+				CompanyID: uint(i),
+			}
+			source = rand.NewSource(time.Now().UnixNano())
+			ran = rand.New(source)
+			ssc := ran.Intn(sc) + 1
+			sss := Shuffle(ss)[:ssc]
+			s.Services = sss
+			s.Insert()
+		}
 	}
+
+	managerRoleID := FindRoleByName(ROLE_MANAGER).ID
+	for i := 2; i <= managerCount + 1; i++ {
+		m := User{
+			Username: "manager" + strconv.Itoa(i),
+			Email: k.Email(),
+			Name: k.Name(),
+			RoleID: managerRoleID,
+		}
+		m.ID = uint(i)
+		m.SetPassword("111111")
+		source := rand.NewSource(time.Now().UnixNano())
+		ran := rand.New(source)
+		if ran.Intn(10) > 2 {
+			m.StoreID = uint(ran.Intn(storeCount) + 1)
+		}
+		m.Insert()
+	}
+
 
 }
 
