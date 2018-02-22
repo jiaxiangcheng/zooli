@@ -12,7 +12,7 @@ import (
 	//_ "github.com/jinzhu/gorm/dialects/sqlite"
 	//_ "github.com/jinzhu/gorm/dialects/mssql"
 	"log"
-	"github.com/malisit/kolpa"
+	"github.com/icrowley/fake"
 	"strconv"
 	"math/rand"
 	"time"
@@ -41,7 +41,6 @@ func GenerateRandomDataset() {
 	storeCount := 200
 	var services []Service
 
-	k := kolpa.C()
 
 	for _, i := range [...]string{"Maintenance", "Wash", "Rent", "Repair", "Gas", "Restaurant", "Hotel"} {
 		s := Service{Name:i}
@@ -51,10 +50,10 @@ func GenerateRandomDataset() {
 
 	for i := 1; i <= companyCount; i++ {
 		c := Company{
-			Name: "Company " + strconv.Itoa(i),
-			Contact: k.Name(),
-			PhoneNumber: k.Phone(),
-			Email: k.Email(),
+			Name: fake.Company(),//"Company " + strconv.Itoa(i),
+			Contact: fake.FullName(),
+			PhoneNumber: fake.Phone(),
+			Email: fake.EmailAddress(),
 		}
 		c.ID = uint(i)
 		c.Insert()
@@ -67,11 +66,11 @@ func GenerateRandomDataset() {
 			source = rand.NewSource(time.Now().UnixNano())
 			ran = rand.New(source)
 			s := Store{
-				Name: "Store " + strconv.Itoa(i),
-				Address: k.Address(),
+				Name: "Store " + strconv.Itoa(j),
+				Address: fake.StreetAddress(),
 				Latitude: ran.Float64()*90,
 				Longitude: ran.Float64()*180,
-				PhoneNumber: k.Phone(),
+				PhoneNumber: fake.Phone(),
 				CompanyID: uint(i),
 			}
 			source = rand.NewSource(time.Now().UnixNano())
@@ -87,8 +86,8 @@ func GenerateRandomDataset() {
 	for i := 2; i <= managerCount + 1; i++ {
 		m := User{
 			Username: "manager" + strconv.Itoa(i),
-			Email: k.Email(),
-			Name: k.Name(),
+			Email: fake.EmailAddress(),
+			Name: fake.FullName(),
 			RoleID: managerRoleID,
 		}
 		m.ID = uint(i)
