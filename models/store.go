@@ -79,7 +79,7 @@ func (s Store) String() string {
 
 func NumStores() int {
 	var count int = 0
-	var st []Service
+	var st []Store
 	DB.Find(&st).Count(&count)
 	return count
 }

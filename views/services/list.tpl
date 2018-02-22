@@ -1,7 +1,7 @@
 <h1 class="ui header" style="text-align:center;">Services</h1>
 {{template "common/modal.tpl" .}}
 {{template "common/flash.tpl" .}}
-<table class="ui single line striped collapsing table" id="table_list">
+<table class="ui single line striped collapsing table" id="table_list" style="table-layout:fixed; width:100%;">
     <thead>
     <tr>
         <th class="center aligned">Name</th>
@@ -12,7 +12,7 @@
     <tbody>
     {{ range .services }}
     <tr>
-        <td class="center aligned">{{ .Name}}</td>
+        <td class="center aligned" style="overflow: hidden;text-overflow: ellipsis;">{{ .Name}}</td>
         <td class="center aligned">
             <button type="button"
                     class="ui basic button"

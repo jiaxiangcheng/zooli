@@ -1,6 +1,6 @@
 <div class="ui raised segment">
     <div class="ui error message"></div>
-{{template "common/flash.tpl" .}}
+    {{template "common/flash.tpl" .}}
 
 
     <div class="field">
@@ -46,7 +46,7 @@
         <div class="field">
             <label>Company</label>
             <div class="field">
-                {{ if eq .user.Role.Name .roleAdmin}} 
+                {{ if eq .user.Role.Name .roleAdmin}}
                     <select name="company" class="ui fluid dropdown">
                         <option value="">Company</option>
                         {{ range .companies }}
@@ -60,13 +60,13 @@
                 {{else}}
                     <div>{{.company.Name}}</div>
                 {{end}}
-                
+
             </div>
         </div>
         <div class="field">
             <label>Services</label>
             <div class="field">
-                {{ if eq .user.Role.Name .roleAdmin}} 
+                {{ if eq .user.Role.Name .roleAdmin}}
                     <div class="ui multiple selection dropdown" id="services">
                         <!-- This will receive comma separated value like 1,2,3 !-->
                         <input name="services" type="hidden" >
@@ -84,7 +84,7 @@
             </div>
         </div>
     </div>
-    {{ if eq .user.Role.Name .roleAdmin}} 
+    {{ if eq .user.Role.Name .roleAdmin}}
         <div class="field">
             <label>Managers</label>
             <div class="ui fluid multiple selection dropdown" id="managers">

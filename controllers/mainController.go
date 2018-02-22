@@ -11,10 +11,10 @@ func (c *MainController) Prepare() {
 }
 
 func (c *MainController) Get() {
-    c.Data["usercount"] = models.NumUsers()
+  c.Data["usercount"] = models.NumUsers()
 	c.Data["companycount"] = models.NumCompanies()
 	c.Data["servicecount"] = models.NumServices()
-	c.Data["storecount"] = models.NumServices()
+	c.Data["storecount"] = models.NumStores()
 	c.TplName = "dashboard.tpl"
 }
 

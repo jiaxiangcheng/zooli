@@ -1,7 +1,7 @@
 <h1 class="ui header" style="text-align:center;">Stores</h1>
 {{template "common/modal.tpl" .}}
 {{template "common/flash.tpl" .}}
-<table class="ui single line striped collapsing table" id="table_list">
+<table class="ui single line striped collapsing table" id="table_list" style="table-layout:fixed; width:100%;">
     <thead>
     <tr>
         <th class="center aligned">Name</th>
@@ -19,14 +19,14 @@
     <tbody>
     {{ range $i, $s := .stores }}
     <tr>
-        <td class="center aligned">{{ .Name}}</td>
-        <td class="center aligned">{{ .Address}}</td>
-        <td class="center aligned">{{ .Latitude}}</td>
-        <td class="center aligned">{{ .Longitude}}</td>
-        <td class="center aligned">{{ .PhoneNumber}}</td>
-        <td class="center aligned">{{ .Company.Name}}</td>
-        <td class="center aligned">{{range .Managers}} <a class="ui olive label">{{.Name}}</a>{{end}}</td>
-        <td class="center aligned">{{range .Services}} <a class="ui blue label">{{.Name}}</a> {{end}}</td>
+        <td class="center aligned" style="overflow: hidden;text-overflow: ellipsis;">{{ .Name}}</td>
+        <td class="center aligned" style="overflow: hidden;text-overflow: ellipsis;">{{ .Address}}</td>
+        <td class="center aligned" style="overflow: hidden;text-overflow: ellipsis;">{{ .Latitude}}</td>
+        <td class="center aligned" style="overflow: hidden;text-overflow: ellipsis;">{{ .Longitude}}</td>
+        <td class="center aligned" style="overflow: hidden;text-overflow: ellipsis;">{{ .PhoneNumber}}</td>
+        <td class="center aligned" style="overflow: hidden;text-overflow: ellipsis;">{{ .Company.Name}}</td>
+        <td class="center aligned" style="overflow: hidden;text-overflow: ellipsis;">{{range .Managers}} <a class="ui olive label">{{.Name}}</a>{{end}}</td>
+        <td class="center aligned" style="overflow: hidden;text-overflow: ellipsis;">{{range .Services}} <a class="ui blue label">{{.Name}}</a> {{end}}</td>
         <td class="center aligned">
             <button type="button"
                     class="ui basic button"

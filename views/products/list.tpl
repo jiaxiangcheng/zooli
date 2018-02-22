@@ -1,6 +1,6 @@
 <h1 class="ui header" style="text-align:center;">Products</h1>
 {{template "common/flash.tpl" .}}
-<table class="ui single line striped collapsing table" id="table_list">
+<table class="ui single line striped collapsing table" id="table_list" style="table-layout:fixed; width:100%;">
     <thead>
     <tr>
         <th class="center aligned">Name</th>
@@ -15,11 +15,11 @@
     <tbody>
     {{ range .products }}
     <tr>
-        <td class="center aligned">{{ .Name}}</td>
-        <td class="center aligned">{{ .Description}}</td>
-        <td class="center aligned">{{ .Value}}</td>
-        <td class="center aligned"></td>
-        <td class="center aligned">{{ .Service.Name}}</td>
+        <td class="center aligned" style="overflow: hidden;text-overflow: ellipsis;">{{ .Name}}</td>
+        <td class="center aligned" style="overflow: hidden;text-overflow: ellipsis;">{{ .Description}}</td>
+        <td class="center aligned" style="overflow: hidden;text-overflow: ellipsis;">{{ .Value}}</td>
+        <td class="center aligned" style="overflow: hidden;text-overflow: ellipsis;"></td>
+        <td class="center aligned" style="overflow: hidden;text-overflow: ellipsis;">{{ .Service.Name}}</td>
         <td class="center aligned">
             <button type="button"
                     class="ui basic button"

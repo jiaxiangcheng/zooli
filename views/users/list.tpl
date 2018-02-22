@@ -1,7 +1,7 @@
 <h1 class="ui header" style="text-align:center;">Users</h1>
 {{template "common/modal.tpl" .}}
 {{template "common/flash.tpl" .}}
-<table class="ui single line striped collapsing table" id="table_list">
+<table class="ui single line striped collapsing table" id="table_list" style="table-layout:fixed; width:100%;">
     <thead>
     <tr>
         <th class="center aligned">Username</th>
@@ -15,10 +15,10 @@
     <tbody>
     {{ range .users }}
     <tr>
-        <td class="center aligned">{{ .Username}}</td>
-        <td class="center aligned">{{ .Role.Name}}</td>
-        <td class="center aligned">{{ .Name}}</td>
-        <td class="center aligned">{{ .Email}}</td>
+        <td class="center aligned" style="overflow: hidden;text-overflow: ellipsis;">{{ .Username}}</td>
+        <td class="center aligned" style="overflow: hidden;text-overflow: ellipsis;">{{ .Role.Name}}</td>
+        <td class="center aligned" style="overflow: hidden;text-overflow: ellipsis;">{{ .Name}}</td>
+        <td class="center aligned" style="overflow: hidden;text-overflow: ellipsis;">{{ .Email}}</td>
         <td class="center aligned">
             <button type="button"
                     class="ui basic button"
