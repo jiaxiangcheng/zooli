@@ -1,16 +1,11 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>ZOOLI</title>
-        <link rel="shortcut icon" href="/static/img/logo/pear.ico">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ZOOLI</title>
+<link rel="shortcut icon" href="/static/img/logo/pear.ico">
+{{ template "common/header.tpl"}}
 
-    {{ template "common/header.tpl"}}
-
-    </head>
-    <body>
+<body>
     <div class="ui huge blue inverted borderless fixed fluid menu">
 
         <a class="item" href="/dashboard">
@@ -23,9 +18,7 @@
         </div>
     </div>
 
-
-            {{.LayoutContent}}
+    {{.LayoutContent}}
 
     <script type="text/javascript" src="/static/js/canvas-nest.min.js"></script>
-    </body>
-</html>
+</body>
