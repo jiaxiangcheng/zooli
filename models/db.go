@@ -94,7 +94,7 @@ func GenerateRandomDataset() {
 		m.SetPassword("111111")
 		source := rand.NewSource(time.Now().UnixNano())
 		ran := rand.New(source)
-		if ran.Intn(10) > 2 {
+		if ran.Intn(10) > 4 {
 			m.StoreID = uint(ran.Intn(storeCount) + 1)
 		}
 		m.Insert()
