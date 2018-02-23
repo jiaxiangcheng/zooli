@@ -15,6 +15,7 @@ type UsersController struct {
 }
 
 func (c *UsersController) Get() {
+	beego.Info("sadsad")
 	c.Data["users"] = models.FindUsers()
 	c.TplName = "admin/users/list.tpl"
 }

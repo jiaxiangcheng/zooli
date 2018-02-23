@@ -1,7 +1,15 @@
 <h1 class="ui header" style="text-align:center;">Users</h1>
 {{template "common/modal.tpl" .}}
 {{template "common/flash.tpl" .}}
-<table class="ui single line striped collapsing table" id="table_list" style="table-layout:fixed; width:100%;">
+{{template "admin/users/form/header.tpl" .}}
+
+<script>
+    $(document).ready(function(){
+        $('#example').DataTable();
+    });
+</script>
+
+<table class="ui single line striped collapsing table" id="example" style="table-layout:fixed; width:100%;">
     <thead>
     <tr>
         <th class="center aligned">Username</th>
@@ -39,6 +47,8 @@
     {{ end }}
     </tbody>
 </table>
+
+
 
 <div class="ui middle aligned center aligned grid">
     <button type="button"
