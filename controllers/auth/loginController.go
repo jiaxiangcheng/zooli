@@ -37,7 +37,9 @@ func (c *LoginController) Login() {
 		c.SetSession("user", u)
 		//c.Data["hasStore"] = u.StoreID != uint(0)
 		//beego.Info(c.Data["hasStore"])
+
 		c.Redirect("/dashboard", 302)
+		
 	} else {
 		c.SetSession("userInfo", u)
 		flash.Error("Wrong username password combination")

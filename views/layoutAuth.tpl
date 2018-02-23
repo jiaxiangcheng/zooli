@@ -31,53 +31,55 @@
     </div>
 
     <div class="ui grid">
-        <div class="row">
-            <div class="column" id="sidebar">
-                <div class="ui secondary vertical fluid menu" id="nav_menu">
-                    <a class="item" href="/dashboard">
-                        <span><i class="dashboard icon"></i>Dashboard</span>
-                    </a>
+    <div class="row">
+        <div class="column" id="sidebar">
+            <div class="ui secondary vertical fluid menu" id="nav_menu">
+                <a class="item" href="/dashboard">
+                    <span><i class="dashboard icon"></i>Dashboard</span>
+                </a>
 
-                    {{ if eq .user.Role.Name .roleAdmin}}
+                {{ if eq .user.Role.Name .roleAdmin}}
 
-                    <a class="item" href="/users">
-                        <span><i class="users icon"></i>Users</span>
-                    </a>
-                    <a class="item" href="/companies">
-                        <span><i class="world icon"></i>Companies</span>
-                    </a>
-                    <a class="item" href="/services">
-                        <span><i class="cubes icon"></i>Services</span>
-                    </a>
-                    <a class="item" href="/stores">
-                        <span><i class="shopping bag icon"></i>Stores</span>
-                    </a>
-                    <div class="ui hidden divider"></div>
+                <a class="item" href="/admin/users">
+                    <span><i class="users icon"></i>Users</span>
+                </a>
+                <a class="item" href="/admin/companies">
+                    <span><i class="world icon"></i>Companies</span>
+                </a>
+                <a class="item" href="/admin/services">
+                    <span><i class="cubes icon"></i>Services</span>
+                </a>
+                <a class="item" href="/admin/stores">
+                    <span><i class="shopping bag icon"></i>Stores</span>
+                </a>
+                <div class="ui hidden divider"></div>
 
-                    <a class="item" href="/analytics">
-                        <span><i class="bar chart icon"></i>Analytics</span>
-                    </a>
-                    {{end}}
+                <a class="item" href="/admin/analytics">
+                    <span><i class="bar chart icon"></i>Analytics</span>
+                </a>
+                {{end}}
 
-                    {{ if eq .user.Role.Name .roleManager}}
-                        <a class="item" href="/manager-store">
+                {{ if eq .user.Role.Name .roleManager}}
+                    {{if .user.StoreID}}
+                        <a class="item" href="/public/store">
                             <span><i class="world icon"></i>My Store</span>
                         </a>
 
-                        <a class="item" href="/orders">
+                        <a class="item" href="/public/orders">
                             <span><i class="payment icon"></i>Orders</span>
                         </a>
 
-                        <a class="item" href="/products">
+                        <a class="item" href="/public/products">
                             <span><i class="cubes icon"></i>Products</span>
                         </a>
                     {{end}}
-                </div>
+                {{end}}
             </div>
+        </div>
 
-            <div class="column" id="main_content">
-            {{.LayoutContent}}
-            </div>
+        <div class="column" id="main_content">
+        {{.LayoutContent}}
+        </div>
         </div>
     </div>
     <script type="text/javascript" src="/static/js/canvas-nest.min.js"></script>
