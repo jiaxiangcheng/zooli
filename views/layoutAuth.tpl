@@ -43,37 +43,39 @@
 
                 {{ if eq .user.Role.Name .roleAdmin}}
 
-                <a class="item" href="/users">
+                <a class="item" href="/admin/users">
                     <span><i class="users icon"></i>Users</span>
                 </a>
-                <a class="item" href="/companies">
+                <a class="item" href="/admin/companies">
                     <span><i class="world icon"></i>Companies</span>
                 </a>
-                <a class="item" href="/services">
+                <a class="item" href="/admin/services">
                     <span><i class="cubes icon"></i>Services</span>
                 </a>
-                <a class="item" href="/stores">
+                <a class="item" href="/admin/stores">
                     <span><i class="shopping bag icon"></i>Stores</span>
                 </a>
                 <div class="ui hidden divider"></div>
 
-                <a class="item" href="/analytics">
+                <a class="item" href="/admin/analytics">
                     <span><i class="bar chart icon"></i>Analytics</span>
                 </a>
                 {{end}}
 
                 {{ if eq .user.Role.Name .roleManager}}
-                    <a class="item" href="/manager-store">
-                        <span><i class="world icon"></i>My Store</span>
-                    </a>
+                    {{if .user.StoreID}} 
+                        <a class="item" href="/public/store">
+                            <span><i class="world icon"></i>My Store</span>
+                        </a>
 
-                    <a class="item" href="/orders">
-                        <span><i class="payment icon"></i>Orders</span>
-                    </a>
+                        <a class="item" href="/public/orders">
+                            <span><i class="payment icon"></i>Orders</span>
+                        </a>
 
-                    <a class="item" href="/products">
-                        <span><i class="cubes icon"></i>Products</span>
-                    </a>
+                        <a class="item" href="/public/products">
+                            <span><i class="cubes icon"></i>Products</span>
+                        </a>
+                    {{end}}
                 {{end}}
             </div>
         </div>
