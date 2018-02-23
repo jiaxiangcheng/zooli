@@ -38,11 +38,11 @@ func (c *ProductsController) Edit() {
 		c.Redirect("/products", 302)
 		return
 	}
-
+    c.Data["services"] = models.FindServices()
 	c.Data["productForm"] = product
 	c.TplName = "products/edit.tpl"
 }
-/*
+
 func (c *ProductsController) New() {
 
 	//get the product session and load if exist
@@ -51,7 +51,7 @@ func (c *ProductsController) New() {
 		c.DelSession("productInfo")
 		c.Data["productForm"] = product.(models.Product)
 	}
-
+    c.Data["services"] = models.FindServices()
 	c.TplName = "products/new.tpl"
 }
 
@@ -84,7 +84,7 @@ func (c *ProductsController) Create() {
 	flash.Store(&c.Controller)
 	c.Redirect("/products", 303)
 }
-*/
+
 func (c *ProductsController) Update() {
 	//init object for error control
 	flash := beego.NewFlash()
@@ -128,7 +128,6 @@ func (c *ProductsController) Update() {
 	c.Redirect("/products/" + strconv.Itoa(id), 302)
 }
 
-/*
 func (c *ProductsController) Delete() {
 	flash := beego.NewFlash()
 
@@ -151,7 +150,6 @@ func (c *ProductsController) Delete() {
 	flash.Store(&c.Controller)
 	c.Redirect("/products", 303)
 }
-*/
 
 func (c *ProductsController) getProduct() (models.Product, error) {
 	product := models.Product{
@@ -163,7 +161,6 @@ func (c *ProductsController) getProduct() (models.Product, error) {
 	}
 
     value, err := c.GetFloat("value")
-	beego.Debug(value)
 	if err != nil {
 		return product, err
 	}

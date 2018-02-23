@@ -60,7 +60,7 @@
 </style>
 
 <script type="text/javascript">
-    /*function newProducts() {
+    function newProducts() {
         $.ajax({
             async: false,
             type: "get",
@@ -69,7 +69,7 @@
                 $('#main_content').html(data);
             }
         });
-    }*/
+    }
 
     function editProducts(product_id) {
         $.ajax({
@@ -81,7 +81,7 @@
             }
         });
     }
-    /*
+
     function deleteProducts(product_id) {
         $.ajax({
             async: false,
@@ -91,5 +91,5 @@
                 $('#main_content').html(data);
             }
         });
-    }*/
+    }
 </script>

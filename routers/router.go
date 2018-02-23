@@ -50,9 +50,13 @@ func init() {
 	beego.Router("/services/:id([0-9]+", &business.ServicesController{}, "delete:Delete")
 
 	beego.Router("/orders", &business.OrdersController{}, "get:Get")
+
 	beego.Router("/products", &business.ProductsController{}, "get:Get")
+	beego.Router("/products/new", &business.ProductsController{}, "get:New")
+	beego.Router("/products/new", &business.ProductsController{}, "post:Create")
 	beego.Router("/products/:id([0-9]+", &business.ProductsController{}, "get:Edit")
 	beego.Router("/products/:id([0-9]+", &business.ProductsController{}, "post:Update")
+	beego.Router("/products/:id([0-9]+", &business.ProductsController{}, "delete:Delete")
 
 	beego.Router("/dont_use-long_name-and_bar", &controllers.MainController{}, "get:RandomData")
 
