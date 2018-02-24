@@ -35,8 +35,6 @@ func (c *LoginController) Login() {
 	u := models.FindUserByUsername(c.GetString("username"))
 	if u.ValidPassword(c.GetString("password")) {
 		c.SetSession("user", u)
-		//c.Data["hasStore"] = u.StoreID != uint(0)
-		//beego.Info(c.Data["hasStore"])
 
 		c.Redirect("/dashboard", 302)
 		
