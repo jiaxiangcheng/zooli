@@ -109,6 +109,26 @@
 <script>
     $(document)
             .ready(function() {
+                var preview = document.getElementById('preview');
+                $("#imgCloser").click(function () {
+                    $('#poster').val('');
+                    $('#oldImage').val("");
+                    preview.src = "";
+                    preview.parentNode.style.display = 'none';
+                });
+
+                $("#poster").change(function () {
+                    if (event.target.files.length > 0) {
+                        preview.src = URL.createObjectURL(event.target.files[0]);
+                        preview.parentNode.style.display = 'inline';
+                    } else {
+                        preview.src = "";
+                        preview.parentNode.style.display = 'none';
+                    }
+                });
+
+
+
                 $('.dropdown').dropdown();
                 {{if .storeForm}}
                     $('#services').dropdown('set selected', [{{range $i, $s := .storeForm.Services}}{{if $i}},{{end}}{{$s.Name}}{{end}}]);
@@ -177,31 +197,4 @@
                             }
                         });
             });
-</script>
-
-
-
-<script>
-    $(document).ready( function () {
-        var preview = document.getElementById('preview');
-        $("#imgCloser").click(function () {
-            $('#poster').val('');
-            $('#oldImage').val("");
-            preview.src = "";
-            preview.parentNode.style.display = 'none';
-        });
-
-        $("#poster").change(function () {
-            if (event.target.files.length > 0) {
-                preview.src = URL.createObjectURL(event.target.files[0]);
-                preview.parentNode.style.display = 'inline';
-            } else {
-                preview.src = "";
-                preview.parentNode.style.display = 'none';
-            }
-        });
-
-
-
-    });
 </script>

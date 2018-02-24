@@ -72,6 +72,7 @@ func GenerateRandomDataset() {
 				Longitude: ran.Float64()*180,
 				PhoneNumber: fake.Phone(),
 				CompanyID: uint(i),
+				Image: "",
 			}
 			source = rand.NewSource(time.Now().UnixNano())
 			ran = rand.New(source)
@@ -178,47 +179,47 @@ func Connect() error {
 //创建数据库
 func createDB() {
 
-	db_type := beego.AppConfig.String("db_type")
-	db_host := beego.AppConfig.String("db_host")
-	db_port := beego.AppConfig.String("db_port")
-	db_user := beego.AppConfig.String("db_user")
-	db_pass := beego.AppConfig.String("db_pass")
-	db_name := beego.AppConfig.String("db_name")
-	db_path := beego.AppConfig.String("db_path")
-	db_sslmode := beego.AppConfig.String("db_sslmode")
+	dbType := beego.AppConfig.String("db_type")
+	dbHost := beego.AppConfig.String("db_host")
+	dbPort := beego.AppConfig.String("db_port")
+	dbUser := beego.AppConfig.String("db_user")
+	dbPass := beego.AppConfig.String("db_pass")
+	dbName := beego.AppConfig.String("db_name")
+	dbPath := beego.AppConfig.String("db_path")
+	dbSslmode := beego.AppConfig.String("db_sslmode")
 
 	var dsn string
 	var sqlstring string
-	switch db_type {
+	switch dbType {
 	case "mysql":
-		dsn = fmt.Sprintf("%s:%s@tcp(%s:%s)/?charset=utf8&parseTime=True&loc=Local", db_user, db_pass, db_host, db_port)
-		sqlstring = fmt.Sprintf("CREATE DATABASE  if not exists `%s` CHARSET utf8 COLLATE utf8_general_ci", db_name)
+		dsn = fmt.Sprintf("%s:%s@tcp(%s:%s)/?charset=utf8&parseTime=True&loc=Local", dbUser, dbPass, dbHost, dbPort)
+		sqlstring = fmt.Sprintf("CREATE DATABASE  if not exists `%s` CHARSET utf8 COLLATE utf8_general_ci", dbName)
 		break
 	case "postgres":
-		dsn = fmt.Sprintf("host=%s  user=%s  password=%s  port=%s  sslmode=%s", db_host, db_user, db_pass, db_port, db_sslmode)
-		sqlstring = fmt.Sprintf("CREATE DATABASE %s", db_name)
+		dsn = fmt.Sprintf("host=%s  user=%s  password=%s  port=%s  sslmode=%s", dbHost, dbUser, dbPass, dbPort, dbSslmode)
+		sqlstring = fmt.Sprintf("CREATE DATABASE %s", dbName)
 		break
 	case "sqlite3":
-		if db_path == "" {
-			db_path = "./"
+		if dbPath == "" {
+			dbPath = "./"
 		}
-		dsn = fmt.Sprintf("%s%s.db", db_path, db_name)
+		dsn = fmt.Sprintf("%s%s.db", dbPath, dbName)
 		os.Remove(dsn)
 		sqlstring = "create table init (n varchar(32));drop table init;"
 		break
 	case "mssql":
-		dsn = fmt.Sprintf("sqlserver://%s:%s@%s:%s?database=%s", db_user, db_pass, db_host, db_port, db_name)
-		sqlstring = fmt.Sprintf("CREATE DATABASE %s", db_name)
+		dsn = fmt.Sprintf("sqlserver://%s:%s@%s:%s?database=%s", dbUser, dbPass, dbHost, dbPort, dbName)
+		sqlstring = fmt.Sprintf("CREATE DATABASE %s", dbName)
 		break
 	default:
-		beego.Critical("Database driver is not allowed:", db_type)
+		beego.Critical("Database driver is not allowed:", dbType)
 	}
-	db, err := gorm.Open(db_type, dsn)
+	db, err := gorm.Open(dbType, dsn)
 	if err != nil {
 		panic(err.Error())
 	}
 	db.Exec(sqlstring)
-	log.Println("Database ", db_name, " created")
+	log.Println("Database ", dbName, " created")
 
 	defer db.Close()
 }

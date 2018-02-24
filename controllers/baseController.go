@@ -42,11 +42,16 @@ func (c *BaseController) GetString(key string, def ...string) string {
 Using form key and specify format to upload a file.
 Return path and error if exists.
 */
-func (c *BaseController) UploadFile(key string, format string) (string, error) {
-	path := ""
-	f, header, err := c.GetFile(key)
-
+func (c *BaseController) UploadFile(key string, format string, defaultPath string) (string, error) {
+	path := defaultPath
+	f, h, err := c.GetFile(key)
+	if err != nil {
+		return path, err
+	}
 	defer f.Close()
+	if h.Filename == "" {
+		return path, nil
+	}
 	buff := make([]byte, 512) // docs tell that it take only first 512 bytes into consideration
 	if _, err = f.Read(buff); err != nil {
 		return "", err
@@ -58,8 +63,7 @@ func (c *BaseController) UploadFile(key string, format string) (string, error) {
 		}
 
 		// get the filename
-		fileName := header.Filename
-		path = EXTERNAL_FILE_STORAGE + strconv.FormatInt(time.Now().Unix(), 10) + fileName
+		path = EXTERNAL_FILE_STORAGE + strconv.FormatInt(time.Now().Unix(), 10) + h.Filename
 		// save to server
 		if err := c.SaveToFile(key, path); err != nil {
 			return "", err
@@ -67,5 +71,5 @@ func (c *BaseController) UploadFile(key string, format string) (string, error) {
 	} else {
 		return "", errors.New("the upload file has incorrect format")
 	}
-	return path, nil
+	return c.Ctx.Input.Site() + ":" + strconv.Itoa(c.Ctx.Input.Port()) + "/" + path, nil
 }
