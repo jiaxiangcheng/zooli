@@ -1,20 +1,10 @@
 <h1 class="ui header" style="text-align:center;">Users</h1>
 {{template "common/modal.tpl" .}}
 {{template "common/flash.tpl" .}}
+<div class="ui divider"></div>
 
-<div class="ui left aligned grid">
-    <button type="button"
-            title="View user"
-            id="create_btn"
-            class="ui blue basic big button"
-            onclick="newUser();"
-            style="margin: 15px;">
-        <i class="add user icon"></i>
-        Create user
-    </button>
-</div>
-
-<table class="ui single line striped collapsing table" id="users-table">
+<table class="ui single line striped collapsing table" id="users-table"
+    style="margin-left:auto; margin-right:auto; table-layout:fixed; width:100%;">
     <thead>
     <tr>
         <th class="center aligned">Username</th>
@@ -55,11 +45,10 @@
     </tbody>
 </table>
 
-    
-<div class="ui left aligned grid">
+
+<div class="ui middle aligned center aligned grid">
     <button type="button"
             title="View user"
-            id="create_btn"
             class="ui blue basic big button"
             onclick="newUser();"
             style="margin: 15px;">
@@ -117,6 +106,3 @@
                 .modal('show');
     }
 </script>
-
-
-    

@@ -1,7 +1,10 @@
 <h1 class="ui header" style="text-align:center;">Stores</h1>
 {{template "common/modal.tpl" .}}
 {{template "common/flash.tpl" .}}
-<table class="ui single line striped collapsing table" id="table_list" style="table-layout:fixed; width:100%;">
+<div class="ui divider"></div>
+
+<table class="ui single line striped collapsing table" id="stores-table"
+    style="margin-left:auto; margin-right:auto; table-layout:fixed; width:100%;">
     <thead>
     <tr>
         <th class="center aligned">Name</th>
@@ -51,7 +54,7 @@
 <div class="ui middle aligned center aligned grid">
     <button type="button"
             title="View store"
-            class="ui basic big button"
+            class="ui blue basic big button"
             onclick="newStore();"
             style="margin: 15px;">
         <i class="add store icon"></i>
@@ -59,14 +62,12 @@
     </button>
 </div>
 
-<style>
-    #table_list {
-       margin-left:auto;
-       margin-right:auto;
-     }
-</style>
-
 <script type="text/javascript">
+
+    $(document).ready(function() {
+        $('#stores-table').DataTable();
+    });
+
     $(document)
             .ready(function() {
                /*$('.dropdown')

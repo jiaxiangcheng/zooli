@@ -1,7 +1,10 @@
 <h1 class="ui header" style="text-align:center;">Companies</h1>
 {{template "common/modal.tpl" .}}
 {{template "common/flash.tpl" .}}
-<table class="ui single line striped collapsing table" id="table_list" style="table-layout:fixed; width:100%;">
+<div class="ui divider"></div>
+
+<table class="ui single line striped collapsing table" id="companies-table"
+    style="margin-left:auto; margin-right:auto; table-layout:fixed; width:100%;">
     <thead>
     <tr>
         <th class="center aligned">Name</th>
@@ -41,21 +44,21 @@
 <div class="ui middle aligned center aligned grid">
     <button type="button"
             title="View company"
-            class="ui basic big button"
+            class="ui blue basic big button"
             onclick="newCompany();"
             style="margin: 15px;">
-        <i class="add company icon"></i>
+        <i class="add icon"></i>
         Create company
     </button>
 </div>
-<style>
-    #table_list {
-       margin-left:auto;
-       margin-right:auto;
-     }
-</style>
+
 
 <script type="text/javascript">
+
+
+    $(document).ready(function() {
+        $('#companies-table').DataTable();
+    });
 
     function newCompany() {
         $.ajax({

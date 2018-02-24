@@ -1,6 +1,9 @@
 <h1 class="ui header" style="text-align:center;">Orders</h1>
 {{template "common/flash.tpl" .}}
-<table class="ui single line striped collapsing table" id="table_list">
+<div class="ui divider"></div>
+
+<table class="ui single line striped collapsing table" id="orders-table"
+    style="margin-left:auto; margin-right:auto; table-layout:fixed; width:100%;">
     <thead>
     <tr>
         <th class="center aligned">Client</th>
@@ -42,7 +45,7 @@
 <div class="ui middle aligned center aligned grid">
     <button type="button"
             title="View user"
-            class="ui basic big button"
+            class="ui blue basic big button"
             onclick="newOrders();"
             style="margin: 15px;">
         <i class="add order icon"></i>
@@ -58,6 +61,11 @@
 </style>
 
 <script type="text/javascript">
+
+    $(document).ready(function() {
+        $('#orders-table').DataTable();
+    });
+
     /*function newOrders() {
         $.ajax({
             async: false,
