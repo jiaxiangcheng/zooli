@@ -168,14 +168,12 @@ func (c *StoresController) getStore() (models.Store, error) {
 	}
 
 	latitude, err := c.GetFloat("latitude")
-	beego.Debug(latitude)
 	if err != nil {
 		return store, err
 	}
 	store.Latitude = latitude
 
 	longitude, err := c.GetFloat("longitude")
-	beego.Debug(longitude)
 	if err != nil {
 		return store, err
 	}
@@ -212,17 +210,14 @@ func (c *StoresController) getStore() (models.Store, error) {
 	}
 
 	// get image
-	_, _, err = c.GetFile("image")
+	defaultImage := c.GetString("oldImage")
+	path, err := c.UploadFile("image", "image", defaultImage)
 	if err != nil {
-		store.Image = c.GetString("oldImage")
+		return store, err
 	} else {
-		path, err := c.UploadFile("image", "image")
-		if err != nil {
-			return store, err
-		} else {
-			store.Image = c.Ctx.Input.Site() + ":" + strconv.Itoa(c.Ctx.Input.Port()) + "/" + path
-		}
+		store.Image = path
 	}
+
 
 	return store, nil
 }
