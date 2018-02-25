@@ -1,11 +1,12 @@
 package public
 
 import (
-    "github.com/Qiaorui/zooli/controllers"
-    "github.com/Qiaorui/zooli/models"
-    "github.com/astaxie/beego"
-    "strconv"
-    utils "github.com/Qiaorui/zooli/controllers/utils"
+	"strconv"
+
+	"github.com/Qiaorui/zooli/controllers"
+	utils "github.com/Qiaorui/zooli/controllers/utils"
+	"github.com/Qiaorui/zooli/models"
+	"github.com/astaxie/beego"
 )
 
 type ProductsController struct {
@@ -36,7 +37,7 @@ func (c *ProductsController) Edit() {
 		c.DelSession("productInfo")
 		product = productSession.(models.Product)
 	} else {
-		id , _ := strconv.Atoi(c.Ctx.Input.Param(":id"))
+		id, _ := strconv.Atoi(c.Ctx.Input.Param(":id"))
 		// load product in DB
 		product = models.FindProductByID(uint(id))
 	}
@@ -116,13 +117,13 @@ func (c *ProductsController) Update() {
 	}
 
 	//get identifier of product
-	id , _ := strconv.Atoi(c.Ctx.Input.Param(":id"))
+	id, _ := strconv.Atoi(c.Ctx.Input.Param(":id"))
 
 	product, err := c.getProduct()
 	if err != nil {
 		flash.Error(err.Error())
 		flash.Store(&c.Controller)
-		c.Redirect("/public/products" + strconv.Itoa(id), 302)
+		c.Redirect("/public/products"+strconv.Itoa(id), 302)
 		return
 	}
 
@@ -143,7 +144,7 @@ func (c *ProductsController) Update() {
 		flash.Error(err.Error())
 		flash.Store(&c.Controller)
 		c.SetSession("productInfo", product)
-		c.Redirect("/public/products/" + strconv.Itoa(id), 302)
+		c.Redirect("/public/products/"+strconv.Itoa(id), 302)
 		return
 	}
 
@@ -153,7 +154,7 @@ func (c *ProductsController) Update() {
 	// load message success and redirect
 	flash.Success("You have updated the product " + product.Name)
 	flash.Store(&c.Controller)
-	c.Redirect("/public/products/" + strconv.Itoa(id), 302)
+	c.Redirect("/public/products/"+strconv.Itoa(id), 302)
 }
 
 func (c *ProductsController) Delete() {
@@ -165,7 +166,7 @@ func (c *ProductsController) Delete() {
 	}
 
 	//get identifier of product
-	id , _ := strconv.Atoi(c.Ctx.Input.Param(":id"))
+	id, _ := strconv.Atoi(c.Ctx.Input.Param(":id"))
 
 	product := models.FindProductByID(uint(id))
 	if !product.Exists() || product.StoreID != s.ID {
@@ -185,11 +186,11 @@ func (c *ProductsController) Delete() {
 
 func (c *ProductsController) getProduct() (models.Product, error) {
 	product := models.Product{
-		Name: c.GetString("name"),
-        Description: c.GetString("description"),
+		Name:        c.GetString("name"),
+		Description: c.GetString("description"),
 	}
 
-    value, err := c.GetFloat("value")
+	value, err := c.GetFloat("value")
 	if err != nil {
 		return product, err
 	}
@@ -210,7 +211,6 @@ func (c *ProductsController) getProduct() (models.Product, error) {
 	} else {
 		product.Image = path
 	}
-
 
 	return product, nil
 }

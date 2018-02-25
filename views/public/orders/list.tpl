@@ -1,4 +1,5 @@
 <h1 class="ui header" style="text-align:center;">Orders</h1>
+{{template "common/modal.tpl" .}}
 {{template "common/flash.tpl" .}}
 <div class="ui divider"></div>
 
@@ -46,7 +47,7 @@
     <button type="button"
             title="View user"
             class="ui blue basic big button"
-            onclick="newOrders();"
+            onclick="newOrder();"
             style="margin: 15px;">
         <i class="add order icon"></i>
         Create order

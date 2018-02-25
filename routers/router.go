@@ -3,12 +3,12 @@ package routers
 import (
 	"github.com/Qiaorui/zooli/controllers"
 	"github.com/Qiaorui/zooli/controllers/admin"
-	"github.com/Qiaorui/zooli/controllers/rbac"
 	"github.com/Qiaorui/zooli/controllers/auth"
 	"github.com/Qiaorui/zooli/controllers/public"
+	"github.com/Qiaorui/zooli/controllers/rbac"
+	"github.com/Qiaorui/zooli/models"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/context"
-	"github.com/Qiaorui/zooli/models"
 )
 
 func init() {
@@ -51,6 +51,11 @@ func init() {
 	beego.Router("admin/services/:id([0-9]+", &admin.ServicesController{}, "delete:Delete")
 
 	beego.Router("public/orders", &public.OrdersController{}, "get:Get")
+	beego.Router("public/orders/new", &public.OrdersController{}, "get:New")
+	beego.Router("public/orders/new", &public.OrdersController{}, "post:Create")
+	beego.Router("public/orders/:id([0-9]+", &public.OrdersController{}, "get:Edit")
+	beego.Router("public/orders/:id([0-9]+", &public.OrdersController{}, "post:Update")
+	beego.Router("public/orders/:id([0-9]+", &public.OrdersController{}, "delete:Delete")
 
 	beego.Router("public/products", &public.ProductsController{}, "get:Get")
 	beego.Router("public/products/new", &public.ProductsController{}, "get:New")
@@ -58,7 +63,6 @@ func init() {
 	beego.Router("public/products/:id([0-9]+", &public.ProductsController{}, "get:Edit")
 	beego.Router("public/products/:id([0-9]+", &public.ProductsController{}, "post:Update")
 	beego.Router("public/products/:id([0-9]+", &public.ProductsController{}, "delete:Delete")
-
 
 	beego.Router("/dont_use-long_name-and_bar", &controllers.MainController{}, "get:RandomData")
 
@@ -84,7 +88,7 @@ var LoggedInFilter = func(ctx *context.Context) {
 var AdminFilter = func(ctx *context.Context) {
 	user := ctx.Input.Session("user").(models.User)
 
-	if  user.Role.Name != models.ROLE_ADMIN {
+	if user.Role.Name != models.ROLE_ADMIN {
 		ctx.Redirect(302, "/dashboard")
 	}
 }
@@ -92,7 +96,7 @@ var AdminFilter = func(ctx *context.Context) {
 var ManagerFilter = func(ctx *context.Context) {
 	user := ctx.Input.Session("user").(models.User)
 
-	if  user.Role.Name != models.ROLE_MANAGER {
+	if user.Role.Name != models.ROLE_MANAGER {
 		ctx.Redirect(302, "/dashboard")
 	}
 }

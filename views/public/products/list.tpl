@@ -1,4 +1,5 @@
 <h1 class="ui header" style="text-align:center;">Products</h1>
+{{template "common/modal.tpl" .}}
 {{template "common/flash.tpl" .}}
 <div class="ui divider"></div>
 
