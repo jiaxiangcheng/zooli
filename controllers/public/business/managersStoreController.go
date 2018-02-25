@@ -12,15 +12,17 @@ type ManagersStoreController struct {
 }
 
 func (c *ManagersStoreController) Edit() {
-	store, _ := GetCurrentStore(&c.BaseController)
-
+	store, err := GetCurrentStore(&c.BaseController)
+	if err != nil {
+		c.Redirect("/dashboard", 302)
+	}
 	c.Data["storeForm"] = store
 	c.TplName = "public/store/edit.tpl"
 }
 
 func (c *ManagersStoreController) Update() {
 	flash := beego.NewFlash()
-	storeUpdated, err := c.getStore()
+	store, err := c.getStore()
 	if err != nil {
 		flash.Error(err.Error())
 		flash.Store(&c.Controller)
@@ -28,14 +30,14 @@ func (c *ManagersStoreController) Update() {
 		return
 	}
 
-	if !storeUpdated.Exists() {
+	if !store.Exists() {
 		flash.Error("Incorrect store id")
 		flash.Store(&c.Controller)
 		c.Redirect("/dashboard", 302)
 		return
 	}
 
-	err = utils.Validate(storeUpdated)
+	err = utils.Validate(store)
 
 	//load the error, save the form fields and redirect
 	if err != nil {
@@ -46,7 +48,7 @@ func (c *ManagersStoreController) Update() {
 	}
 
 	//update the store
-	storeUpdated.Update()
+	store.Update()
 
 	// load message success and redirect
 	flash.Success("You have update the store")
