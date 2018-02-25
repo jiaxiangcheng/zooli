@@ -8,6 +8,7 @@ import (
 	"github.com/Qiaorui/zooli/controllers/public"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/context"
+	"github.com/Qiaorui/zooli/models"
 )
 
 func init() {
@@ -62,6 +63,9 @@ func init() {
 	beego.Router("/dont_use-long_name-and_bar", &controllers.MainController{}, "get:RandomData")
 
 	beego.InsertFilter("*", beego.BeforeRouter, LoggedInFilter)
+	beego.InsertFilter("admin/*", beego.BeforeRouter, AdminFilter)
+	beego.InsertFilter("public/*", beego.BeforeRouter, ManagerFilter)
+
 }
 
 var LoggedInFilter = func(ctx *context.Context) {
@@ -73,6 +77,22 @@ var LoggedInFilter = func(ctx *context.Context) {
 		ctx.Redirect(302, "/login")
 	}
 	if user != nil && ctx.Request.RequestURI == "/login" {
+		ctx.Redirect(302, "/dashboard")
+	}
+}
+
+var AdminFilter = func(ctx *context.Context) {
+	user := ctx.Input.Session("user").(models.User)
+
+	if  user.Role.Name != models.ROLE_ADMIN {
+		ctx.Redirect(302, "/dashboard")
+	}
+}
+
+var ManagerFilter = func(ctx *context.Context) {
+	user := ctx.Input.Session("user").(models.User)
+
+	if  user.Role.Name != models.ROLE_MANAGER {
 		ctx.Redirect(302, "/dashboard")
 	}
 }
