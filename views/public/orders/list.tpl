@@ -24,7 +24,7 @@
         <td class="center aligned">
             <button type="button"
                     class="ui basic button"
-                    onclick="editOrders('{{ .ID}}');">
+                    onclick="editOrder('{{ .ID}}');">
                 View
             </button>
         </td>
@@ -33,7 +33,7 @@
                     class="ui negative button"
                     data-toggle="modal"
                     data-target=".bs-example-modal-sm"
-                    onclick="deleteOrders('{{ .ID}}');">
+                    onclick="deleteOrder('{{ .ID}}');">
                 Delete
             </button>
         </td>
@@ -66,7 +66,7 @@
         $('#orders-table').DataTable();
     });
 
-    /*function newOrders() {
+    function newOrder() {
         $.ajax({
             async: false,
             type: "get",
@@ -87,7 +87,8 @@
             }
         });
     }
-    function deleteOrders(order_id) {
+
+    function deleteOrder(order_id) {
         $.ajax({
             async: false,
             type: "delete",
@@ -96,5 +97,5 @@
                 $('#main_content').html(data);
             }
         });
-    }*/
+    }
 </script>
