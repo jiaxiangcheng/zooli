@@ -56,6 +56,12 @@ func FindProducts() []Product {
 	return p
 }
 
+func FindProductsByStoreID(storeID uint) []Product {
+	var p []Product
+	DB.Where("store_id = ?", storeID).Preload("Service").Preload("Store").Find(&p)
+	return p
+}
+
 func (p *Product) Update() {
 	var pDB Product
 	pDB.ID = p.ID

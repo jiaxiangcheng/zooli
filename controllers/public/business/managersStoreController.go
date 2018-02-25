@@ -16,6 +16,13 @@ func (c *ManagersStoreController) Edit() {
 	if err != nil {
 		c.Redirect("/dashboard", 302)
 	}
+
+	storeSession := c.GetSession("storeInfo")
+	if storeSession != nil {
+		c.DelSession("storeInfo")
+		store = storeSession.(models.Store)
+	}
+
 	c.Data["storeForm"] = store
 	c.TplName = "public/store/edit.tpl"
 }
@@ -26,6 +33,7 @@ func (c *ManagersStoreController) Update() {
 	if err != nil {
 		flash.Error(err.Error())
 		flash.Store(&c.Controller)
+		c.SetSession("storeInfo", store)
 		c.Redirect("/dashboard/", 302)
 		return
 	}
@@ -43,6 +51,7 @@ func (c *ManagersStoreController) Update() {
 	if err != nil {
 		flash.Error(err.Error())
 		flash.Store(&c.Controller)
+		c.SetSession("storeInfo", store)
 		c.Redirect("/dashboard", 302)
 		return
 	}

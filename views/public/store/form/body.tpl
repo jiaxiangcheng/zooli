@@ -60,12 +60,6 @@
     $(document)
             .ready(function() {
                 $('.dropdown').dropdown();
-                {{if .storeForm}}
-                    $('#services').dropdown('set selected', [{{range $i, $s := .storeForm.Services}}{{if $i}},{{end}}{{$s.Name}}{{end}}]);
-                {{end}}
-                {{if .storeForm}}
-                    $('#managers').dropdown('set selected', [{{range $i, $s := .storeForm.Managers}}{{if $i}},{{end}}"{{$s.ID}}"{{end}}]);
-                {{end}}
 
                 $('.ui.form')
                         .form({
