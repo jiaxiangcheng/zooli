@@ -19,8 +19,8 @@
                             processData: false,
                             contentType: false,
                             beforeSend: (settings)=>{
-                            settings.data = new FormData($(".ui.form")[0]);
-                            return settings;
+                                settings.data = new FormData($(".ui.form")[0]);
+                                return settings;
                             },
                             onSuccess    : function(response) {
                                 $('#main_content').html(response);

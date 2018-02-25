@@ -1,4 +1,4 @@
-<form class="ui form">
+<form class="ui form" enctype="multipart/form-data">
     <h2 id="title">
         <i class="world icon"></i>
         New Product
@@ -16,7 +16,13 @@
                         .api({
                             url : 'public/products/new',
                             method : 'POST',
-                            serializeForm : true,
+                            cache: false,
+                            processData: false,
+                            contentType: false,
+                            beforeSend: (settings)=>{
+                            settings.data = new FormData($(".ui.form")[0]);
+                            return settings;
+                            },
                             onSuccess    : function(response) {
                                 $('#main_content').html(response);
                             },

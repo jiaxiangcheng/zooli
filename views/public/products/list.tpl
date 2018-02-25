@@ -9,7 +9,6 @@
         <th class="center aligned">Name</th>
         <th class="center aligned">Description</th>
         <th class="center aligned">Value</th>
-        <th class="center aligned">Image</th>
         <th class="center aligned">Service</th>
         <th class="center aligned"></th>
         <th></th>
@@ -21,7 +20,6 @@
         <td class="center aligned" style="overflow: hidden;text-overflow: ellipsis;">{{ .Name}}</td>
         <td class="center aligned" style="overflow: hidden;text-overflow: ellipsis;">{{ .Description}}</td>
         <td class="center aligned" style="overflow: hidden;text-overflow: ellipsis;">{{ .Value}}</td>
-        <td class="center aligned" style="overflow: hidden;text-overflow: ellipsis;"></td>
         <td class="center aligned" style="overflow: hidden;text-overflow: ellipsis;">{{ .Service.Name}}</td>
         <td class="center aligned">
             <button type="button"

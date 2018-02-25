@@ -14,32 +14,29 @@
             <div class="six wide field">
                 <label>Services</label>
                 <div class="field">
-                        <div class="ui multiple selection dropdown" id="services">
-                            <!-- This will receive comma separated value like 1,2,3 !-->
-                            <input name="services" type="hidden" >
-                            <i class="dropdown icon"></i>
-                            <div class="default text">Services</div>
-                            <div class="menu">
-                                {{ range .services }}
-                                    <div class="item" data-value="{{.Name}}">{{.Name}}</div>
-                                {{end}}
-                            </div>
-                        </div>
+                    <select name="service" class="ui fluid dropdown">
+                        <option value="">Service</option>
+                    {{ range .services }}
+                    {{ if $.productForm }}
+                        <option value="{{.ID}}" {{ if eq .ID $.productForm.ServiceID}} selected {{end}}>{{.Name}}</option>
+                    {{else}}
+                        <option value="{{.ID}}">{{.Name}}</option>
+                    {{end}}
+                    {{end}}
+                    </select>
                 </div>
             </div>
         </div>
     </div>
     <div class="field">
         <label>Description</label>
-        <textarea name="description"
-        type="text" value="{{.productForm.Description}}"
-        placeholder="Type your product description"></textarea>
+        <textarea name="description" type="text" placeholder="Type your product description">{{.productForm.Description}}</textarea>
     </div>
     <div class="field">
-        <div style="width:100%;float:left;position:relative;display:{{if .storeForm.Image}}inline{{else}}none{{end}};">
-            <img class="ui fluid image" id="preview" src="{{.storeForm.Image}}" style="width:100%;max-height:100%;"/>
+        <div style="width:100%;float:left;position:relative;display:{{if .productForm.Image}}inline{{else}}none{{end}};">
+            <img class="ui fluid image" id="preview" src="{{.productForm.Image}}" style="width:100%;max-height:100%;"/>
             <i id="imgCloser" class="close icon" style="position: absolute;top:15px;right:15px;cursor: pointer;"></i>
-            <input type="hidden" id="oldImage" name="oldImage" value="{{.storeForm.Image}}">
+            <input type="hidden" id="oldImage" name="oldImage" value="{{.productForm.Image}}">
         </div>
         <input type="file" accept="image/*" name="image" id="poster">
     </div>
@@ -48,14 +45,29 @@
 <script>
     $(document)
             .ready(function() {
+                var preview = document.getElementById('preview');
+                $("#imgCloser").click(function () {
+                    $('#poster').val('');
+                    $('#oldImage').val("");
+                    preview.src = "";
+                    preview.parentNode.style.display = 'none';
+                });
+
+                $("#poster").change(function () {
+                    if (event.target.files.length > 0) {
+                        preview.src = URL.createObjectURL(event.target.files[0]);
+                        preview.parentNode.style.display = 'inline';
+                    } else {
+                        preview.src = "";
+                        preview.parentNode.style.display = 'none';
+                    }
+                });
+
                 $('.dropdown').dropdown();
-                {{if .productForm}}
-                    $('#services').dropdown('set selected', [{{range $i, $s := .storeForm.Services}}{{if $i}},{{end}}{{$s.Name}}{{end}}]);
-                {{end}}
                 $('.ui.form')
                         .form({
                             fields: {
-                                productname: {
+                                name: {
                                     identifier  : 'name',
                                     rules: [
                                         {
@@ -82,15 +94,6 @@
                                         }
                                     ]
                                 },
-                                image: {
-                                    identifier  : 'phoneNumber',
-                                    rules: [
-                                        {
-                                            type   : 'number',
-                                            prompt : 'Incorrect phone number format'
-                                        }
-                                    ]
-                                },
                                 service: {
                                     identifier  : 'service',
                                     rules: [
@@ -103,30 +106,4 @@
                             }
                         });
             });
-</script>
-
-
-<script>
-    $(document).ready( function () {
-        var preview = document.getElementById('preview');
-        $("#imgCloser").click(function () {
-            $('#poster').val('');
-            $('#oldImage').val("");
-            preview.src = "";
-            preview.parentNode.style.display = 'none';
-        });
-
-        $("#poster").change(function () {
-            if (event.target.files.length > 0) {
-                preview.src = URL.createObjectURL(event.target.files[0]);
-                preview.parentNode.style.display = 'inline';
-            } else {
-                preview.src = "";
-                preview.parentNode.style.display = 'none';
-            }
-        });
-
-
-
-    });
 </script>

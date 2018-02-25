@@ -187,9 +187,6 @@ func (c *ProductsController) getProduct() (models.Product, error) {
 	product := models.Product{
 		Name: c.GetString("name"),
         Description: c.GetString("description"),
-
-        Image: c.GetString("image"),
-        //falta get del service
 	}
 
     value, err := c.GetFloat("value")
@@ -198,6 +195,21 @@ func (c *ProductsController) getProduct() (models.Product, error) {
 	}
 	product.Value = value
 
+	serviceID, err := c.GetInt("service")
+	if err != nil {
+		return product, err
+	}
+	product.ServiceID = uint(serviceID)
+	product.Service = models.FindServiceByID(product.ServiceID)
+
+	// get image
+	defaultImage := c.GetString("oldImage")
+	path, err := c.UploadFile("image", "image", defaultImage)
+	if err != nil {
+		return product, err
+	} else {
+		product.Image = path
+	}
 
 
 	return product, nil
