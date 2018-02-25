@@ -96,6 +96,12 @@ Jquery
 * https://jquery.com/
 * https://www.w3schools.com/jquery/default.asp
 
+### Backend
+* http://www.cnblogs.com/samlin/archive/2010/02/08/log-operation-management.html Logging system
+* http://www.cnblogs.com/hooray/archive/2012/09/05/2672133.html Logging system
+* http://blog.csdn.net/jackljf/article/details/5750577 Logging system
+
+
 ### Docker
 Training
 * https://www.katacoda.com/courses/docker
