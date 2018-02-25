@@ -46,21 +46,16 @@
         <div class="field">
             <label>Company</label>
             <div class="field">
-                {{ if eq .user.Role.Name .roleAdmin}}
-                    <select name="company" class="ui fluid dropdown">
-                        <option value="">Company</option>
-                        {{ range .companies }}
-                            {{ if $.storeForm }}
-                                <option value="{{.ID}}" {{ if eq .ID $.storeForm.CompanyID}} selected {{end}}>{{.Name}}</option>
-                            {{else}}
-                                <option value="{{.ID}}">{{.Name}}</option>
-                            {{end}}
-                        {{end}}
-                    </select>
+                <select name="company" class="ui fluid dropdown">
+                    <option value="">Company</option>
+                {{ range .companies }}
+                {{ if $.storeForm }}
+                    <option value="{{.ID}}" {{ if eq .ID $.storeForm.CompanyID}} selected {{end}}>{{.Name}}</option>
                 {{else}}
-                    <div>{{.company.Name}}</div>
+                    <option value="{{.ID}}">{{.Name}}</option>
                 {{end}}
-
+                {{end}}
+                </select>
             </div>
         </div>
         <div class="field">

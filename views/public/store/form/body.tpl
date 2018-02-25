@@ -43,13 +43,13 @@
         <div class="field">
             <label>Company</label>
             <div class="field">
-                <div>{{.company.Name}}</div>
+                <div>{{.storeForm.Company.Name}}</div>
             </div>
         </div>
         <div class="field">
             <label>Services</label>
             <div class="field">
-                <div>{{range .services}} <a class="ui blue label">{{.Name}}</a> {{end}}</div>
+                <div>{{range .storeForm.Services}} <a class="ui blue label">{{.Name}}</a> {{end}}</div>
             </div>
         </div>
     </div>

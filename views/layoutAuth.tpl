@@ -82,6 +82,5 @@
         </div>
         </div>
     </div>
-    <script type="text/javascript" src="/static/js/canvas-nest.min.js"></script>
     <script type="text/javascript" src="/static/js/nav.js"></script>
 </body>

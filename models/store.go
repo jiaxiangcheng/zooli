@@ -34,7 +34,7 @@ func (s *Store) Exists() bool {
 
 func FindStoreByID(id uint) Store {
 	var s Store
-	DB.Where("id = ?", id).Preload("Managers").Preload("Services").Find(&s)
+	DB.Where("id = ?", id).Preload("Managers").Preload("Services").Preload("Company").Find(&s)
 	return s
 }
 

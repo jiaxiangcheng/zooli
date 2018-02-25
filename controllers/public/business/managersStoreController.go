@@ -12,13 +12,8 @@ type ManagersStoreController struct {
 }
 
 func (c *ManagersStoreController) Edit() {
-	var store models.Store
-	store = c.getStoreFromDB()
+	store, _ := GetCurrentStore(&c.BaseController)
 
-	c.Data["services"] = models.FindServices()
-
-	company := models.FindCompanyByID(store.CompanyID)
-	c.Data["company"] = company
 	c.Data["storeForm"] = store
 	c.TplName = "public/store/edit.tpl"
 }
@@ -59,7 +54,8 @@ func (c *ManagersStoreController) Update() {
 	c.Redirect("/public/store", 302)
 }
 
-func (c *ManagersStoreController) getStoreFromDB() models.Store {
+/*
+func (c *ManagersStoreController) GetStoreFromDB() models.Store {
 	manager := c.GetSession("user")
 	id := manager.(models.User).StoreID
 	var store models.Store
@@ -67,11 +63,12 @@ func (c *ManagersStoreController) getStoreFromDB() models.Store {
 
 	return store
 }
+*/
 
 func (c *ManagersStoreController) getStore() (models.Store, error) {
 
 	// var store models.Store
-	var storeDb (models.Store) = c.getStoreFromDB()
+	storeDb, _ := GetCurrentStore(&c.BaseController)
 	store := models.Store{
 		Company:     storeDb.Company,
 		CompanyID:   storeDb.CompanyID,
