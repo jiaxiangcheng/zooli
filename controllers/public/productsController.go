@@ -1,4 +1,4 @@
-package business
+package public
 
 import (
     "github.com/Qiaorui/zooli/controllers"

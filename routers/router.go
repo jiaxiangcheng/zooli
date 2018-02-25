@@ -2,10 +2,10 @@ package routers
 
 import (
 	"github.com/Qiaorui/zooli/controllers"
-	adminBusiness "github.com/Qiaorui/zooli/controllers/admin/business"
-	"github.com/Qiaorui/zooli/controllers/admin/rbac"
+	"github.com/Qiaorui/zooli/controllers/admin"
+	"github.com/Qiaorui/zooli/controllers/rbac"
 	"github.com/Qiaorui/zooli/controllers/auth"
-	publicBusiness "github.com/Qiaorui/zooli/controllers/public/business"
+	"github.com/Qiaorui/zooli/controllers/public"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/context"
 )
@@ -25,38 +25,38 @@ func init() {
 	beego.Router("admin/users/new", &rbac.UsersController{}, "post:Create")
 	beego.Router("admin/users/:id([0-9]+/assign", &rbac.UsersController{}, "post:AssignStore")
 
-	beego.Router("admin/companies", &adminBusiness.CompaniesController{}, "get:Get")
-	beego.Router("admin/companies/new", &adminBusiness.CompaniesController{}, "get:New")
-	beego.Router("admin/companies/new", &adminBusiness.CompaniesController{}, "post:Create")
-	beego.Router("admin/companies/:id([0-9]+", &adminBusiness.CompaniesController{}, "get:Edit")
-	beego.Router("admin/companies/:id([0-9]+", &adminBusiness.CompaniesController{}, "post:Update")
-	beego.Router("admin/companies/:id([0-9]+", &adminBusiness.CompaniesController{}, "delete:Delete")
+	beego.Router("admin/companies", &admin.CompaniesController{}, "get:Get")
+	beego.Router("admin/companies/new", &admin.CompaniesController{}, "get:New")
+	beego.Router("admin/companies/new", &admin.CompaniesController{}, "post:Create")
+	beego.Router("admin/companies/:id([0-9]+", &admin.CompaniesController{}, "get:Edit")
+	beego.Router("admin/companies/:id([0-9]+", &admin.CompaniesController{}, "post:Update")
+	beego.Router("admin/companies/:id([0-9]+", &admin.CompaniesController{}, "delete:Delete")
 
-	beego.Router("admin/stores", &adminBusiness.StoresController{}, "get:Get")
-	beego.Router("admin/stores/new", &adminBusiness.StoresController{}, "get:New")
-	beego.Router("admin/stores/new", &adminBusiness.StoresController{}, "post:Create")
-	beego.Router("admin/stores/:id([0-9]+", &adminBusiness.StoresController{}, "get:Edit")
-	beego.Router("admin/stores/:id([0-9]+", &adminBusiness.StoresController{}, "post:Update")
-	beego.Router("admin/stores/:id([0-9]+", &adminBusiness.StoresController{}, "delete:Delete")
+	beego.Router("admin/stores", &admin.StoresController{}, "get:Get")
+	beego.Router("admin/stores/new", &admin.StoresController{}, "get:New")
+	beego.Router("admin/stores/new", &admin.StoresController{}, "post:Create")
+	beego.Router("admin/stores/:id([0-9]+", &admin.StoresController{}, "get:Edit")
+	beego.Router("admin/stores/:id([0-9]+", &admin.StoresController{}, "post:Update")
+	beego.Router("admin/stores/:id([0-9]+", &admin.StoresController{}, "delete:Delete")
 
-	beego.Router("public/store", &publicBusiness.ManagersStoreController{}, "get:Edit")
-	beego.Router("public/store", &publicBusiness.ManagersStoreController{}, "post:Update")
+	beego.Router("public/store", &public.ManagersStoreController{}, "get:Edit")
+	beego.Router("public/store", &public.ManagersStoreController{}, "post:Update")
 
-	beego.Router("admin/services", &adminBusiness.ServicesController{}, "get:Get")
-	beego.Router("admin/services/new", &adminBusiness.ServicesController{}, "get:New")
-	beego.Router("admin/services/new", &adminBusiness.ServicesController{}, "post:Create")
-	beego.Router("admin/services/:id([0-9]+", &adminBusiness.ServicesController{}, "get:Edit")
-	beego.Router("admin/services/:id([0-9]+", &adminBusiness.ServicesController{}, "post:Update")
-	beego.Router("admin/services/:id([0-9]+", &adminBusiness.ServicesController{}, "delete:Delete")
+	beego.Router("admin/services", &admin.ServicesController{}, "get:Get")
+	beego.Router("admin/services/new", &admin.ServicesController{}, "get:New")
+	beego.Router("admin/services/new", &admin.ServicesController{}, "post:Create")
+	beego.Router("admin/services/:id([0-9]+", &admin.ServicesController{}, "get:Edit")
+	beego.Router("admin/services/:id([0-9]+", &admin.ServicesController{}, "post:Update")
+	beego.Router("admin/services/:id([0-9]+", &admin.ServicesController{}, "delete:Delete")
 
-	beego.Router("public/orders", &publicBusiness.OrdersController{}, "get:Get")
+	beego.Router("public/orders", &public.OrdersController{}, "get:Get")
 
-	beego.Router("public/products", &publicBusiness.ProductsController{}, "get:Get")
-	beego.Router("public/products/new", &publicBusiness.ProductsController{}, "get:New")
-	beego.Router("public/products/new", &publicBusiness.ProductsController{}, "post:Create")
-	beego.Router("public/products/:id([0-9]+", &publicBusiness.ProductsController{}, "get:Edit")
-	beego.Router("public/products/:id([0-9]+", &publicBusiness.ProductsController{}, "post:Update")
-	beego.Router("public/products/:id([0-9]+", &publicBusiness.ProductsController{}, "delete:Delete")
+	beego.Router("public/products", &public.ProductsController{}, "get:Get")
+	beego.Router("public/products/new", &public.ProductsController{}, "get:New")
+	beego.Router("public/products/new", &public.ProductsController{}, "post:Create")
+	beego.Router("public/products/:id([0-9]+", &public.ProductsController{}, "get:Edit")
+	beego.Router("public/products/:id([0-9]+", &public.ProductsController{}, "post:Update")
+	beego.Router("public/products/:id([0-9]+", &public.ProductsController{}, "delete:Delete")
 
 
 	beego.Router("/dont_use-long_name-and_bar", &controllers.MainController{}, "get:RandomData")
