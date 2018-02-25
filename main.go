@@ -7,6 +7,7 @@ import (
 	"github.com/asaskevich/govalidator"
 	"strconv"
 	"os"
+	"regexp"
 )
 
 func main() {
@@ -22,4 +23,10 @@ func main() {
 	//models.DB.LogMode(true)
 
 	beego.Run()
+
+
+	govalidator.TagMap["phone"] = govalidator.Validator(func(str string) bool {
+		match, _ := regexp.MatchString("^[\\d-+]+$", str)
+		return match
+	})
 }

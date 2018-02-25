@@ -10,7 +10,7 @@ type Company struct {
 	gorm.Model				`valid:"-"`
 	Name			string	`gorm:"not null;unique" valid:"required"`
 	Contact			string	`gorm:"not null" valid:"required"`
-	PhoneNumber		string	`valid:"numeric,optional"`
+	PhoneNumber		string	`valid:"phone,optional"`
 	Email			string	`valid:"email,optional"`
 }
 

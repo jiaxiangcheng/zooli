@@ -13,7 +13,7 @@ type Store struct {
 	Address     string		`valid:"-"`
 	Latitude    float64 	`gorm:"not null" valid:"required"`
 	Longitude   float64		`gorm:"not null" valid:"required"`
-	PhoneNumber string		`valid:"numeric,optional"`
+	PhoneNumber string		`valid:"phone,optional"`
 	Image       string		`valid:"url,optional"`
 	Company     Company		`valid:"-" json:"-"`
 	CompanyID   uint		`gorm:"not null" valid:"required"`
