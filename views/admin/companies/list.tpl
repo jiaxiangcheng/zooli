@@ -9,7 +9,7 @@
     <tr>
         <th class="center aligned">Name</th>
         <th class="center aligned">Contact</th>
-        <th class="center aligned">Phone number</th>
+        <th class="center aligned">Phone</th>
         <th class="center aligned">Email</th>
         <th class="center aligned"></th>
         <th></th>

@@ -9,10 +9,8 @@
     <tr>
         <th class="center aligned">Name</th>
         <th class="center aligned">Address</th>
-        <th class="center aligned">Latitude</th>
-        <th class="center aligned">Longitude</th>
-        <th class="center aligned">Phone number</th>
-        <th class="center aligned">Company name</th>
+        <th class="center aligned">Phone</th>
+        <th class="center aligned">Company</th>
         <th class="center aligned">Manager</th>
         <th class="center aligned">Services</th>
         <th class="center aligned"></th>
@@ -24,8 +22,6 @@
     <tr>
         <td class="center aligned" style="overflow: hidden;text-overflow: ellipsis;">{{ .Name}}</td>
         <td class="center aligned" style="overflow: hidden;text-overflow: ellipsis;">{{ .Address}}</td>
-        <td class="center aligned" style="overflow: hidden;text-overflow: ellipsis;">{{ .Latitude}}</td>
-        <td class="center aligned" style="overflow: hidden;text-overflow: ellipsis;">{{ .Longitude}}</td>
         <td class="center aligned" style="overflow: hidden;text-overflow: ellipsis;">{{ .PhoneNumber}}</td>
         <td class="center aligned" style="overflow: hidden;text-overflow: ellipsis;">{{ .Company.Name}}</td>
         <td class="center aligned" style="overflow: hidden;text-overflow: ellipsis;">{{range .Managers}} <a class="ui olive label">{{.Name}}</a>{{end}}</td>
