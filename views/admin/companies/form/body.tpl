@@ -65,7 +65,7 @@
                                     identifier  : 'phoneNumber',
                                     rules: [
                                         {
-                                            type   : 'number',
+                                            type   : 'regExp[^[\\d+-]+$]',
                                             prompt : 'Incorrect phone number format'
                                         }
                                     ]

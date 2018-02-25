@@ -87,6 +87,7 @@
                                 },
                                 value: {
                                     identifier  : 'value',
+                                    optional   : true,
                                     rules: [
                                         {
                                             type   : 'number',
