@@ -7,11 +7,12 @@ import (
 )
 
 type Client struct {
-	gorm.Model				`valid:"-"`
-	Name			string	`gorm:"not null" valid:"-"`
-	PhoneNumber		string	`gorm:"not null" valid:"required,phone"`
-	PasswordHash 	string	`gorm:"not null" valid:"required,alphanum"`
-	Email			string	`gorm:"not null" valid:"required,email"`
+	gorm.Model					`valid:"-"`
+	Name			string		`gorm:"not null" valid:"-"`
+	PhoneNumber		string		`gorm:"not null" valid:"required,phone"`
+	PasswordHash 	string		`gorm:"not null" valid:"required,alphanum"`
+	Email			string		`gorm:"not null" valid:"required,email"`
+	Vehicles		[]Vehicle	`valid:"-" json:"-"`
 }
 
 
@@ -28,13 +29,13 @@ func (c *Client) Exists() bool {
 
 func FindClientByID(id uint) Client {
 	var c Client
-	DB.Where("id = ?", id).Find(&c)
+	DB.Where("id = ?", id).Preload("Vehicles").Find(&c)
 	return c
 }
 
 func FindClients() []Client {
 	var c []Client
-	DB.Find(&c)
+	DB.Preload("Vehicles").Find(&c)
 	return c
 }
 

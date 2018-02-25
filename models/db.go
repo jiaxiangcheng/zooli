@@ -39,14 +39,42 @@ func GenerateRandomDataset() {
 	companyCount := 10
 	managerCount := 400
 	storeCount := 200
-	var services []Service
+	clientCount := 50000
 
+	var services []Service
+	statuses := [...]Status{ORDERED, IN_SERVICE, WAITING_FOR_PAYMENT, FINISHED, CANCELED, END_SERVICE}
+
+	source := rand.NewSource(time.Now().UnixNano())
+	ran := rand.New(source)
 
 	for _, i := range [...]string{"Maintenance", "Wash", "Rent", "Repair", "Gas", "Restaurant", "Hotel"} {
 		s := Service{Name:i}
 		s.Insert()
 		services = append(services, s)
 	}
+
+	for i := 1; i <= clientCount; i++ {
+		c := Client{
+			Name: fake.FullName(),
+			PhoneNumber: fake.Phone(),
+			Email: fake.EmailAddress(),
+		}
+		c.SetPassword("111111")
+
+		c.Insert()
+
+		vCount := ran.Intn(3)
+		for j := 0; j < vCount ; j++ {
+			v := Vehicle{
+				Model: fake.Model(),
+				OwnerID: c.ID,
+				Plate: string(c.Name[0]) + strconv.Itoa(int(c.ID)) + strconv.Itoa(j+1) ,
+			}
+			v.Insert()
+		}
+	}
+
+
 
 	for i := 1; i <= companyCount; i++ {
 		c := Company{
@@ -57,14 +85,11 @@ func GenerateRandomDataset() {
 		}
 		c.ID = uint(i)
 		c.Insert()
-		source := rand.NewSource(time.Now().UnixNano())
-		ran := rand.New(source)
+
 		sc := ran.Intn(3) + 1
 		ss := Shuffle(services)[:sc]
 
 		for j := 0; j < storeCount/companyCount; j++ {
-			source = rand.NewSource(time.Now().UnixNano())
-			ran = rand.New(source)
 			s := Store{
 				Name: "Store " + strconv.Itoa(j),
 				Address: fake.StreetAddress(),
@@ -74,12 +99,37 @@ func GenerateRandomDataset() {
 				CompanyID: uint(i),
 				Image: "",
 			}
-			source = rand.NewSource(time.Now().UnixNano())
-			ran = rand.New(source)
 			ssc := ran.Intn(sc) + 1
 			sss := Shuffle(ss)[:ssc]
 			s.Services = sss
 			s.Insert()
+
+			pCount := ran.Intn(4)
+			for k := 0; k < pCount; k++ {
+				p := Product{
+					Name: fake.ProductName(),
+					Value: float64(int(ran.Float64() * 10000) / 100),
+					StoreID: s.ID,
+					ServiceID: sss[ran.Intn(len(sss))].ID,
+					Description: fake.Paragraph(),
+				}
+
+				p.Insert()
+
+				oCount := ran.Intn(200)
+				for m := 0; m < oCount; m++ {
+					o := Order{
+						ClientID: uint(ran.Intn(clientCount) + 1),
+						Fee: p.Value,
+						ProductID: p.ID,
+						Status: statuses[ran.Intn(len(statuses))],
+					}
+					o.Insert()
+
+				}
+
+			}
+
 		}
 	}
 
@@ -93,13 +143,13 @@ func GenerateRandomDataset() {
 		}
 		m.ID = uint(i)
 		m.SetPassword("111111")
-		source := rand.NewSource(time.Now().UnixNano())
-		ran := rand.New(source)
 		if ran.Intn(10) > 4 {
 			m.StoreID = uint(ran.Intn(storeCount) + 1)
 		}
 		m.Insert()
 	}
+
+
 
 
 }
