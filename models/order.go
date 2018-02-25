@@ -6,13 +6,26 @@ import (
 	"encoding/json"
 )
 
+
+type Status int
+const (
+	ORDERED Status = iota + 1
+	IN_SERVICE
+	END_SERVICE
+	WAITING_FOR_PAYMENT
+	FINISHED
+	CANCELED
+)
+
+
+
 type Order struct {
 	gorm.Model        `valid:"-"`
 	Client    Client  `valid:"-" json:"-"`
-	ClientID  uint    `gorm:"not null" valid:"required,alphanum"`
+	ClientID  uint    `gorm:"not null" valid:"required"`
 	Product   Product `valid:"-" json:"-"`
-	ProductID uint    `gorm:"not null" valid:"required,alphanum"`
-	Status    int     `gorm:"not null" valid:"required,alphanum"`
+	ProductID uint    `gorm:"not null" valid:"required"`
+	Status    Status  `gorm:"not null" valid:"required"`
 	Fee       float64 `valid:"-"`
 }
 
