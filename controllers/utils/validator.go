@@ -58,7 +58,7 @@ func Validate(obj interface{}, validatePK ...bool) error {
 		}
 	case models.Order:
 		//
-	case models.Client:
+	case models.Customer:
 		//
 	case models.Vehicle:
 		if obj.ExistsPlate() {

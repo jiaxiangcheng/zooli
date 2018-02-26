@@ -7,14 +7,14 @@ import (
 )
 
 type Vehicle struct {
-	ID				uint		`gorm:"primary_key" valid:"-"`
-	CreatedAt		time.Time	`valid:"-"`
-	UpdatedAt		time.Time	`valid:"-"`
-	DeletedAt		*time.Time	`sql:"index" valid:"-"`
-	Plate			string		`gorm:"not null;unique" valid:"required"`
-	Model			string		`valid:"-"`
-	Owner			Client		`valid:"-" json:"-"`
-	OwnerID			uint		`gorm:"not null" valid:"required"`
+	ID        uint       `gorm:"primary_key" valid:"-"`
+	CreatedAt time.Time  `valid:"-"`
+	UpdatedAt time.Time  `valid:"-"`
+	DeletedAt *time.Time `sql:"index" valid:"-"`
+	Plate     string     `gorm:"not null;unique" valid:"required"`
+	Model     string     `valid:"-"`
+	Owner     Customer   `valid:"-" json:"-"`
+	OwnerID   uint       `gorm:"not null" valid:"required"`
 }
 
 

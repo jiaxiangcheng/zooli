@@ -6,7 +6,7 @@ import (
 	"encoding/json"
 )
 
-type Client struct {
+type Customer struct {
 	gorm.Model					`valid:"-"`
 	Name			string		`gorm:"not null" valid:"-"`
 	PhoneNumber		string		`gorm:"not null" valid:"required,phone"`
@@ -16,31 +16,31 @@ type Client struct {
 }
 
 
-func (c *Client) Insert() {
+func (c *Customer) Insert() {
 	DB.Create(&c)
-	beego.Debug("Insert Client:", c)
+	beego.Debug("Insert Customer:", c)
 }
 
-func (c *Client) Exists() bool {
+func (c *Customer) Exists() bool {
 	count := 0
-	DB.Where("id = ?", c.ID).Find(&Client{}).Count(&count)
+	DB.Where("id = ?", c.ID).Find(&Customer{}).Count(&count)
 	return count > 0
 }
 
-func FindClientByID(id uint) Client {
-	var c Client
+func FindClientByID(id uint) Customer {
+	var c Customer
 	DB.Where("id = ?", id).Preload("Vehicles").Find(&c)
 	return c
 }
 
-func FindClients() []Client {
-	var c []Client
+func FindClients() []Customer {
+	var c []Customer
 	DB.Preload("Vehicles").Find(&c)
 	return c
 }
 
-func (c *Client) Update() {
-	var cDB Client
+func (c *Customer) Update() {
+	var cDB Customer
 	cDB.ID = c.ID
 	DB.Where(&cDB).First(&cDB)
 
@@ -50,27 +50,27 @@ func (c *Client) Update() {
 	cDB.Email = c.Email
 
 	DB.Save(&cDB)
-	beego.Debug("Update Client:", cDB)
+	beego.Debug("Update Customer:", cDB)
 }
 
-func (c *Client) DeleteSoft() {
+func (c *Customer) DeleteSoft() {
 	DB.Delete(&c)
-	beego.Debug("Delete Client:", c)
+	beego.Debug("Delete Customer:", c)
 }
 
 
-func (c *Client) SetPassword(pass string) {
+func (c *Customer) SetPassword(pass string) {
 	c.PasswordHash = encryptMD5(pass)
 }
 
-func (c *Client) ValidPassword(pass string) bool {
+func (c *Customer) ValidPassword(pass string) bool {
 	if c.PasswordHash == encryptMD5(pass) {
 		return true
 	}
 	return false
 }
 
-func (c Client) String() string {
+func (c Customer) String() string {
 	out, err := json.Marshal(c)
 	if err != nil {
 		beego.Error(err)

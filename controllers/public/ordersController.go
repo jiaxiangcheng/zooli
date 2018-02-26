@@ -91,7 +91,7 @@ func (c *OrdersController) Create() {
 	// fake client
 	clientName := c.GetString("name")
 
-	client := models.Client{
+	client := models.Customer{
 		Name:         clientName,
 		PhoneNumber:  "1234",
 		PasswordHash: "1234",

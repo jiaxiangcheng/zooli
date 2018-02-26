@@ -58,7 +58,7 @@ func GenerateRandomDataset() {
 	}
 
 	for i := 1; i <= clientCount; i++ {
-		c := Client{
+		c := Customer{
 			Name: fake.FullName(),
 			PhoneNumber: fake.Phone(),
 			Email: fake.EmailAddress(),
@@ -191,7 +191,7 @@ func LoadlibDB(db *gorm.DB) {
 	db.AutoMigrate(&User{})
 	db.AutoMigrate(&Product{})
 	db.AutoMigrate(&Store{})
-	db.AutoMigrate(&Client{})
+	db.AutoMigrate(&Customer{})
 	db.AutoMigrate(&Vehicle{})
 	db.AutoMigrate(&Order{})
 	db.AutoMigrate(&OrderLog{})
