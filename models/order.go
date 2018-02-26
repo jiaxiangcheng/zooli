@@ -33,13 +33,14 @@ func (status Status) String() string {
 
 
 type Order struct {
-	gorm.Model        `valid:"-"`
-	Client    Client  `valid:"-" json:"-"`
-	ClientID  uint    `gorm:"not null" valid:"required"`
-	Product   Product `valid:"-" json:"-"`
-	ProductID uint    `gorm:"not null" valid:"required"`
-	Status    Status  `gorm:"not null" valid:"required"`
-	Fee       float64 `valid:"-"`
+	gorm.Model				`valid:"-"`
+	Client		Client		`valid:"-" json:"-"`
+	ClientID	uint		`gorm:"not null" valid:"required"`
+	Product		Product		`valid:"-" json:"-"`
+	ProductID	uint		`gorm:"not null" valid:"required"`
+	Status		Status		`gorm:"not null" valid:"required"`
+	Fee			float64		`valid:"-"`
+	Logs		[]OrderLog	`valid:"-" json:"-"`
 }
 
 
@@ -56,7 +57,7 @@ func (o *Order) Exists() bool {
 
 func FindOrderByID(id uint) Order {
 	var o Order
-	DB.Where("id = ?", id).Find(&o)
+	DB.Where("id = ?", id).Preload("Client").Preload("Product").Preload("Logs").Find(&o)
 	return o
 }
 
