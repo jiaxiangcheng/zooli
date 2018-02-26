@@ -20,5 +20,5 @@
 
     {{.LayoutContent}}
 
-    <script type="text/javascript" src="/static/js/canvas-nest.min.js"></script>
+    <script src="//cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
 </body>
