@@ -47,6 +47,15 @@ type Order struct {
 
 func (o *Order) Insert() {
 	DB.Create(&o)
+	if len(o.Logs) == 0 {
+		l := OrderLog{
+			o.Status,
+			time.Now(),
+			o.ID,
+		}
+		l.Insert()
+	}
+
 	beego.Debug("Insert Order:", o)
 }
 
