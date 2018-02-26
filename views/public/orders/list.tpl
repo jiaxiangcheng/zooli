@@ -78,7 +78,7 @@
         });
     }
 
-    function editOrders(order_id) {
+    function editOrder(order_id) {
         $.ajax({
             async: false,
             type: "get",
