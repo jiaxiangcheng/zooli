@@ -4,6 +4,7 @@ import (
 	"github.com/jinzhu/gorm"
 	"github.com/astaxie/beego"
 	"encoding/json"
+	"time"
 )
 
 
@@ -81,6 +82,14 @@ func (o *Order) Update() {
 	oDB.ID = o.ID
 	DB.Where(&oDB).First(&oDB)
 
+	if oDB.Status != o.Status {
+		l := OrderLog{
+			Status: o.Status,
+			Timestamp: time.Now(),
+			OrderID: o.ID,
+		}
+		l.Insert()
+	}
 	oDB.Status = o.Status
 	oDB.Fee = o.Fee
 

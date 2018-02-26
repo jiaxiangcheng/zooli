@@ -42,7 +42,11 @@ func GenerateRandomDataset() {
 	clientCount := 50000
 
 	var services []Service
-	statuses := [...]Status{ORDERED, IN_SERVICE, WAITING_FOR_PAYMENT, FINISHED, CANCELED, END_SERVICE}
+	statuses := [...]Status{ORDERED, IN_SERVICE, END_SERVICE, WAITING_FOR_PAYMENT, FINISHED}
+
+	startTime := time.Date(2017, 6, 1,0, 0, 0, 0, time.UTC).Unix()
+	endTime := time.Now().Unix()
+	diffTime := int(endTime - startTime)
 
 	source := rand.NewSource(time.Now().UnixNano())
 	ran := rand.New(source)
@@ -93,8 +97,8 @@ func GenerateRandomDataset() {
 			s := Store{
 				Name: "Store " + strconv.Itoa(j),
 				Address: fake.StreetAddress(),
-				Latitude: ran.Float64()*90,
-				Longitude: ran.Float64()*180,
+				Latitude: float64(fake.Latitude()),
+				Longitude: float64(fake.Longitude()),
 				PhoneNumber: fake.Phone(),
 				CompanyID: uint(i),
 				Image: "",
@@ -122,8 +126,32 @@ func GenerateRandomDataset() {
 						ClientID: uint(ran.Intn(clientCount) + 1),
 						Fee: p.Value,
 						ProductID: p.ID,
-						Status: statuses[ran.Intn(len(statuses))],
 					}
+					var targetStatus int
+					if ran.Intn(10) > 5 {
+						targetStatus = len(statuses) - 1
+					} else {
+						targetStatus = ran.Intn(len(statuses))
+					}
+					tmpT := time.Unix(startTime + int64(ran.Intn(diffTime)), 0)
+					for n := 0; n <= targetStatus; n++ {
+						tmpT = tmpT.Add( time.Hour * time.Duration(ran.Intn(24)))
+						ol := OrderLog{
+							Status: statuses[n],
+							Timestamp: tmpT,
+						}
+						o.Logs = append(o.Logs, ol)
+						if ran.Intn(20) < 2 {
+							olc := OrderLog{
+								Status: CANCELED,
+								Timestamp: tmpT.Add( time.Hour * time.Duration(ran.Intn(24))),
+							}
+							o.Logs = append(o.Logs, olc)
+							break
+						}
+					}
+					o.Status = o.Logs[len(o.Logs)-1].Status
+
 					o.Insert()
 
 				}
@@ -166,17 +194,18 @@ func LoadlibDB(db *gorm.DB) {
 	db.AutoMigrate(&Client{})
 	db.AutoMigrate(&Vehicle{})
 	db.AutoMigrate(&Order{})
+	db.AutoMigrate(&OrderLog{})
 }
 
 
 func Syncdb() {
 	createDB()
+	//insertRoles()
+	//insertUser()
 	if err := Connect(); err != nil {
 		beego.Error(err)
 		return
 	}
-	insertRoles()
-	insertUser()
 	fmt.Println("database init is complete.")
 }
 
