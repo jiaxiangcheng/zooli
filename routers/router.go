@@ -75,8 +75,6 @@ func init() {
 var LoggedInFilter = func(ctx *context.Context) {
 	user := ctx.Input.Session("user")
 
-	//TODO: if user is admin, then has permission admin/*
-
 	if user == nil && ctx.Request.RequestURI != "/login" {
 		ctx.Redirect(302, "/login")
 	}
