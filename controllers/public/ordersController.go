@@ -14,6 +14,8 @@ type OrdersController struct {
 }
 
 func (c *OrdersController) Prepare() {
+	c.BaseController.Prepare()
+
 	c.Data["ordered"] = models.ORDERED
 	c.Data["inService"] = models.IN_SERVICE
 	c.Data["endService"] = models.END_SERVICE
