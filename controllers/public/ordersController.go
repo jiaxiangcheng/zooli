@@ -62,6 +62,7 @@ func (c *OrdersController) Edit() {
 	c.TplName = "public/orders/edit.tpl"
 }
 
+/*
 func (c *OrdersController) New() {
 
 	beego.Debug("new order")
@@ -129,6 +130,7 @@ func (c *OrdersController) Create() {
 	flash.Store(&c.Controller)
 	c.Redirect("/public/orders", 303)
 }
+*/
 
 func (c *OrdersController) Update() {
 	//init object for error control
@@ -173,6 +175,7 @@ func (c *OrdersController) Update() {
 	c.Redirect("/public/orders/"+strconv.Itoa(id), 302)
 }
 
+/*
 func (c *OrdersController) Delete() {
 	flash := beego.NewFlash()
 
@@ -195,6 +198,7 @@ func (c *OrdersController) Delete() {
 	flash.Store(&c.Controller)
 	c.Redirect("/public/orders", 303)
 }
+*/
 
 func (c *OrdersController) getOrder() (models.Order, error) {
 	var order models.Order
@@ -203,9 +207,9 @@ func (c *OrdersController) getOrder() (models.Order, error) {
 	if err != nil {
 		return order, err
 	}
-	beego.Debug(fee)
 	order.Fee = fee
 
+	/*
 	productID, err := c.GetInt("product")
 	if err != nil {
 		return order, err
@@ -213,6 +217,7 @@ func (c *OrdersController) getOrder() (models.Order, error) {
 	beego.Debug(productID)
 	order.ProductID = uint(productID)
 	order.Product = models.FindProductByID(order.ProductID)
+	*/
 
 	status := c.GetString("status")
 

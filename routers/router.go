@@ -12,8 +12,8 @@ import (
 )
 
 func init() {
-	beego.Router("", &controllers.MainController{})
-	beego.Router("/dashboard", &controllers.MainController{})
+	beego.Router("", &controllers.MainController{}, "get:Get")
+	beego.Router("/dashboard", &controllers.MainController{}, "get:Get")
 	beego.Router("/login", &auth.LoginController{}, "get:LoginForm")
 	beego.Router("/login", &auth.LoginController{}, "post:Login")
 	beego.Router("/logout", &auth.LoginController{}, "get:Logout")
@@ -51,11 +51,11 @@ func init() {
 	beego.Router("admin/services/:id([0-9]+", &admin.ServicesController{}, "delete:Delete")
 
 	beego.Router("public/orders", &public.OrdersController{}, "get:Get")
-	beego.Router("public/orders/new", &public.OrdersController{}, "get:New")
-	beego.Router("public/orders/new", &public.OrdersController{}, "post:Create")
+	//beego.Router("public/orders/new", &public.OrdersController{}, "get:New")
+	//beego.Router("public/orders/new", &public.OrdersController{}, "post:Create")
 	beego.Router("public/orders/:id([0-9]+", &public.OrdersController{}, "get:Edit")
 	beego.Router("public/orders/:id([0-9]+", &public.OrdersController{}, "post:Update")
-	beego.Router("public/orders/:id([0-9]+", &public.OrdersController{}, "delete:Delete")
+	//beego.Router("public/orders/:id([0-9]+", &public.OrdersController{}, "delete:Delete")
 
 	beego.Router("public/products", &public.ProductsController{}, "get:Get")
 	beego.Router("public/products/new", &public.ProductsController{}, "get:New")
