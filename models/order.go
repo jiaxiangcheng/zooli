@@ -17,6 +17,19 @@ const (
 	CANCELED
 )
 
+var statuses = [...]string {
+	"ORDERED",
+	"IN SERVICE",
+	"END SERVICE",
+	"WAITING FOR PAYMENT",
+	"FINISHED",
+	"CANCELED",
+}
+
+func (status Status) String() string {
+	return statuses[status - 1]
+}
+
 
 
 type Order struct {
@@ -47,6 +60,14 @@ func FindOrderByID(id uint) Order {
 	return o
 }
 
+func FindOrdersByStoreID(storeID uint) []Order {
+	var o []Order
+	DB.Where("product_id in (?)",
+		DB.Table("products").Select("id").Where("store_id = ?", storeID).QueryExpr()).
+		Preload("Client").Preload("Product").Find(&o)
+
+	return o
+}
 
 func FindOrders() []Order {
 	var o []Order

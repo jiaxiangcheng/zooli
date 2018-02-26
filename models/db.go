@@ -108,7 +108,7 @@ func GenerateRandomDataset() {
 			for k := 0; k < pCount; k++ {
 				p := Product{
 					Name: fake.ProductName(),
-					Value: float64(int(ran.Float64() * 10000) / 100),
+					Value: float64(int(ran.Float64() * 10000)) / 100,
 					StoreID: s.ID,
 					ServiceID: sss[ran.Intn(len(sss))].ID,
 					Description: fake.Paragraph(),

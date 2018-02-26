@@ -23,7 +23,12 @@ func (c *OrdersController) Prepare() {
 }
 
 func (c *OrdersController) Get() {
-	c.Data["orders"] = models.FindOrders()
+	s, err := GetCurrentStore(&c.BaseController)
+	if err != nil {
+		c.Redirect("/dashboard", 302)
+	}
+
+	c.Data["orders"] = models.FindOrdersByStoreID(s.ID)
 	c.TplName = "public/orders/list.tpl"
 }
 
