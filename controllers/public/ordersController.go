@@ -13,16 +13,6 @@ type OrdersController struct {
 	controllers.BaseController
 }
 
-func (c *OrdersController) Prepare() {
-	c.BaseController.Prepare()
-
-	c.Data["ordered"] = models.ORDERED
-	c.Data["inService"] = models.IN_SERVICE
-	c.Data["endService"] = models.END_SERVICE
-	c.Data["waitingForPayment"] = models.WAITING_FOR_PAYMENT
-	c.Data["orderFinished"] = models.FINISHED
-	c.Data["orderedCanceled"] = models.CANCELED
-}
 
 func (c *OrdersController) Get() {
 	s, err := GetCurrentStore(&c.BaseController)
@@ -30,6 +20,12 @@ func (c *OrdersController) Get() {
 		c.Redirect("/dashboard", 302)
 	}
 
+	c.Data["ordered"] = models.ORDERED
+	c.Data["inService"] = models.IN_SERVICE
+	c.Data["endService"] = models.END_SERVICE
+	c.Data["waitingForPayment"] = models.WAITING_FOR_PAYMENT
+	c.Data["orderFinished"] = models.FINISHED
+	c.Data["orderedCanceled"] = models.CANCELED
 	c.Data["orders"] = models.FindOrdersByStoreID(s.ID)
 	c.TplName = "public/orders/list.tpl"
 }
@@ -56,6 +52,12 @@ func (c *OrdersController) Edit() {
 		return
 	}
 
+	c.Data["ordered"] = models.ORDERED
+	c.Data["inService"] = models.IN_SERVICE
+	c.Data["endService"] = models.END_SERVICE
+	c.Data["waitingForPayment"] = models.WAITING_FOR_PAYMENT
+	c.Data["orderFinished"] = models.FINISHED
+	c.Data["orderedCanceled"] = models.CANCELED
 	c.Data["orderForm"] = order
 	c.TplName = "public/orders/edit.tpl"
 }
