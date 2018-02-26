@@ -13,7 +13,7 @@
         .ready(function() {
             $('.ui.form')
                 .api({
-                    url : "/public/orders/{{.productForm.ID}}",
+                    url : "/public/orders/{{.orderForm.ID}}",
                     method : 'POST',
                     cache: false,
                     processData: false,

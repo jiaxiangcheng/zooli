@@ -20,7 +20,7 @@
     <tr>
         <td class="center aligned">{{ .Client.Name}}</td>
         <td class="center aligned">{{ .Product.Name}}</td>
-        <td class="center aligned">{{ .Status}}</td>
+        <td class="center aligned"><a class="ui {{if eq .Status $.ordered}}orange{{else if eq .Status $.inService}}yellow{{else if eq .Status $.endService}}olive{{else if eq .Status $.waitingForPayment}}teal{{else if eq .Status $.orderFinished}}green{{else}}grey{{end}} label">{{.Status}}</a></td>
         <td class="center aligned">{{ .Fee}}</td>
         <td class="center aligned">
             <button type="button"
