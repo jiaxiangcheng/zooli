@@ -13,7 +13,6 @@ type OrdersController struct {
 	controllers.BaseController
 }
 
-
 func (c *OrdersController) Get() {
 	s, err := GetCurrentStore(&c.BaseController)
 	if err != nil {
@@ -59,6 +58,8 @@ func (c *OrdersController) Edit() {
 	c.Data["orderFinished"] = models.FINISHED
 	c.Data["orderedCanceled"] = models.CANCELED
 	c.Data["orderForm"] = order
+	c.Data["orderLogs"] = models.FindOrderLogsByOrderID(order.ID)
+	beego.Debug(c.Data["orderLogs"])
 	c.TplName = "public/orders/edit.tpl"
 }
 
@@ -210,13 +211,13 @@ func (c *OrdersController) getOrder() (models.Order, error) {
 	order.Fee = fee
 
 	/*
-	productID, err := c.GetInt("product")
-	if err != nil {
-		return order, err
-	}
-	beego.Debug(productID)
-	order.ProductID = uint(productID)
-	order.Product = models.FindProductByID(order.ProductID)
+		productID, err := c.GetInt("product")
+		if err != nil {
+			return order, err
+		}
+		beego.Debug(productID)
+		order.ProductID = uint(productID)
+		order.Product = models.FindProductByID(order.ProductID)
 	*/
 
 	status := c.GetString("status")
