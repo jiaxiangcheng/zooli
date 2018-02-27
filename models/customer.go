@@ -27,13 +27,13 @@ func (c *Customer) Exists() bool {
 	return count > 0
 }
 
-func FindClientByID(id uint) Customer {
+func FindCustomerByID(id uint) Customer {
 	var c Customer
 	DB.Where("id = ?", id).Preload("Vehicles").Find(&c)
 	return c
 }
 
-func FindClients() []Customer {
+func FindCustomers() []Customer {
 	var c []Customer
 	DB.Preload("Vehicles").Find(&c)
 	return c
