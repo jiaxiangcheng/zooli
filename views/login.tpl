@@ -37,7 +37,7 @@
                         <input type="password" name="password" placeholder="password">
                     </div>
                 </div>
-                <div class="ui fluid large blue submit button">Login</div>
+                <div class="ui fluid large blue submit button">{{i18n .Lang "login.login"}}</div>
             </div>
 
             <div class="ui error message"></div>

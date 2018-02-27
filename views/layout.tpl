@@ -12,6 +12,14 @@
             <i class="large database icon"></i> Zooli
         </a>
         <div class="right menu">
+            <div class="ui dropdown item" id="select_language">
+                {{.CurLang}} <i class="dropdown icon"></i>
+                <div class="menu">
+                    {{range .RestLangs}}
+                        <a class="item" data-value="{{.Lang}}">{{i18n $.Lang .Name}}</a>
+                    {{end}}
+                </div>
+            </div>
             <a class="item" href="/help">
                 <i class="help icon"></i> Help
             </a>
