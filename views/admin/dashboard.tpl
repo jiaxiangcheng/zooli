@@ -91,16 +91,53 @@
     // The data for our dataset
     data: {
         labels: ["January", "February", "March", "April", "May", "June", "July"],
-        datasets: [{
-            label: "Income history",
-            backgroundColor: 'rgb(255, 99, 132)',
-            borderColor: 'rgb(255, 99, 132)',
-            data: [0, 10, 5, 2, 20, 30, 45],
-        }]
+        datasets: [
+            {
+                label: "Income history",
+                backgroundColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgb(255, 99, 132)',
+                data: [0, 10, 5, 2, 20, 30, 45],
+            },
+            {
+                label: "Income history2",
+                backgroundColor: 'rgb(0, 255, 132)',
+                borderColor: 'rgb(0, 255, 132)',
+                data: [0, 5, 5, 2, 20, 30, 45],
+            },
+            {
+                label: "Income history3",
+                backgroundColor: 'rgb(0, 255, 255)',
+                borderColor: 'rgb(0, 255, 255)',
+                data: [10, 5, 5, 2, -10, -20, 45],
+            }
+        ]
     },
 
     // Configuration options go here
-    options: {}
+    options: {
+        responsive: true,
+                tooltips: {
+                    mode: 'index',
+                },
+                hover: {
+                    mode: 'index'
+                },
+                scales: {
+                    xAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Month'
+                        }
+                    }],
+                    yAxes: [{
+                        stacked: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Value'
+                        }
+                    }]
+                }
+    }
     });
 
     var ctx = document.getElementById('most_used_services').getContext('2d');
