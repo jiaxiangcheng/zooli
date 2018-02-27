@@ -68,37 +68,48 @@
 
 <div class="ui grid">
     <div class="eight wide column">
-    
-                <div class="chart-container" style="height:400px; width:500px">
+        <div class="ui raised compact segment">
+                <div class="chart-container" style="height:300px; width:500px">
                     <canvas id="most_used_services"></canvas>
                 </div>
-
+        </div>
     </div>
     <div class="eight wide column">
-        <div class="chart-container" style="height:400px; width:500px">
-            <canvas id="most_used_services1"></canvas>
+        <div class="ui raised compact segment">
+            <div class="chart-container" style="height:300px; width:500px">
+                <canvas id="most_used_services1"></canvas>
+            </div>
         </div>
     </div>
 </div>
 
 
 <div class="ui grid">
-    <div class="ten wide column">
-        <div class="chart-container" style="height:400px; width:600px;">
-            <canvas id="income"></canvas>
-        </div>
-    </div>
-    <div class="six wide column">
-        <div class="chart-container" style="height:200px; width:200px;">
-            <canvas id="finished_order"></canvas>
+    <div class="eight wide column">
+        <div class="ui raised compact segment">
+            <div class="chart-container" style="height:300px; width:500px;">
+                <canvas id="income"></canvas>
+            </div>
         </div>
     </div>
 
-    <div class="column">
-        <div class="chart-container" style="height:500px; width:500px;">
-            <canvas id="user_activity"></canvas>
+    <div class="four wide column">
+        <div class="ui raised compact segment">
+            <div class="chart-container" style="height:300px; width:500px;">
+                <canvas id="user_activity"></canvas>
+            </div>
         </div>
     </div>
+
+    <div class="six wide column">
+        <div class="ui raised compact segment">
+            <div class="chart-container" style="height:200px; width:200px;">
+                <canvas id="finished_order"></canvas>
+            </div>
+        </div>
+    </div>
+
+
 </div>
 
 
