@@ -65,24 +65,89 @@
 </div>
 
 <div class="ui divider"></div>
-<div class="ui two column grid">
-    <div class="column">
-        <div class="chart-container" style="position: relative; height:400px; width:500px">
-            <canvas id="income"></canvas>
-        </div>
+
+<div class="ui grid">
+    <div class="eight wide column">
+    
+                <div class="chart-container" style="height:400px; width:500px">
+                    <canvas id="most_used_services"></canvas>
+                </div>
+
     </div>
-    <div class="column">
-        <div class="chart-container" style="position: relative; height:400px; width:500px">
-            <canvas id="most_used_services"></canvas>
+    <div class="eight wide column">
+        <div class="chart-container" style="height:400px; width:500px">
+            <canvas id="most_used_services1"></canvas>
         </div>
     </div>
 </div>
+
+
+<div class="ui grid">
+    <div class="ten wide column">
+        <div class="chart-container" style="height:400px; width:600px;">
+            <canvas id="income"></canvas>
+        </div>
+    </div>
+    <div class="six wide column">
+        <div class="chart-container" style="height:200px; width:200px;">
+            <canvas id="finished_order"></canvas>
+        </div>
+    </div>
+
+    <div class="column">
+        <div class="chart-container" style="height:500px; width:500px;">
+            <canvas id="user_activity"></canvas>
+        </div>
+    </div>
+</div>
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 <script src="static\js\custom-todo.js"></script>
 
 
 <script>
+    var ctx = document.getElementById('finished_order').getContext('2d');
+    var chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'pie',
+
+    // The data for our dataset
+    data: {
+        labels: ["Finished", "Pending"],
+        datasets: [{
+            label: "Finished orders",
+            backgroundColor: ["rgb(255, 99, 132)", "rgb(221, 221, 221)"],
+            borderColor: 'rgb(255, 99, 132)',
+            data: [50, 40],
+        }]
+    },
+
+    // Configuration options go here
+    options: {}
+    });
+
+    var ctx = document.getElementById('user_activity').getContext('2d');
+    var chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'line',
+
+    // The data for our dataset
+    data: {
+        labels: ["Monday", "Tuesday", "Wednesdays", "Thursday", "Friday", "Saturday", "Sunday"],
+        datasets: [{
+            label: "Users activities",
+            backgroundColor: ["rgb(255, 99, 132)", "rgb(221, 221, 221)"],
+            borderColor: 'rgb(255, 99, 132)',
+            data: [50, 40, 30, 100, 124, 78, 37],
+        }]
+    },
+
+    // Configuration options go here
+    options: {}
+    });
+
+
     var ctx = document.getElementById('income').getContext('2d');
     var chart = new Chart(ctx, {
     // The type of chart we want to create
@@ -140,6 +205,8 @@
     }
     });
 
+
+
     var ctx = document.getElementById('most_used_services').getContext('2d');
     var chart = new Chart(ctx, {
     // The type of chart we want to create
@@ -160,4 +227,30 @@
     options: {}
     });
 
+
+
+    var ctx = document.getElementById('most_used_services1').getContext('2d');
+    var chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'bar',
+
+    // The data for our dataset
+    data: {
+        labels: ["January", "February", "March", "April", "May", "June", "July"],
+        datasets: [{
+            label: "Most used services",
+            backgroundColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(255, 99, 132)',
+            data: [0, 10, 5, 2, 20, 30, 45],
+        }]
+    },
+
+    // Configuration options go here
+    options: {}
+    });
+
 </script>
+
+<style>
+
+</style>
