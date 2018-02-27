@@ -5,9 +5,9 @@
     <div class="field">
         <div class="three fields">
             <div class="four wide field">
-                <label>Client</label>
+                <label>Customer</label>
                 <div class="ui disabled input">
-                    <input value="{{.orderForm.Client.Name}}" type="text"/>
+                    <input value="{{.orderForm.Customer.Name}}" type="text"/>
                 </div>
 
             </div>
