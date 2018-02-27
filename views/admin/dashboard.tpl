@@ -2,81 +2,97 @@
 <div class="ui grid">
     <div class="six column centered row">
         <div class="column">
-            <div class="title">
-                <i class="user icon"></i>
-                Total Users
-            </div>
-            <div class="ui statistic">
-                <div class="value">
-                    {{.usercount}}
+            <div class="ui raised compact segment">
+                <div class="title">
+                    <i class="user icon"></i>
+                    Total Users
                 </div>
-                <div class="label">
-                    Users
+                <div class="ui statistic">
+                    <div class="value" style="color: #6495ED;">
+                        {{.usercount}}
+                    </div>
+                    <div class="label">
+                        Users
+                    </div>
                 </div>
-            </div>
-            <div class="count">
-                <i class="tiny angle up icon"></i>
-                <label style="font-size: 10px;">5% From last Week</label>
-            </div>
-        </div>
-        <div class="column">
-            <div class="title">
-                <i class="world icon"></i>
-                Total Companies
-            </div>
-            <div class="ui statistic">
-                <div class="value">
-                    {{.companycount}}
-                </div>
-                <div class="label">
-                    Companies
-                </div>
-                <div class="count">
-                    <i class="tiny angle up icon"></i>
-                    <label style="font-size: 10px;">3% From last Week</label>
-                </div>
-            </div>
-        </div>
-        <div class="column">
-            <div class="title">
-                <i class="cubes icon"></i>
-                Total Services
-            </div>
-            <div class="ui statistic">
-                <div class="value">
-                    {{.servicecount}}
-                </div>
-                <div class="label">
-                    Services
-                </div>
+                <div class="ui divider"></div>
                 <div class="count">
                     <i class="tiny angle up icon"></i>
                     <label style="font-size: 10px;">5% From last Week</label>
                 </div>
             </div>
         </div>
+
         <div class="column">
-            <div class="title">
-                <i class="shopping bag icon"></i>
-                Total Stores
+            <div class="ui raised compact segment">
+                <div class="title">
+                    <i class="world icon"></i>
+                    Total Companies
+                </div>
+                <div class="ui statistic">
+                    <div class="value" style="color: #6495ED;">
+                        {{.companycount}}
+                    </div>
+                    <div class="label">
+                        Companies
+                    </div>
+                </div>
+                <div class="ui divider"></div>
+                <div class="count">
+                    <i class="tiny angle up icon"></i>
+                    <label style="font-size: 10px;">3% From last Week</label>
+                </div>
             </div>
-            <div class="ui statistic">
-                <div class="value">
-                    {{.storecount}}
+        </div>
+
+        <div class="column">
+            <div class="ui raised compact segment">
+                <div class="title">
+                    <i class="cubes icon"></i>
+                    Total Services
                 </div>
-                <div class="label">
-                    Stores
+                <div class="ui statistic">
+                    <div class="value" style="color: #6495ED;">
+                        {{.servicecount}}
+                    </div>
+                    <div class="label">
+                        Services
+                    </div>
                 </div>
+                <div class="ui divider"></div>
+                <div class="count">
+                    <i class="tiny angle up icon"></i>
+                    <label style="font-size: 10px;">5% From last Week</label>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="column">
+            <div class="ui raised compact segment">
+                <div class="title">
+                    <i class="shopping bag icon"></i>
+                    Total Stores
+                </div>
+                <div class="ui statistic">
+                    <div class="value" style="color: #6495ED;">
+                        {{.storecount}}
+                    </div>
+                    <div class="label">
+                        Stores
+                    </div>
+                </div>
+                <div class="ui divider"></div>
                 <div class="count">
                     <i class="tiny angle down icon"></i>
                     <label style="font-size: 10px;">10% From last Week</label>
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 
-<div class="ui divider"></div>
 
 <div class="ui grid">
     <div class="eight wide column">
