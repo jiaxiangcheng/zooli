@@ -39,7 +39,7 @@ func GenerateRandomDataset() {
 	companyCount := 10
 	managerCount := 400
 	storeCount := 200
-	clientCount := 50000
+	clientCount := 5000
 
 	var services []Service
 	statuses := [...]Status{ORDERED, IN_SERVICE, END_SERVICE, WAITING_FOR_PAYMENT, FINISHED}
