@@ -123,7 +123,7 @@ func GenerateRandomDataset() {
 				oCount := ran.Intn(200)
 				for m := 0; m < oCount; m++ {
 					o := Order{
-						ClientID: uint(ran.Intn(clientCount) + 1),
+						CustomerID: uint(ran.Intn(clientCount) + 1),
 						Fee: p.Value,
 						ProductID: p.ID,
 					}

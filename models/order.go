@@ -34,14 +34,14 @@ func (status Status) String() string {
 
 
 type Order struct {
-	gorm.Model           `valid:"-"`
-	Client    Customer   `valid:"-" json:"-"`
-	ClientID  uint       `gorm:"not null" valid:"required"`
-	Product   Product    `valid:"-" json:"-"`
-	ProductID uint       `gorm:"not null" valid:"required"`
-	Status    Status     `gorm:"not null" valid:"required"`
-	Fee       float64    `valid:"-"`
-	Logs      []OrderLog `valid:"-" json:"-"`
+	gorm.Model				`valid:"-"`
+	Customer	Customer	`valid:"-" json:"-"`
+	CustomerID	uint		`gorm:"not null" valid:"required"`
+	Product		Product		`valid:"-" json:"-"`
+	ProductID	uint		`gorm:"not null" valid:"required"`
+	Status		Status		`gorm:"not null" valid:"required"`
+	Fee			float64		`valid:"-"`
+	Logs		[]OrderLog	`valid:"-" json:"-"`
 }
 
 
