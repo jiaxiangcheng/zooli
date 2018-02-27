@@ -4,6 +4,8 @@ import (
 	"github.com/Qiaorui/zooli/controllers"
 	"github.com/Qiaorui/zooli/models"
 	"github.com/astaxie/beego"
+	"github.com/beego/i18n"
+	utils "github.com/Qiaorui/zooli/controllers/utils"
 )
 
 type LoginController struct {
@@ -27,7 +29,7 @@ func (c *LoginController) Login() {
 			Username: c.GetString("username"),
 		}
 		c.SetSession("userInfo", u)
-		flash.Error("Wrong username password combination")
+		flash.Error(i18n.Tr(c.Lang, utils.ERROR_LOGIN_COMBO))
 		flash.Store(&c.Controller)
 		c.Redirect("/login", 302)
 		return
@@ -40,7 +42,7 @@ func (c *LoginController) Login() {
 		
 	} else {
 		c.SetSession("userInfo", u)
-		flash.Error("Wrong username password combination")
+		flash.Error(i18n.Tr(c.Lang, utils.ERROR_LOGIN_COMBO))
 		flash.Store(&c.Controller)
 		c.Redirect("/login", 302)
 	}
@@ -49,7 +51,7 @@ func (c *LoginController) Login() {
 func (c *LoginController) Logout() {
 	c.DelSession("user")
 	flash := beego.NewFlash()
-	flash.Success("Log out successfully")
+	flash.Success(i18n.Tr(c.Lang, utils.SUCCESS_LOG_OUT))
 	flash.Store(&c.Controller)
 	c.Redirect("/login", 302)
 }

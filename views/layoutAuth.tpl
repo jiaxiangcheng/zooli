@@ -30,10 +30,10 @@
                 </div>
             </div>
             <a class="item" href="/help">
-                <i class="help icon"></i> Help
+                <i class="help icon"></i> {{i18n $.Lang "help"}}
             </a>
             <a class="item" href="/logout">
-                <i class="sign out icon"></i> Log out
+                <i class="sign out icon"></i> {{i18n $.Lang "log out"}}
             </a>
         </div>
     </div>

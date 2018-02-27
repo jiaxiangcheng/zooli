@@ -21,7 +21,7 @@
                 </div>
             </div>
             <a class="item" href="/help">
-                <i class="help icon"></i> Help
+                <i class="help icon"></i> {{i18n $.Lang "help"}}
             </a>
         </div>
     </div>
