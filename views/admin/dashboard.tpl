@@ -16,7 +16,7 @@
             </div>
             <div class="count">
                 <i class="tiny angle up icon"></i>
-                <label style="font-size: 10px;">3% From last Week</label>
+                <label style="font-size: 10px;">5% From last Week</label>
             </div>
         </div>
         <div class="column">
@@ -30,6 +30,10 @@
                 </div>
                 <div class="label">
                     Companies
+                </div>
+                <div class="count">
+                    <i class="tiny angle up icon"></i>
+                    <label style="font-size: 10px;">3% From last Week</label>
                 </div>
             </div>
         </div>
@@ -45,6 +49,10 @@
                 <div class="label">
                     Services
                 </div>
+                <div class="count">
+                    <i class="tiny angle up icon"></i>
+                    <label style="font-size: 10px;">5% From last Week</label>
+                </div>
             </div>
         </div>
         <div class="column">
@@ -58,6 +66,10 @@
                 </div>
                 <div class="label">
                     Stores
+                </div>
+                <div class="count">
+                    <i class="tiny angle down icon"></i>
+                    <label style="font-size: 10px;">10% From last Week</label>
                 </div>
             </div>
         </div>
@@ -109,6 +121,11 @@
         </div>
     </div>
 
+    <div class="six wide column">
+        <div class="ui raised segment">
+            <div class="ui big header">Map will be here</div>
+        </div>
+    </div>
 
 </div>
 
