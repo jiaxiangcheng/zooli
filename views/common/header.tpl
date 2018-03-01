@@ -12,5 +12,9 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/se/dt-1.10.16/r-2.2.1/datatables.min.css"/>
 <script type="text/javascript" src="https://cdn.datatables.net/v/se/dt-1.10.16/r-2.2.1/datatables.min.js"></script>
 
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pace-progress@1.0.2/pace.min.js"></script>
+
+
 <!-- My Script -->
 <script type="text/javascript" src="/static/js/language.js"></script>

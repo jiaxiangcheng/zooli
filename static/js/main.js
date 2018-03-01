@@ -9,6 +9,28 @@ $(document)
         var ManuelSideBarIsState = false;
 
 
+        $(window).resize(function() {
+            if (ManuelSideBarIsHide == false) {
+                if ($(window).width() <= 767) {
+                    if (!sideBarIsHide); {
+                        resizeSidebar("1");
+                        sideBarIsHide = true;
+                        $(".colhidden").addClass("displaynone");
+
+                    }
+                } else {
+                    if (sideBarIsHide); {
+                        resizeSidebar("0");
+                        sideBarIsHide = false;
+
+                        $(".colhidden").removeClass("displaynone");
+
+                    }
+                }
+            }
+        });
+
+
         function resizeSidebar(op) {
             if (op == "1") {
 
