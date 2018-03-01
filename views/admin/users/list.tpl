@@ -1,66 +1,72 @@
-<h1 class="ui header" style="text-align:center; margin-top: 20px;">Users</h1>
+
 {{template "common/modal.tpl" .}}
-{{template "common/flash.tpl" .}}
+
 <div class="ui divider"></div>
 
-<table class="ui single line striped collapsing table" id="users-table"
-    style="margin-left:auto; margin-right:auto; table-layout:fixed; width:100%;">
-    <thead>
-    <tr>
-        <th class="center aligned">Username</th>
-        <th class="center aligned">Role</th>
-        <th class="center aligned">Name</th>
-        <th class="center aligned">Email</th>
-        <th class="center aligned"></th>
-        <th class="center aligned"></th>
-    </tr>
-    </thead>
-    <tbody>
-    {{ range .users }}
-    <tr>
-        <td class="center aligned" style="overflow: hidden;text-overflow: ellipsis;">{{ .Username}}</td>
-        <td class="center aligned" style="overflow: hidden;text-overflow: ellipsis;">{{ .Role.Name}}</td>
-        <td class="center aligned" style="overflow: hidden;text-overflow: ellipsis;">{{ .Name}}</td>
-        <td class="center aligned" style="overflow: hidden;text-overflow: ellipsis;">{{ .Email}}</td>
-        <td class="center aligned">
-            <button type="button"
-                    class="ui basic button"
-                    onclick="editUser('{{ .ID}}');">
-                View
-            </button>
-        </td>
-        {{if ne $.user.ID .ID}}
-        <td class="center aligned">
-            <button type="button"
-                    class="ui negative button"
-                    onclick="openDeleteModal('{{ .ID}}');">
-                Delete
-            </button>
-        </td>
-        {{else}}
-        <td></td>
-        {{end}}
-    </tr>
-    {{ end }}
-    </tbody>
-</table>
+<div class="row">
+    <div class="column">
+
+        <div class="ui segments">
+            <div class="ui segment">
+                <h1 class="ui header" style="text-align:center;">Users</h1>
+            </div>
+            <div class="ui segment">
+            {{template "common/flash.tpl" .}}
+                <table class="ui compact selectable striped celled table tablet stackable" id="data_table" cellspacing="0" width="100%">
+                    <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Role</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{ range .users }}
+                    <tr>
+                        <td style="overflow: hidden;text-overflow: ellipsis;">{{ .Username}}</td>
+                        <td style="overflow: hidden;text-overflow: ellipsis;">{{ .Role.Name}}</td>
+                        <td style="overflow: hidden;text-overflow: ellipsis;">{{ .Name}}</td>
+                        <td style="overflow: hidden;text-overflow: ellipsis;">{{ .Email}}</td>
+                        <td class="center aligned">
+                            <i class="blue link pencil alternate icon" onclick="editUser('{{ .ID}}');"></i>
+                        {{if ne $.user.ID .ID}}
+                            <i class="red link trash alternate icon" onclick="openDeleteModal('{{ .ID}}');"></i>
+                        {{end}}
+                        </td>
+                    </tr>
+                    {{ end }}
+                    </tbody>
+                    <tfoot class="full-width">
+                    <tr>
+                        <th colspan="5">
+                            <div class="ui right floated small primary labeled icon button" onclick="newUser();">
+                                <i class="user icon"></i> Add User
+                            </div>
+                        </th>
+                    </tr>
+                    </tfoot>
+                </table>
+
+            </div>
+
+        </div>
 
 
-<div class="ui middle aligned center aligned grid">
-    <button type="button"
-            title="View user"
-            class="ui blue basic big button"
-            onclick="newUser();"
-            style="margin: 15px;">
-        <i class="add user icon"></i>
-        Create user
-    </button>
+    </div>
 </div>
 
-<script type="text/javascript">
 
+<script type="text/javascript">
     $(document).ready(function() {
-        $('#users-table').DataTable();
+        $('#data_table').DataTable({
+            //dom: 'Bfrtip',
+            lengthChange: false,
+            info: false
+                }
+        );
+
     });
 
     function newUser() {
