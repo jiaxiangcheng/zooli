@@ -130,7 +130,7 @@
 
     <div class="six wide column">
         <div class="ui raised compact segment">
-            <div class="chart-container" style="position: relative; height: 10vh; width: 10vw">
+            <div class="chart-container" style="position: relative; height: 20vh; width: 20vh">
                 <canvas id="finished_order"></canvas>
             </div>
         </div>

@@ -120,3 +120,10 @@ func (o Order) String() string {
 	}
 	return string(out)
 }
+
+func NumOrders() int {
+	var count int = 0
+	var c []Order
+	DB.Find(&c).Count(&count)
+	return count
+}
