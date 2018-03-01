@@ -136,10 +136,8 @@
     <!--navbar-->
     <!--maincontent-->
     <div class="mainWrap navslide">
-        <div class="ui equal width left aligned padded grid stackable">
-            <div id="main_content">
+        <div class="ui equal width left aligned padded grid stackable" id="main_content">
             {{.LayoutContent}}
-            </div>
         </div>
     </div>
     <!--maincontent-->
