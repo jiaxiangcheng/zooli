@@ -4,14 +4,14 @@
         <div class="column">
             <div class="title">
                 <i class="user icon"></i>
-                Total Users
+                Total Customers
             </div>
             <div class="ui statistic">
                 <div class="value">
                     {{.usercount}}
                 </div>
                 <div class="label">
-                    Users
+                    Customer
                 </div>
             </div>
             <div class="count">
@@ -22,14 +22,14 @@
         <div class="column">
             <div class="title">
                 <i class="world icon"></i>
-                Total Companies
+                Total orders
             </div>
             <div class="ui statistic">
                 <div class="value">
                     {{.companycount}}
                 </div>
                 <div class="label">
-                    Companies
+                    Order
                 </div>
             </div>
         </div>
@@ -64,18 +64,43 @@
     </div>
 </div>
 
-<div class="ui divider"></div>
-<div class="ui two column grid">
+<div class="ui five column grid">
     <div class="column">
-        <div class="chart-container" style="position: relative; height:400px; width:500px">
-            <canvas id="income"></canvas>
+        <div class="ui raised compact segment">
+            <div class="chart-container" style="height:200px; width:200px;">
+                <canvas id="in_service"></canvas>
+            </div>
         </div>
     </div>
     <div class="column">
-        <div class="chart-container" style="position: relative; height:400px; width:500px">
-            <canvas id="most_used_services"></canvas>
+        <div class="ui raised compact segment">
+            <div class="chart-container" style="height:200px; width:200px;">
+                <canvas id="end_service"></canvas>
+            </div>
         </div>
     </div>
+    <div class="column">
+        <div class="ui raised compact segment">
+            <div class="chart-container" style="height:200px; width:200px;">
+                <canvas id="w_for_payment"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="column">
+        <div class="ui raised compact segment">
+            <div class="chart-container" style="height:200px; width:200px;">
+                <canvas id="finished"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="column">
+        <div class="ui raised compact segment">
+            <div class="chart-container" style="height:200px; width:200px;">
+                <canvas id="canceled"></canvas>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
@@ -83,39 +108,20 @@
 
 
 <script>
-    var ctx = document.getElementById('income').getContext('2d');
+    var ctx = document.getElementById('in_service').getContext('2d');
+
     var chart = new Chart(ctx, {
     // The type of chart we want to create
-    type: 'line',
+    type: 'pie',
 
     // The data for our dataset
     data: {
-        labels: ["January", "February", "March", "April", "May", "June", "July"],
+        labels: ["Finished", "Pending"],
         datasets: [{
-            label: "Income history",
-            backgroundColor: 'rgb(255, 99, 132)',
+            label: "Finished orders",
+            backgroundColor: ["rgb(255, 99, 132)", "rgb(221, 221, 221)"],
             borderColor: 'rgb(255, 99, 132)',
-            data: [0, 10, 5, 2, 20, 30, 45],
-        }]
-    },
-
-    // Configuration options go here
-    options: {}
-    });
-
-    var ctx = document.getElementById('most_used_services').getContext('2d');
-    var chart = new Chart(ctx, {
-    // The type of chart we want to create
-    type: 'bar',
-
-    // The data for our dataset
-    data: {
-        labels: ["January", "February", "March", "April", "May", "June", "July"],
-        datasets: [{
-            label: "Most used services",
-            backgroundColor: 'rgb(255, 99, 132)',
-            borderColor: 'rgb(255, 99, 132)',
-            data: [0, 10, 5, 2, 20, 30, 45],
+            data: [50, 40],
         }]
     },
 
