@@ -109,7 +109,83 @@
 
 <script>
     var ctx = document.getElementById('in_service').getContext('2d');
+    var chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'pie',
 
+    // The data for our dataset
+    data: {
+        labels: ["Finished", "Pending"],
+        datasets: [{
+            label: "Finished orders",
+            backgroundColor: ["rgb(255, 99, 132)", "rgb(221, 221, 221)"],
+            borderColor: 'rgb(255, 99, 132)',
+            data: [50, 40],
+        }]
+    },
+
+    // Configuration options go here
+    options: {}
+    });
+
+    var ctx = document.getElementById('end_service').getContext('2d');
+    var chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'pie',
+
+    // The data for our dataset
+    data: {
+        labels: ["Finished", "Pending"],
+        datasets: [{
+            label: "Finished orders",
+            backgroundColor: ["rgb(255, 99, 132)", "rgb(221, 221, 221)"],
+            borderColor: 'rgb(255, 99, 132)',
+            data: [50, 40],
+        }]
+    },
+
+    // Configuration options go here
+    options: {}
+    });
+    var ctx = document.getElementById('w_for_payment').getContext('2d');
+    var chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'pie',
+
+    // The data for our dataset
+    data: {
+        labels: ["Finished", "Pending"],
+        datasets: [{
+            label: "Finished orders",
+            backgroundColor: ["rgb(255, 99, 132)", "rgb(221, 221, 221)"],
+            borderColor: 'rgb(255, 99, 132)',
+            data: [50, 40],
+        }]
+    },
+
+    // Configuration options go here
+    options: {}
+    });
+    var ctx = document.getElementById('finished').getContext('2d');
+    var chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'pie',
+
+    // The data for our dataset
+    data: {
+        labels: ["Finished", "Pending"],
+        datasets: [{
+            label: "Finished orders",
+            backgroundColor: ["rgb(255, 99, 132)", "rgb(221, 221, 221)"],
+            borderColor: 'rgb(255, 99, 132)',
+            data: [50, 40],
+        }]
+    },
+
+    // Configuration options go here
+    options: {}
+    });
+    var ctx = document.getElementById('canceled').getContext('2d');
     var chart = new Chart(ctx, {
     // The type of chart we want to create
     type: 'pie',

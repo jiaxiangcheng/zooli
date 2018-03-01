@@ -97,14 +97,14 @@
 <div class="ui grid">
     <div class="eight wide column">
         <div class="ui raised compact segment">
-                <div class="chart-container" style="height:300px; width:500px">
+                <div class="chart-container" style="position: relative; height: 35vh; width: 30vw">
                     <canvas id="most_used_services"></canvas>
                 </div>
         </div>
     </div>
     <div class="eight wide column">
         <div class="ui raised compact segment">
-            <div class="chart-container" style="height:300px; width:500px">
+            <div class="chart-container" style="position: relative; height: 35vh; width: 30vw">
                 <canvas id="most_used_services1"></canvas>
             </div>
         </div>
@@ -115,7 +115,7 @@
 <div class="ui grid">
     <div class="eight wide column">
         <div class="ui raised compact segment">
-            <div class="chart-container" style="height:300px; width:500px;">
+            <div class="chart-container" style="position: relative; height: 35vh; width: 30vw">
                 <canvas id="income"></canvas>
             </div>
         </div>
@@ -123,7 +123,7 @@
 
     <div class="four wide column">
         <div class="ui raised compact segment">
-            <div class="chart-container" style="height:300px; width:500px;">
+            <div class="chart-container" style="position: relative; height: 35vh; width: 30vw">
                 <canvas id="user_activity"></canvas>
             </div>
         </div>
@@ -131,7 +131,7 @@
 
     <div class="six wide column">
         <div class="ui raised compact segment">
-            <div class="chart-container" style="height:200px; width:200px;">
+            <div class="chart-container" style="position: relative; height: 10vh; width: 10vw">
                 <canvas id="finished_order"></canvas>
             </div>
         </div>
