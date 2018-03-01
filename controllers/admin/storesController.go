@@ -107,7 +107,6 @@ func (c *StoresController) Update() {
 	if err != nil {
 		flash.Error(err.Error())
 		flash.Store(&c.Controller)
-		c.SetSession("storeInfo", store)
 		c.Redirect("/admin/stores/"+strconv.Itoa(id), 302)
 		return
 	}
