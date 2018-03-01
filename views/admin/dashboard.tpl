@@ -1,5 +1,4 @@
-<h1>ADMIN</h1>
-<div class="ui grid">
+
     <div class="six column centered row">
         <div class="column">
             <div class="ui raised compact segment">
@@ -91,31 +90,31 @@
         </div>
 
     </div>
-</div>
 
 
-<div class="ui grid">
+
+
     <div class="eight wide column">
         <div class="ui raised compact segment">
-                <div class="chart-container" style="height:300px; width:500px">
+                <div class="chart-container" style="position: relative; height: 35vh; width: 30vw">
                     <canvas id="most_used_services"></canvas>
                 </div>
         </div>
     </div>
     <div class="eight wide column">
         <div class="ui raised compact segment">
-            <div class="chart-container" style="height:300px; width:500px">
+            <div class="chart-container" style="position: relative; height: 35vh; width: 30vw">
                 <canvas id="most_used_services1"></canvas>
             </div>
         </div>
     </div>
-</div>
 
 
-<div class="ui grid">
+
+
     <div class="eight wide column">
         <div class="ui raised compact segment">
-            <div class="chart-container" style="height:300px; width:500px;">
+            <div class="chart-container" style="position: relative; height: 35vh; width: 30vw">
                 <canvas id="income"></canvas>
             </div>
         </div>
@@ -123,7 +122,7 @@
 
     <div class="four wide column">
         <div class="ui raised compact segment">
-            <div class="chart-container" style="height:300px; width:500px;">
+            <div class="chart-container" style="position: relative; height: 35vh; width: 30vw">
                 <canvas id="user_activity"></canvas>
             </div>
         </div>
@@ -131,7 +130,7 @@
 
     <div class="six wide column">
         <div class="ui raised compact segment">
-            <div class="chart-container" style="height:200px; width:200px;">
+            <div class="chart-container" style="position: relative; height: 20vh; width: 20vh">
                 <canvas id="finished_order"></canvas>
             </div>
         </div>
@@ -143,7 +142,6 @@
         </div>
     </div>
 
-</div>
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
@@ -294,7 +292,3 @@
     });
 
 </script>
-
-<style>
-
-</style>

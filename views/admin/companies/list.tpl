@@ -1,4 +1,4 @@
-<h1 class="ui header" style="text-align:center;">Companies</h1>
+<h1 class="ui header" style="text-align:center; margin-top: 20px;">Companies</h1>
 {{template "common/modal.tpl" .}}
 {{template "common/flash.tpl" .}}
 <div class="ui divider"></div>

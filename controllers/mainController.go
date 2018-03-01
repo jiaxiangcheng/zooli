@@ -15,6 +15,9 @@ func (c *MainController) Get() {
 	c.Data["companycount"] = models.NumCompanies()
 	c.Data["servicecount"] = models.NumServices()
 	c.Data["storecount"] = models.NumStores()
+	c.Data["ordercount"]= models.NumOrders()
+	c.Data["customercount"]= models.NumCustomers()
+
 
 	user := c.GetSession("user")
 	switch userRole := user.(models.User).Role.Name; userRole {

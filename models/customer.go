@@ -78,3 +78,10 @@ func (c Customer) String() string {
 	}
 	return string(out)
 }
+
+func NumCustomers() int {
+	var count int = 0
+	var c []Customer
+	DB.Find(&c).Count(&count)
+	return count
+}
