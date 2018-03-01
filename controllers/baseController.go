@@ -154,7 +154,7 @@ func (c *BaseController) UploadFile(key string, format string, defaultPath strin
 	path := defaultPath
 	f, h, err := c.GetFile(key)
 	if err != nil {
-		return path, err
+		return path, nil
 	}
 	defer f.Close()
 	if h.Filename == "" {
