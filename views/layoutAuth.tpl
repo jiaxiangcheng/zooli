@@ -17,31 +17,31 @@
     </a>
 
     <a class="item" href="/dashboard">
-        <i class="dashboard icon"></i><span>Dashboard</span>
+        <i class="dashboard icon"></i><span>{{i18n .Lang "layoutAuth.dashboard"}}</span>
     </a>
 
     {{ if eq .user.Role.Name .roleAdmin}}
 
         <a class="item" href="/admin/users">
             <i class="users icon"></i>
-            <span>Users</span>
+            <span>{{i18n .Lang "layoutAuth.users"}}</span>
         </a>
         <a class="item" href="/admin/companies">
             <i class="world icon"></i>
-            <span>Companies</span>
+            <span>{{i18n .Lang "layoutAuth.companies"}}</span>
         </a>
         <a class="item" href="/admin/services">
             <i class="cubes icon"></i>
-            <span>Services</span>
+            <span>{{i18n .Lang "layoutAuth.services"}}</span>
         </a>
         <a class="item" href="/admin/stores">
             <i class="shopping bag icon"></i>
-            <span>Stores</span>
+            <span>{{i18n .Lang "layoutAuth.stores"}}</span>
         </a>
         <div class="ui divider"></div>
         <a class="item" href="/admin/analytics">
             <i class="bar chart icon"></i>
-            <span>Analytics</span>
+            <span>{{i18n .Lang "layoutAuth.analytics"}}</span>
         </a>
         <div class="ui divider"></div>
         <a class="item">
@@ -49,7 +49,7 @@
                 <div class="bar">
 
                 </div>
-                <div class="label colhidden" style="margin-top: 10px"><span class="colhidden">Monthly Bandwidth Transfer</span></div>
+                <div class="label colhidden" style="margin-top: 10px"><span class="colhidden">{{i18n .Lang "layoutAuth.mbt"}}</span></div>
             </div>
 
         </a>
@@ -59,7 +59,7 @@
                 <div class="bar">
 
                 </div>
-                <div class="label colhidden" style="margin-top: 10px"><span class="colhidden">Disk Space Usage</span></div>
+                <div class="label colhidden" style="margin-top: 10px"><span class="colhidden">{{i18n .Lang "layoutAuth.dsu"}}</span></div>
             </div>
 
         </a>
@@ -68,7 +68,7 @@
                 <div class="bar">
 
                 </div>
-                <div class="label colhidden" style="margin-top: 10px"><span class="colhidden">Earn money</span></div>
+                <div class="label colhidden" style="margin-top: 10px"><span class="colhidden">{{i18n .Lang "layoutAuth.em"}}</span></div>
             </div>
 
         </a>
