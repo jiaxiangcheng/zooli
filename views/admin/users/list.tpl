@@ -7,17 +7,17 @@
 
         <div class="ui segments">
             <div class="ui segment">
-                <h1 class="ui header" style="text-align:center;">Users</h1>
+                <h1 class="ui header" style="text-align:center;">{{i18n .Lang "users_table.title"}}</h1>
             </div>
             <div class="ui segment">
                 {{template "common/flash.tpl" .}}
                 <table class="ui compact selectable striped celled table tablet stackable" id="data_table" cellspacing="0" width="100%">
                     <thead>
                         <tr>
-                            <th>Username</th>
-                            <th>Role</th>
-                            <th>Name</th>
-                            <th>Email</th>
+                            <th>{{i18n .Lang "table_attribute_names.username"}}</th>
+                            <th>{{i18n .Lang "table_attribute_names.role"}}</th>
+                            <th>{{i18n .Lang "table_attribute_names.name"}}</th>
+                            <th>{{i18n .Lang "table_attribute_names.email"}}</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -41,7 +41,7 @@
                         <tr>
                             <th colspan="5">
                                 <div class="ui right floated small primary labeled icon button" onclick="newUser();">
-                                    <i class="user icon"></i> Add User
+                                    <i class="user icon"></i> {{i18n .Lang "users_table.add_user"}}
                                 </div>
                             </th>
                         </tr>

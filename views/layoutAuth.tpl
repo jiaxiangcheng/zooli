@@ -17,31 +17,31 @@
     </a>
 
     <a class="item" href="/dashboard">
-        <i class="dashboard icon"></i><span>{{i18n .Lang "layoutAuth.dashboard"}}</span>
+        <i class="dashboard icon"></i><span>{{i18n .Lang "nav_items.dashboard"}}</span>
     </a>
 
     {{ if eq .user.Role.Name .roleAdmin}}
 
         <a class="item" href="/admin/users">
             <i class="users icon"></i>
-            <span>{{i18n .Lang "layoutAuth.users"}}</span>
+            <span>{{i18n .Lang "nav_items.users"}}</span>
         </a>
         <a class="item" href="/admin/companies">
             <i class="world icon"></i>
-            <span>{{i18n .Lang "layoutAuth.companies"}}</span>
+            <span>{{i18n .Lang "nav_items.companies"}}</span>
         </a>
         <a class="item" href="/admin/services">
             <i class="cubes icon"></i>
-            <span>{{i18n .Lang "layoutAuth.services"}}</span>
+            <span>{{i18n .Lang "nav_items.services"}}</span>
         </a>
         <a class="item" href="/admin/stores">
             <i class="shopping bag icon"></i>
-            <span>{{i18n .Lang "layoutAuth.stores"}}</span>
+            <span>{{i18n .Lang "nav_items.stores"}}</span>
         </a>
         <div class="ui divider"></div>
         <a class="item" href="/admin/analytics">
             <i class="bar chart icon"></i>
-            <span>{{i18n .Lang "layoutAuth.analytics"}}</span>
+            <span>{{i18n .Lang "nav_items.analytics"}}</span>
         </a>
         <div class="ui divider"></div>
         <a class="item">
@@ -49,7 +49,7 @@
                 <div class="bar">
 
                 </div>
-                <div class="label colhidden" style="margin-top: 10px"><span class="colhidden">{{i18n .Lang "layoutAuth.mbt"}}</span></div>
+                <div class="label colhidden" style="margin-top: 10px"><span class="colhidden">{{i18n .Lang "nav_items.month_bandwidth"}}</span></div>
             </div>
 
         </a>
@@ -59,7 +59,7 @@
                 <div class="bar">
 
                 </div>
-                <div class="label colhidden" style="margin-top: 10px"><span class="colhidden">{{i18n .Lang "layoutAuth.dsu"}}</span></div>
+                <div class="label colhidden" style="margin-top: 10px"><span class="colhidden">{{i18n .Lang "nav_items.disk_usage"}}</span></div>
             </div>
 
         </a>
@@ -68,7 +68,7 @@
                 <div class="bar">
 
                 </div>
-                <div class="label colhidden" style="margin-top: 10px"><span class="colhidden">{{i18n .Lang "layoutAuth.em"}}</span></div>
+                <div class="label colhidden" style="margin-top: 10px"><span class="colhidden">{{i18n .Lang "nav_items.earn_money"}}</span></div>
             </div>
 
         </a>
@@ -78,15 +78,15 @@
     {{ if eq .user.Role.Name .roleManager}}
     {{if .user.StoreID}}
         <a class="item" href="/public/store">
-            <span><i class="world icon"></i>My Store</span>
+            <span><i class="world icon"></i>{{i18n .Lang "nav_items.my_store"}}</span>
         </a>
 
         <a class="item" href="/public/orders">
-            <span><i class="payment icon"></i>Orders</span>
+            <span><i class="payment icon"></i>{{i18n .Lang "nav_items.orders"}}</span>
         </a>
 
         <a class="item" href="/public/products">
-            <span><i class="cubes icon"></i>Products</span>
+            <span><i class="cubes icon"></i>{{i18n .Lang "nav_items.products"}}</span>
         </a>
     {{end}}
     {{end}}

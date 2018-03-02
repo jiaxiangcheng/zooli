@@ -4,33 +4,33 @@
     <div class="field">
         <div class="two fields">
             <div class="field">
-                <label>Username</label>
-                <input name="username" value="{{.userForm.Username}}" type="text" placeholder="Username"/>
+                <label>{{i18n .Lang "forms.name"}}</label>
+                <input name="username" value="{{.userForm.Username}}" type="text" placeholder="{{i18n .Lang "forms.name"}}"/>
             </div>
             <div class="field">
-                <label>Password</label>
-                <input name="password" type="password" placeholder="Password"/>
+                <label>{{i18n .Lang "forms.password"}}</label>
+                <input name="password" type="password" placeholder="{{i18n .Lang "forms.password"}}"/>
             </div>
         </div>
     </div>
     <div class="field">
         <div class="fields">
             <div class="ten wide field">
-                <label>Email</label>
-                <input name="email" value="{{.userForm.Email}}" type="email" placeholder="Email"/>
+                <label>{{i18n .Lang "forms.email"}}</label>
+                <input name="email" value="{{.userForm.Email}}" type="email" placeholder="{{i18n .Lang "forms.email"}}"/>
             </div>
             <div class="six wide field">
-                <label>Name</label>
-                <input name="name" value="{{.userForm.Name}}" type="text" placeholder="Name"/>
+                <label>{{i18n .Lang "forms.name"}}</label>
+                <input name="name" value="{{.userForm.Name}}" type="text" placeholder="{{i18n .Lang "forms.name"}}"/>
             </div>
         </div>
     </div>
     <div class="two fields">
         <div class="field">
-            <label>Role</label>
+            <label>{{i18n .Lang "forms.role"}}</label>
             <div class="field">
                 <select name="role" class="ui fluid dropdown">
-                    <option value="">Role</option>
+                    <option value="">{{i18n .Lang "forms.role"}}</option>
                 {{ range .roles }}
                     {{ if $.userForm }}
                         <option value="{{.ID}}" {{ if eq .ID $.userForm.RoleID}} selected {{end}}>{{.Name}}</option>
@@ -43,11 +43,11 @@
         </div>
 
         <div class="field">
-            <label>Store (Optional)</label>
+            <label>{{i18n .Lang "forms.store_optional"}}</label>
             <div class="ui fluid search selection dropdown" id="stores">
                 <input name="stores" type="hidden">
                 <i class="dropdown icon"></i>
-                <span class="default text">Stores</span>
+                <span class="default text">{{i18n .Lang "forms.stores"}}</span>
                 <div class="menu">
                     <div class="ui icon search input">
                         <i class="search icon"></i>

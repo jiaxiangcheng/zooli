@@ -4,24 +4,24 @@
     <div class="field">
         <div class="two fields">
             <div class="field">
-                <label>Name</label>
-                <input name="name" value="{{.companyForm.Name}}" type="text" placeholder="Name"/>
+                <label>{{i18n .Lang "forms.name"}}</label>
+                <input name="name" value="{{.companyForm.Name}}" type="text" placeholder="{{i18n .Lang "forms.name"}}"/>
             </div>
             <div class="field">
-                <label>Contact</label>
-                <input name="contact" type="text" value="{{.companyForm.Contact}}" placeholder="Contact" />
+                <label>{{i18n .Lang "forms.contact"}}</label>
+                <input name="contact" type="text" value="{{.companyForm.Contact}}" placeholder="{{i18n .Lang "forms.contact"}}" />
             </div>
         </div>
     </div>
     <div class="field">
         <div class="fields">
             <div class="six wide field">
-                <label>Phone number</label>
-                <input name="phoneNumber" value="{{.companyForm.PhoneNumber}}" type="text" placeholder="Phone number"/>
+                <label>{{i18n .Lang "forms.phone_number"}}</label>
+                <input name="phoneNumber" value="{{.companyForm.PhoneNumber}}" type="text" placeholder="{{i18n .Lang "forms.phone_number"}}"/>
             </div>
             <div class="ten wide field">
-                <label>Email</label>
-                <input name="email" value="{{.companyForm.Email}}" type="email" placeholder="Email"/>
+                <label>{{i18n .Lang "forms.email"}}</label>
+                <input name="email" value="{{.companyForm.Email}}" type="email" placeholder="{{i18n .Lang "forms.email"}}"/>
             </div>
         </div>
     </div>

@@ -4,18 +4,18 @@
     <div class="field">
         <div class="three fields">
             <div class="four wide field">
-                <label>Name</label>
-                <input name="name" value="{{.productForm.Name}}" type="text" placeholder="Name"/>
+                <label>{{i18n .Lang "form.name"}}</label>
+                <input name="name" value="{{.productForm.Name}}" type="text" placeholder="{{i18n .Lang "form.name"}}"/>
             </div>
             <div class="six wide field">
-                <label>Value</label>
-                <input name="value" value="{{.productForm.Value}}" type="text" placeholder="Value"/>
+                <label>{{i18n .Lang "form.value"}}</label>
+                <input name="value" value="{{.productForm.Value}}" type="text" placeholder="{{i18n .Lang "form.value"}}"/>
             </div>
             <div class="six wide field">
-                <label>Services</label>
+                <label>{{i18n .Lang "form.services"}}</label>
                 <div class="field">
                     <select name="service" class="ui fluid dropdown">
-                        <option value="">Service</option>
+                        <option value="">{{i18n .Lang "form.services"}}</option>
                     {{ range .services }}
                     {{ if $.productForm }}
                         <option value="{{.ID}}" {{ if eq .ID $.productForm.ServiceID}} selected {{end}}>{{.Name}}</option>
@@ -29,8 +29,8 @@
         </div>
     </div>
     <div class="field">
-        <label>Description</label>
-        <textarea name="description" type="text" placeholder="Type your product description">{{.productForm.Description}}</textarea>
+        <label>{{i18n .Lang "form.description"}}</label>
+        <textarea name="description" type="text" placeholder="{{i18n .Lang "form.type_description"}}">{{.productForm.Description}}</textarea>
     </div>
     <div class="field">
         <div style="width:100%;float:left;position:relative;display:{{if .productForm.Image}}inline{{else}}none{{end}};">

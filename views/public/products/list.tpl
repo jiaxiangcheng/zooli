@@ -7,22 +7,22 @@
 
         <div class="ui segments">
             <div class="ui segment">
-                <h1 class="ui header" style="text-align:center;">Products</h1>
+                <h1 class="ui header" style="text-align:center;">{{i18n .Lang "products.title"}}</h1>
             </div>
             <div class="ui segment">
                 {{template "common/flash.tpl" .}}
                 <table class="ui compact selectable striped celled table tablet stackable" id="data_table" cellspacing="0" width="100%">
                     <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Description</th>
-                            <th>Value</th>
-                            <th>Service</th>
+                            <th>{{i18n .Lang "table_attribute_names.name"}}</th>
+                            <th>{{i18n .Lang "table_attribute_names.name"}}</th>
+                            <th>{{i18n .Lang "table_attribute_names.name"}}</th>
+                            <th>{{i18n .Lang "table_attribute_names.name"}}</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        {{ range .products }}
+                        {{ range .table_attribute_names }}
                         <tr>
                             <td style="overflow: hidden;text-overflow: ellipsis;">{{ .Name}}</td>
                             <td style="overflow: hidden;text-overflow: ellipsis;">{{ .Description}}</td>
@@ -39,7 +39,7 @@
                         <tr>
                             <th colspan="5">
                                 <div class="ui right floated small primary labeled icon button" onclick="newProduct();">
-                                    <i class="cubes icon"></i> Add Product
+                                    <i class="cubes icon"></i> {{i18n .Lang "table_attribute_names.add_product"}}
                                 </div>
                             </th>
                         </tr>

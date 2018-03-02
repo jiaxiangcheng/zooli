@@ -4,14 +4,11 @@
             <div class="ui raised compact segment">
                 <div class="title">
                     <i class="user icon"></i>
-                    Total Users
+                    {{i18n .Lang "admin_dashoard.total_users"}}
                 </div>
                 <div class="ui statistic">
                     <div class="value" style="color: #6495ED;">
-                        {{.usercount}}
-                    </div>
-                    <div class="label">
-                        Users
+                        {{.usercount}} <span style="font-size: 20px; color: #000000;">{{i18n .Lang "admin_dashoard.user_unit"}}</span>
                     </div>
                 </div>
                 <div class="ui divider"></div>
@@ -26,14 +23,11 @@
             <div class="ui raised compact segment">
                 <div class="title">
                     <i class="world icon"></i>
-                    Total Companies
+                    {{i18n .Lang "admin_dashoard.total_companies"}}
                 </div>
                 <div class="ui statistic">
                     <div class="value" style="color: #6495ED;">
-                        {{.companycount}}
-                    </div>
-                    <div class="label">
-                        Companies
+                        {{.companycount}} <span style="font-size: 20px; color: #000000;">{{i18n .Lang "admin_dashoard.company_unit"}}</span>
                     </div>
                 </div>
                 <div class="ui divider"></div>
@@ -48,14 +42,11 @@
             <div class="ui raised compact segment">
                 <div class="title">
                     <i class="cubes icon"></i>
-                    Total Services
+                    {{i18n .Lang "admin_dashoard.total_services"}}
                 </div>
                 <div class="ui statistic">
                     <div class="value" style="color: #6495ED;">
-                        {{.servicecount}}
-                    </div>
-                    <div class="label">
-                        Services
+                        {{.servicecount}} <span style="font-size: 20px; color: #000000;">{{i18n .Lang "admin_dashoard.service_unit"}}</span>
                     </div>
                 </div>
                 <div class="ui divider"></div>
@@ -71,14 +62,11 @@
             <div class="ui raised compact segment">
                 <div class="title">
                     <i class="shopping bag icon"></i>
-                    Total Stores
+                    {{i18n .Lang "admin_dashoard.total_stores"}}
                 </div>
                 <div class="ui statistic">
                     <div class="value" style="color: #6495ED;">
-                        {{.storecount}}
-                    </div>
-                    <div class="label">
-                        Stores
+                        {{.storecount}} <span style="font-size: 20px; color: #000000;">{{i18n .Lang "admin_dashoard.store_unit"}}</span>
                     </div>
                 </div>
                 <div class="ui divider"></div>

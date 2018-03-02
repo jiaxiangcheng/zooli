@@ -3,14 +3,11 @@
         <div class="ui raised compact segment">
             <div class="title">
                 <i class="user icon"></i>
-                Total Customers
+                {{i18n .Lang "public_dashoard.total_customers"}}
             </div>
             <div class="ui statistic">
                 <div class="value" style="color: #6495ED;">
                     {{.customercount}}
-                </div>
-                <div class="label">
-                    Customer
                 </div>
             </div>
             <div class="ui divider"></div>
@@ -25,14 +22,11 @@
         <div class="ui raised compact segment">
             <div class="title">
                 <i class="world icon"></i>
-                Total Orders
+                {{i18n .Lang "public_dashoard.total_orders"}}
             </div>
             <div class="ui statistic">
                 <div class="value" style="color: #6495ED;">
                     {{.ordercount}}
-                </div>
-                <div class="label">
-                    Order
                 </div>
             </div>
             <div class="ui divider"></div>
@@ -47,14 +41,11 @@
         <div class="ui raised compact segment">
             <div class="title">
                 <i class="cubes icon"></i>
-                Total XXXX
+                {{i18n .Lang "public_dashoard.total_XXXX"}}
             </div>
             <div class="ui statistic">
                 <div class="value" style="color: #6495ED;">
                     {{.servicecount}}
-                </div>
-                <div class="label">
-                    XXXX
                 </div>
             </div>
             <div class="ui divider"></div>
@@ -69,14 +60,11 @@
         <div class="ui raised compact segment">
             <div class="title">
                 <i class="shopping bag icon"></i>
-                Total XXXX
+                {{i18n .Lang "public_dashoard.total_XXXX"}}
             </div>
             <div class="ui statistic">
                 <div class="value" style="color: #6495ED;">
                     {{.storecount}}
-                </div>
-                <div class="label">
-                    XXXX
                 </div>
             </div>
             <div class="ui divider"></div>

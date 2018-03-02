@@ -7,7 +7,7 @@
 
         <div class="ui segments">
             <div class="ui segment">
-                <h1 class="ui header" style="text-align:center;">Companies</h1>
+                <h1 class="ui header" style="text-align:center;">{{i18n .Lang "companies_table.title"}}</h1>
             </div>
             <div class="ui segment">
                 {{template "common/flash.tpl" .}}
@@ -15,10 +15,10 @@
 
                     <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Contact</th>
-                            <th>Phone</th>
-                            <th>Email</th>
+                            <th>{{i18n .Lang "table_attribute_names.name"}}</th>
+                            <th>{{i18n .Lang "table_attribute_names.contact"}}</th>
+                            <th>{{i18n .Lang "table_attribute_names.phone"}}</th>
+                            <th>{{i18n .Lang "table_attribute_names.email"}}</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -41,7 +41,7 @@
                         <tr>
                             <th colspan="5">
                                 <div class="ui right floated small primary labeled icon button" onclick="newCompany();">
-                                    <i class="world icon"></i> Add Company
+                                    <i class="world icon"></i> {{i18n .Lang "companies_table.add_company"}}
                                 </div>
                             </th>
                         </tr>
