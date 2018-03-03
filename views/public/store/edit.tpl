@@ -1,13 +1,13 @@
 <form class="ui form" enctype="multipart/form-data">
     <h2 id="title">
         <i class="shopping bag icon"></i>
-        Store Information
+        {{i18n .Lang "manager_store.title"}}
     </h2>
     {{template "public/store/form/body.tpl" .}}
     <button id="save" class="ui primary button" type="submit">Save</button>
     <button id="cancel" class="ui button" type="button">Cancel</button>
 </form>
-    
+
 <script type="text/javascript">
     $(document)
             .ready(function() {

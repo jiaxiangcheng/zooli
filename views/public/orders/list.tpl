@@ -7,17 +7,17 @@
 
         <div class="ui segments">
             <div class="ui segment">
-                <h1 class="ui header" style="text-align:center;">Orders</h1>
+                <h1 class="ui header" style="text-align:center;">{{i18n .Lang "orders_table.title"}}</h1>
             </div>
             <div class="ui segment">
                 {{template "common/flash.tpl" .}}
                 <table class="ui compact selectable striped celled table tablet stackable" id="data_table" cellspacing="0" width="100%">
                     <thead>
                         <tr>
-                            <th>Customer</th>
-                            <th>Product</th>
-                            <th>Status</th>
-                            <th>Fee</th>
+                            <th>{{i18n .Lang "table_attribute_names.customer"}}</th>
+                            <th>{{i18n .Lang "table_attribute_names.product"}}</th>
+                            <th>{{i18n .Lang "table_attribute_names.status"}}</th>
+                            <th>{{i18n .Lang "table_attribute_names.fee"}}</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -39,7 +39,7 @@
                         <tr>
                             <th colspan="5">
                                 <div class="ui right floated small primary labeled icon button" onclick="newOrder();">
-                                    <i class="payment icon"></i> Add Order
+                                    <i class="payment icon"></i> {{i18n .Lang "orders_table.add_order"}}
                                 </div>
                             </th>
                         </tr>

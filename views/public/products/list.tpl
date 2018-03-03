@@ -7,7 +7,7 @@
 
         <div class="ui segments">
             <div class="ui segment">
-                <h1 class="ui header" style="text-align:center;">{{i18n .Lang "products.title"}}</h1>
+                <h1 class="ui header" style="text-align:center;">{{i18n .Lang "products_table.title"}}</h1>
             </div>
             <div class="ui segment">
                 {{template "common/flash.tpl" .}}
@@ -39,7 +39,7 @@
                         <tr>
                             <th colspan="5">
                                 <div class="ui right floated small primary labeled icon button" onclick="newProduct();">
-                                    <i class="cubes icon"></i> {{i18n .Lang "table_attribute_names.add_product"}}
+                                    <i class="cubes icon"></i> {{i18n .Lang "products_table.add_product"}}
                                 </div>
                             </th>
                         </tr>
