@@ -931,3 +931,9 @@ a.item.transition {
 .hiddenCollapse .statistics .label {
     opacity: 0.5;
 }
+
+
+.broken-word {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

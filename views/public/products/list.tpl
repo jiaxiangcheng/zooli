@@ -1,33 +1,31 @@
 {{template "common/modal.tpl" .}}
 
-<div class="ui divider"></div>
-
 <div class="row">
     <div class="column">
 
         <div class="ui segments">
             <div class="ui segment">
-                <h1 class="ui header" style="text-align:center;">{{i18n .Lang "products_table.title"}}</h1>
+                <h1 class="ui header center aligned">{{i18n .Lang "products_table.title"}}</h1>
             </div>
             <div class="ui segment">
                 {{template "common/flash.tpl" .}}
-                <table class="ui compact selectable striped celled table tablet stackable" id="data_table" cellspacing="0" width="100%">
+                <table class="ui compact fixed single line selectable striped celled table tablet stackable" id="data_table" cellspacing="0" width="100%">
                     <thead>
                         <tr>
                             <th>{{i18n .Lang "table_attribute_names.name"}}</th>
                             <th>{{i18n .Lang "table_attribute_names.name"}}</th>
-                            <th>{{i18n .Lang "table_attribute_names.name"}}</th>
+                            <th class="center aligned">{{i18n .Lang "table_attribute_names.name"}}</th>
                             <th>{{i18n .Lang "table_attribute_names.name"}}</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        {{ range .table_attribute_names }}
+                        {{ range .products }}
                         <tr>
-                            <td style="overflow: hidden;text-overflow: ellipsis;">{{ .Name}}</td>
-                            <td style="overflow: hidden;text-overflow: ellipsis;">{{ .Description}}</td>
-                            <td style="overflow: hidden;text-overflow: ellipsis;">{{ .Value}}</td>
-                            <td style="overflow: hidden;text-overflow: ellipsis;">{{ .Service.Name}}</td>
+                            <td>{{ .Name}}</td>
+                            <td>{{ .Description}}</td>
+                            <td class="center aligned">{{ .Value}}</td>
+                            <td>{{ .Service.Name}}</td>
                             <td class="center aligned">
                                 <i class="blue link pencil alternate icon" onclick="editProduct('{{ .ID}}');"></i>
                                 <i class="red link trash alternate icon" onclick="openDeleteModal('{{ .ID}}');"></i>
@@ -55,7 +53,9 @@
 
 $(document).ready(function() {
     $('#data_table').DataTable({
-        //dom: 'Bfrtip',
+        language: {
+            "search": {{i18n .Lang "search input"}}
+        },
         lengthChange: false,
         info: false
     }

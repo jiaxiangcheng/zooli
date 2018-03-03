@@ -171,7 +171,7 @@ func GenerateRandomDataset() {
 		}
 		m.ID = uint(i)
 		m.SetPassword("111111")
-		if ran.Intn(10) > 4 {
+		if ran.Intn(10) > 2 {
 			m.StoreID = uint(ran.Intn(storeCount) + 1)
 		}
 		m.Insert()

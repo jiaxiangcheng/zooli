@@ -1,13 +1,11 @@
 {{template "common/modal.tpl" .}}
 
-<div class="ui divider"></div>
-
 <div class="row">
     <div class="column">
 
         <div class="ui segments">
             <div class="ui segment">
-                <h1 class="ui header" style="text-align:center;">{{i18n .Lang "companies_table.title"}}</h1>
+                <h1 class="ui header center aligned">{{i18n .Lang "companies_table.title"}}</h1>
             </div>
             <div class="ui segment">
                 {{template "common/flash.tpl" .}}
@@ -25,10 +23,10 @@
                     <tbody>
                         {{ range .companies }}
                         <tr>
-                            <td class="center aligned" style="overflow: hidden;text-overflow: ellipsis;">{{ .Name}}</td>
-                            <td class="center aligned" style="overflow: hidden;text-overflow: ellipsis;">{{ .Contact}}</td>
-                            <td class="center aligned" style="overflow: hidden;text-overflow: ellipsis;">{{ .PhoneNumber}}</td>
-                            <td class="center aligned" style="overflow: hidden;text-overflow: ellipsis;">{{ .Email}}</td>
+                            <td>{{ .Name}}</td>
+                            <td>{{ .Contact}}</td>
+                            <td>{{ .PhoneNumber}}</td>
+                            <td>{{ .Email}}</td>
                             <td class="center aligned">
                                 <i class="blue link pencil alternate icon" onclick="editCompany('{{ .ID}}');"></i>
                                 <i class="red link trash alternate icon" onclick="openDeleteModal('{{ .ID}}');"></i>
@@ -58,7 +56,9 @@
 
 $(document).ready(function() {
     $('#data_table').DataTable({
-        //dom: 'Bfrtip',
+        language: {
+            "search": {{i18n .Lang "search input"}}
+        },
         lengthChange: false,
         info: false
     }

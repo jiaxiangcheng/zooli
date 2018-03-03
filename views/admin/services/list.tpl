@@ -1,12 +1,10 @@
 {{template "common/modal.tpl" .}}
 
-<div class="ui divider"></div>
-
 <div class="row">
     <div class="column">
         <div class="ui segments">
             <div class="ui segment">
-                <h1 class="ui header" style="text-align:center;">{{i18n .Lang "services_table.title"}}</h1>
+                <h1 class="ui header center aligned">{{i18n .Lang "services_table.title"}}</h1>
             </div>
             <div class="ui segment">
                 {{template "common/flash.tpl" .}}
@@ -20,7 +18,7 @@
                     <tbody>
                         {{ range .services }}
                         <tr>
-                            <td style="overflow: hidden;text-overflow: ellipsis;">{{ .Name}}</td>
+                            <td>{{ .Name}}</td>
                             <td class="center aligned">
                                 <i class="blue link pencil alternate icon" onclick="editService('{{ .ID}}');"></i>
                                 <i class="red link trash alternate icon" onclick="openDeleteModal('{{ .ID}}');"></i>
@@ -30,7 +28,7 @@
                     </tbody>
                     <tfoot class="full-width">
                         <tr>
-                            <th colspan="5">
+                            <th colspan="2">
                                 <div class="ui right floated small primary labeled icon button" onclick="newService();">
                                     <i class="cubes icon"></i> {{i18n .Lang "services_table.add_service"}}
                                 </div>
@@ -48,7 +46,9 @@
 
 $(document).ready(function() {
     $('#data_table').DataTable({
-        //dom: 'Bfrtip',
+        language: {
+            "search": {{i18n .Lang "search input"}}
+        },
         lengthChange: false,
         info: false
     }

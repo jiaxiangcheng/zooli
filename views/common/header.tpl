@@ -14,7 +14,8 @@
 
 
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pace-progress@1.0.2/pace.min.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.2.0/min/dropzone.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.2.0/min/dropzone.min.css" />
 
 <!-- My Script -->
 <script type="text/javascript" src="/static/js/language.js"></script>

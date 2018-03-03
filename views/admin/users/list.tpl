@@ -1,13 +1,11 @@
 {{template "common/modal.tpl" .}}
 
-<div class="ui divider"></div>
-
 <div class="row">
     <div class="column">
 
         <div class="ui segments">
             <div class="ui segment">
-                <h1 class="ui header" style="text-align:center;">{{i18n .Lang "users_table.title"}}</h1>
+                <h1 class="ui header center aligned">{{i18n .Lang "users_table.title"}}</h1>
             </div>
             <div class="ui segment">
                 {{template "common/flash.tpl" .}}
@@ -24,10 +22,10 @@
                     <tbody>
                         {{ range .users }}
                         <tr>
-                            <td style="overflow: hidden;text-overflow: ellipsis;">{{ .Username}}</td>
-                            <td style="overflow: hidden;text-overflow: ellipsis;">{{ .Role.Name}}</td>
-                            <td style="overflow: hidden;text-overflow: ellipsis;">{{ .Name}}</td>
-                            <td style="overflow: hidden;text-overflow: ellipsis;">{{ .Email}}</td>
+                            <td>{{ .Username}}</td>
+                            <td>{{ .Role.Name}}</td>
+                            <td>{{ .Name}}</td>
+                            <td>{{ .Email}}</td>
                             <td class="center aligned">
                                 <i class="blue link pencil alternate icon" onclick="editUser('{{ .ID}}');"></i>
                                 {{if ne $.user.ID .ID}}
@@ -56,7 +54,9 @@
 <script type="text/javascript">
 $(document).ready(function() {
     $('#data_table').DataTable({
-        //dom: 'Bfrtip',
+        language: {
+            "search": {{i18n .Lang "search input"}}
+        },
         lengthChange: false,
         info: false
     }
