@@ -10,9 +10,22 @@ git clone https://github.com/Qiaorui/zooli.git $GOPATH/src/github.com/Qiaorui/zo
 
 cd $GOPATH/src/github.com/Qiaorui/zooli/
 
+# update package
+go get -u
+
+# run web app
 bee run
 ```
 Then your app should be able to run in http://localhost:8090/
+
+The default account:
+```
+username: admin
+password: 1234
+```
+
+If you generate random data set, all fake account has password: 111111
+
 > Note: if any error happens please check prerequisites first.
 
 ### Prerequisites
