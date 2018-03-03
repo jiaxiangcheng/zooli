@@ -11,136 +11,20 @@
 </head>
 
 <body>
-<div class="ui sidebar vertical left menu overlay borderless visible sidemenu inverted grey" id="nav_sidebar" style="-webkit-transition-duration: 0.1s; transition-duration: 0.1s;" data-color="grey">
-    <a class="item logo" href="/dashboard">
-        <img class="ui mini image spaced" src="/static/img/logo/z.png" alt="Zooli" /><span style="color: black;">   Zooli</span>
-    </a>
-
-    <a class="item" href="/dashboard">
-        <i class="dashboard icon"></i><span>{{i18n .Lang "nav_items.dashboard"}}</span>
-    </a>
-
-    {{ if eq .user.Role.Name .roleAdmin}}
-
-        <a class="item" href="/admin/users">
-            <i class="users icon"></i>
-            <span>{{i18n .Lang "nav_items.users"}}</span>
-        </a>
-        <a class="item" href="/admin/companies">
-            <i class="world icon"></i>
-            <span>{{i18n .Lang "nav_items.companies"}}</span>
-        </a>
-        <a class="item" href="/admin/services">
-            <i class="cubes icon"></i>
-            <span>{{i18n .Lang "nav_items.services"}}</span>
-        </a>
-        <a class="item" href="/admin/stores">
-            <i class="shopping bag icon"></i>
-            <span>{{i18n .Lang "nav_items.stores"}}</span>
-        </a>
-        <div class="ui divider"></div>
-        <a class="item" href="/admin/analytics">
-            <i class="bar chart icon"></i>
-            <span>{{i18n .Lang "nav_items.analytics"}}</span>
-        </a>
-        <div class="ui divider"></div>
-        <a class="item">
-            <div class="ui inverted progress tiny yellow" id="sidebar_progress1">
-                <div class="bar">
-
-                </div>
-                <div class="label colhidden" style="margin-top: 10px"><span class="colhidden">{{i18n .Lang "nav_items.month_bandwidth"}}</span></div>
-            </div>
-
-        </a>
-
-        <a class="item">
-            <div class="ui inverted progress tiny teal" id="sidebar_progress2">
-                <div class="bar">
-
-                </div>
-                <div class="label colhidden" style="margin-top: 10px"><span class="colhidden">{{i18n .Lang "nav_items.disk_usage"}}</span></div>
-            </div>
-
-        </a>
-        <a class="item">
-            <div class="ui inverted progress tiny blue" id="sidebar_progress3">
-                <div class="bar">
-
-                </div>
-                <div class="label colhidden" style="margin-top: 10px"><span class="colhidden">{{i18n .Lang "nav_items.earn_money"}}</span></div>
-            </div>
-
-        </a>
-        <div class="ui divider"></div>
-    {{end}}
-
-    {{ if eq .user.Role.Name .roleManager}}
-    {{if .user.StoreID}}
-        <a class="item" href="/public/store">
-            <span><i class="world icon"></i>{{i18n .Lang "nav_items.my_store"}}</span>
-        </a>
-
-        <a class="item" href="/public/orders">
-            <span><i class="payment icon"></i>{{i18n .Lang "nav_items.orders"}}</span>
-        </a>
-
-        <a class="item" href="/public/products">
-            <span><i class="cubes icon"></i>{{i18n .Lang "nav_items.products"}}</span>
-        </a>
-    {{end}}
-    {{end}}
-
-</div>
+<!-- side bar -->
+{{template "side_bar.tpl" .}}
 
 <div class="pusher">
-    <!--navbar-->
+    <!-- top menu-->
     <div class="navslide">
-        <div class="ui menu icon borderless grid blue">
-            <a class="item labeled" id="open_btn">
-                <i class="bars big icon"></i>
-            </a>
-            <a class="item labeled expandit" id="full_screen_toggle">
-                <i class="expand arrows alternate big icon"></i>
-            </a>
-            <div class="item ui colhidden">
-                <div class="ui icon input">
-                    <input type="text" placeholder="Search...">
-                    <i class="search icon"></i>
-                </div>
-            </div>
-            <div class="right menu colhidden">
-
-            {{ if eq .user.Role.Name .roleAdmin}}
-                    {{template "random.tpl"}}
-            {{end}}
-
-                <div class="ui dropdown item" id="select_language">
-                {{.CurLang}} <i class="dropdown icon"></i>
-                    <div class="menu">
-                    {{range .RestLangs}}
-                        <a class="item" data-value="{{.Lang}}">{{i18n $.Lang .Name}}</a>
-                    {{end}}
-                    </div>
-                </div>
-                <a class="item" href="/help">
-                    <i class="help icon"></i> {{i18n $.Lang "help"}}
-                </a>
-                <a class="item" href="/logout">
-                    <i class="sign out icon"></i> {{i18n $.Lang "log out"}}
-                </a>
-
-            </div>
-        </div>
+        {{template "top_menu.tpl" .}}
     </div>
-    <!--navbar-->
-    <!--maincontent-->
+    <!-- main content -->
     <div class="mainWrap navslide">
         <div class="ui equal width left aligned padded grid stackable" id="main_content">
             {{.LayoutContent}}
         </div>
     </div>
-    <!--maincontent-->
 </div>
 
 </body>
