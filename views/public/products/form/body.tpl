@@ -32,15 +32,48 @@
         <label>{{i18n .Lang "form.description"}}</label>
         <textarea name="description" type="text" placeholder="{{i18n .Lang "form.type_description"}}">{{.productForm.Description}}</textarea>
     </div>
-    <div class="field">
-        <div style="width:100%;float:left;position:relative;display:{{if .productForm.Image}}inline{{else}}none{{end}};">
-            <img class="ui fluid image" id="preview" src="{{.productForm.Image}}" style="width:100%;max-height:100%;"/>
+    <div class="field" id="image-container">
+        <div style="{{if .productForm.Image}}
+                        border: 1px solid #ddd;
+                        border-radius: 4px;
+                        padding: 5px;
+                        width: 150px;
+                    {{else}}
+                        width:100%;float:left;position:relative;display:none
+                    {{end}};">
+            <img class="ui fluid image" id="preview" src="{{.productForm.Image}}"/>
             <i id="imgCloser" class="close icon" style="position: absolute;top:15px;right:15px;cursor: pointer;"></i>
             <input type="hidden" id="oldImage" name="oldImage" value="{{.productForm.Image}}">
         </div>
         <input type="file" accept="image/*" name="image" id="poster">
     </div>
 </div>
+
+<div id="image_modal" class="ui modal">
+    <div class="image content">
+        <img id="modal-image">
+    </div>
+</div>
+    
+<style>
+    #image-container{
+        position: relative;
+    }
+
+    #imgCloser{
+        position: absolute;
+        top: 0;
+        right: -10;
+        cursor: pointer;
+    }
+
+    img:hover{
+        cursor: pointer;
+        transition: 0.3s;
+        opacity: 0.5
+    }
+
+</style>
 
 <script>
     $(document)
@@ -50,17 +83,22 @@
                     $('#poster').val('');
                     $('#oldImage').val("");
                     preview.src = "";
-                    preview.parentNode.style.display = 'none';
+                    preview.parentNode.style = 'width:100%;float:left;position:relative;display:none';
                 });
 
                 $("#poster").change(function () {
                     if (event.target.files.length > 0) {
                         preview.src = URL.createObjectURL(event.target.files[0]);
-                        preview.parentNode.style.display = 'inline';
+                        preview.parentNode.style = 'border: 1px solid #ddd;border-radius: 4px;padding: 5px;width: 150px;';
                     } else {
                         preview.src = "";
-                        preview.parentNode.style.display = 'none';
+                        preview.parentNode.style = 'width:100%;float:left;position:relative;display:none';
                     }
+                });
+
+                $("#preview").click(function () {
+                    $("#modal-image").attr("src", preview.src);
+                    $('#image_modal').modal('show');
                 });
 
                 $('.dropdown').dropdown();
