@@ -190,11 +190,13 @@ func (c *ProductsController) getProduct() (models.Product, error) {
 		Description: c.GetString("description"),
 	}
 
-	value, err := c.GetFloat("value")
-	if err != nil {
-		return product, err
+	if c.GetString("value") != "" {
+		value, err := c.GetFloat("value")
+		if err != nil {
+			return product, err
+		}
+		product.Value = value
 	}
-	product.Value = value
 
 	serviceID, err := c.GetInt("service")
 	if err != nil {

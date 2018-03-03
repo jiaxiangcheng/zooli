@@ -92,10 +92,6 @@
                                         {
                                             type   : 'number',
                                             prompt : 'Incorrect product value format'
-                                        },
-                                        {
-                                            type   : 'empty',
-                                            prompt : 'Please enter your value'
                                         }
                                     ]
                                 },
