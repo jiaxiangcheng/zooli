@@ -59,7 +59,13 @@ func (c *OrdersController) Edit() {
 	c.Data["orderedCanceled"] = models.CANCELED
 	c.Data["orderForm"] = order
 	c.Data["orderLogs"] = models.FindOrderLogsByOrderID(order.ID)
-	beego.Debug(c.Data["orderLogs"])
+
+	status := c.getStatusFromConst(order.Status)
+	if status != 5 && status != 6 {
+		c.Data["nextStep"] = c.getStatusFromInt(status + 1)
+	}
+	beego.Debug(c.Data["nextStep"])
+
 	c.TplName = "public/orders/edit.tpl"
 }
 
@@ -176,6 +182,31 @@ func (c *OrdersController) Update() {
 	c.Redirect("/public/orders/"+strconv.Itoa(id), 302)
 }
 
+func (c *OrdersController) NextStatus() {
+	flash := beego.NewFlash()
+
+	var order models.Order
+	id, _ := strconv.Atoi(c.Ctx.Input.Param(":id"))
+	order = models.FindOrderByID(uint(id))
+	beego.Debug(order.Status)
+
+	oldStatusInt := c.getStatusFromConst(order.Status)
+	beego.Debug(oldStatusInt)
+	currenStatusInt := oldStatusInt + 1
+	beego.Debug(currenStatusInt)
+
+	order.Status = c.getStatusFromInt(currenStatusInt)
+
+	beego.Debug("current Status = " + order.Status.String())
+
+	order.Update()
+
+	// load message success and redirect
+	flash.Success("You have updated the order")
+	flash.Store(&c.Controller)
+	c.Redirect("/public/orders/"+strconv.Itoa(id), 302)
+}
+
 /*
 func (c *OrdersController) Delete() {
 	flash := beego.NewFlash()
@@ -221,23 +252,48 @@ func (c *OrdersController) getOrder() (models.Order, error) {
 	*/
 
 	status := c.GetString("status")
+	s, _ := strconv.Atoi(status)
 
-	beego.Debug(status)
-
-	switch s, _ := strconv.Atoi(status); s {
-	case 1:
-		order.Status = models.ORDERED
-	case 2:
-		order.Status = models.IN_SERVICE
-	case 3:
-		order.Status = models.END_SERVICE
-	case 4:
-		order.Status = models.WAITING_FOR_PAYMENT
-	case 5:
-		order.Status = models.FINISHED
-	case 6:
-		order.Status = models.CANCELED
-	}
+	order.Status = c.getStatusFromInt(s)
 
 	return order, nil
+}
+
+func (c *OrdersController) getStatusFromConst(status models.Status) int {
+
+	switch status {
+	case models.ORDERED:
+		return 1
+	case models.IN_SERVICE:
+		return 2
+	case models.END_SERVICE:
+		return 3
+	case models.WAITING_FOR_PAYMENT:
+		return 4
+	case models.FINISHED:
+		return 5
+	case models.CANCELED:
+		return 6
+	}
+
+	return 0
+}
+
+func (c *OrdersController) getStatusFromInt(status int) models.Status {
+	switch status {
+	case 1:
+		return models.ORDERED
+	case 2:
+		return models.IN_SERVICE
+	case 3:
+		return models.END_SERVICE
+	case 4:
+		return models.WAITING_FOR_PAYMENT
+	case 5:
+		return models.FINISHED
+	case 6:
+		return models.CANCELED
+	}
+
+	return models.CANCELED
 }

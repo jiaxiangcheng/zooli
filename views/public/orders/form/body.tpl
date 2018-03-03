@@ -45,6 +45,13 @@
                     </a>
                 {{end}}
             {{end}}
+            {{ if .nextStep }}
+                <div class="disabled step">
+                    <div class="content">
+                      <div class="title">{{.nextStep}}</div>
+                    </div>
+                </div>
+            {{end}}
         </div>
 
         <div class="field">

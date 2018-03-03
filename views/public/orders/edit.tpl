@@ -6,6 +6,9 @@
     {{template "public/orders/form/body.tpl" .}}
     <button id="save" class="ui primary button" type="submit">Save</button>
     <button id="cancel" class="ui button" type="button">Cancel</button>
+    {{if not (eq .orderForm.Status .orderFinished .orderedCanceled)}}
+        <button id="next" class="ui primary right floated button" type="button">Next Status</button>
+    {{end}}
 </form>
 
 <script type="text/javascript">
@@ -35,6 +38,17 @@
                         async: false,
                         type: "get",
                         url: "/public/orders",
+                        success: function (data) {
+                            $('#main_content').html(data);
+                        }
+                    });
+                });
+            $('#next')
+                .on('click', function () {
+                    $.ajax({
+                        async: false,
+                        type: "post",
+                        url: "/public/orders/{{.orderForm.ID}}/next",
                         success: function (data) {
                             $('#main_content').html(data);
                         }
