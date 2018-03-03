@@ -101,7 +101,6 @@ func GenerateRandomDataset() {
 				Longitude: float64(fake.Longitude()),
 				PhoneNumber: fake.Phone(),
 				CompanyID: uint(i),
-				Image: "",
 			}
 			ssc := ran.Intn(sc) + 1
 			sss := Shuffle(ss)[:ssc]
@@ -189,7 +188,9 @@ func LoadlibDB(db *gorm.DB) {
 	db.AutoMigrate(&Company{})
 	db.AutoMigrate(&Role{})
 	db.AutoMigrate(&User{})
+	db.AutoMigrate(&ProductImage{})
 	db.AutoMigrate(&Product{})
+	db.AutoMigrate(&StoreImage{})
 	db.AutoMigrate(&Store{})
 	db.AutoMigrate(&Customer{})
 	db.AutoMigrate(&Vehicle{})

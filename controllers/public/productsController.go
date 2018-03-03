@@ -206,13 +206,14 @@ func (c *ProductsController) getProduct() (models.Product, error) {
 	product.Service = models.FindServiceByID(product.ServiceID)
 
 	// get image
+	/*
 	defaultImage := c.GetString("oldImage")
 	path, err := c.UploadFile("image", "image", defaultImage)
 	if err != nil {
 		return product, err
 	} else {
 		product.Image = path
-	}
+	}*/
 
 	return product, nil
 }

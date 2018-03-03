@@ -105,13 +105,14 @@ func (c *ManagersStoreController) getStore() (models.Store, error) {
 	store.Longitude = longitude
 
 	// get image
+	/*
 	defaultImage := c.GetString("oldImage")
 	path, err := c.UploadFile("image", "image", defaultImage)
 	if err != nil {
 		return store, err
 	} else {
 		store.Image = path
-	}
+	}*/
 
 	return store, nil
 }

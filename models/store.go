@@ -8,17 +8,17 @@ import (
 )
 
 type Store struct {
-	gorm.Model				`valid:"-"`
-	Name        string		`gorm:"not null" valid:"required"`
-	Address     string		`valid:"-"`
-	Latitude    float64 	`gorm:"not null" valid:"required"`
-	Longitude   float64		`gorm:"not null" valid:"required"`
-	PhoneNumber string		`valid:"phone,optional"`
-	Image       string		`valid:"url,optional"`
-	Company     Company		`valid:"-" json:"-"`
-	CompanyID   uint		`gorm:"not null" valid:"required"`
-	Managers	[]User		`valid:"-" json:"-"`
-	Services    []Service	`gorm:"many2many:store_services;" valid:"-" json:"-"`
+	gorm.Model					`valid:"-"`
+	Name        string			`gorm:"not null" valid:"required"`
+	Address     string			`valid:"-"`
+	Latitude    float64			`gorm:"not null" valid:"required"`
+	Longitude   float64			`gorm:"not null" valid:"required"`
+	PhoneNumber string			`valid:"phone,optional"`
+	Images		[]StoreImage
+	Company     Company			`valid:"-" json:"-"`
+	CompanyID   uint			`gorm:"not null" valid:"required"`
+	Managers	[]User			`valid:"-" json:"-"`
+	Services    []Service		`gorm:"many2many:store_services;" valid:"-" json:"-"`
 }
 
 func (s *Store) Insert() {
@@ -34,7 +34,7 @@ func (s *Store) Exists() bool {
 
 func FindStoreByID(id uint) Store {
 	var s Store
-	DB.Where("id = ?", id).Preload("Managers").Preload("Services").Preload("Company").Find(&s)
+	DB.Where("id = ?", id).Preload("Images").Preload("Managers").Preload("Services").Preload("Company").Find(&s)
 	return s
 }
 
@@ -51,12 +51,12 @@ func (s *Store) Update() {
 
 	DB.Model(&sDB).Association("Services").Replace(s.Services)
 	DB.Model(&sDB).Association("Managers").Replace(s.Managers)
+	DB.Model(&sDB).Association("Images").Replace(s.Images)
 	sDB.Name = s.Name
 	sDB.Address = s.Address
 	sDB.Latitude = s.Latitude
 	sDB.Longitude = s.Longitude
 	sDB.PhoneNumber = s.PhoneNumber
-	sDB.Image = s.Image
 	sDB.CompanyID = s.CompanyID
 
 	DB.Save(&sDB)

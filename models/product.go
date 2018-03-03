@@ -7,15 +7,15 @@ import (
 )
 
 type Product struct {
-	gorm.Model					`valid:"-"`
-	Name			string		`gorm:"not null" valid:"required"`
-	Description		string		`gorm:"type:longtext" valid:"-"`
-	Value			float64		`valid:"optional"`
-	Image			string		`valid:"url,optional"`
-	Service			Service		`valid:"-" json:"-"`
-	ServiceID		uint		`gorm:"not null" valid:"required"`
-	Store			Store		`valid:"-" json:"-"`
-	StoreID			uint		`gorm:"not null" valid:"required"`
+	gorm.Model						`valid:"-"`
+	Name			string			`gorm:"not null" valid:"required"`
+	Description		string			`gorm:"type:longtext" valid:"-"`
+	Value			float64			`valid:"optional"`
+	Images			[]ProductImage
+	Service			Service			`valid:"-" json:"-"`
+	ServiceID		uint			`gorm:"not null" valid:"required"`
+	Store			Store			`valid:"-" json:"-"`
+	StoreID			uint			`gorm:"not null" valid:"required"`
 }
 
 
@@ -39,7 +39,7 @@ func (p *Product) ExistsName() bool {
 
 func FindProductByID(id uint) Product {
 	var p Product
-	DB.Where("id = ?", id).Preload("Service").Preload("Store").Find(&p)
+	DB.Where("id = ?", id).Preload("Images").Preload("Service").Preload("Store").Find(&p)
 	return p
 }
 
@@ -67,10 +67,11 @@ func (p *Product) Update() {
 	pDB.ID = p.ID
 	DB.Where(&pDB).First(&pDB)
 
+	DB.Model(&pDB).Association("Images").Replace(p.Images)
+
 	pDB.Name = p.Name
 	pDB.Description = p.Description
 	pDB.Value = p.Value
-	pDB.Image = p.Image
 	pDB.ServiceID = p.ServiceID
 	pDB.StoreID = p.StoreID
 
