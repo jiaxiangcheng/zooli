@@ -19,3 +19,7 @@
 
 <!-- My Script -->
 <script type="text/javascript" src="/static/js/language.js"></script>
+
+<!-- Lightbox -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.10.0/css/lightbox.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.10.0/js/lightbox.min.js"></script>

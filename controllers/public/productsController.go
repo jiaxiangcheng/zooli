@@ -207,13 +207,13 @@ func (c *ProductsController) getProduct() (models.Product, error) {
 
 	// get image
 	/*
-	defaultImage := c.GetString("oldImage")
-	path, err := c.UploadFile("image", "image", defaultImage)
-	if err != nil {
-		return product, err
-	} else {
-		product.Image = path
-	}*/
+		defaultImage := c.GetString("oldImage")
+		path, err := c.UploadFile("image", "image", defaultImage)
+		if err != nil {
+			return product, err
+		} else {
+			product.Image = path
+		}*/
 
 	return product, nil
 }

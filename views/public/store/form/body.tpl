@@ -1,20 +1,9 @@
 <div class="ui raised segment">
     <div class="ui error message"></div>
     {{template "common/flash.tpl" .}}
-    <div class="field">
-        <div style="{{if .storeForm.Image}}
-                        border: 1px solid #ddd;
-                        border-radius: 4px;
-                        padding: 5px;
-                        width: 150px;
-                    {{else}}
-                        width:100%;float:left;position:relative;display:none
-                    {{end}};">
-            <img class="ui fluid image" id="preview" src="{{.storeForm.Image}}"/>
-            <i id="imgCloser" class="close icon"></i>
-            <input type="hidden" id="oldImage" name="oldImage" value="{{.storeForm.Image}}">
-        </div>
-        <input type="file" accept="image/*" name="image" id="poster">
+    <div class="field" id="image-container">
+        <input type="file" id="files" name="files[]" accept="image/*" multiple/>
+        <output id="store-images"></output>
     </div>
 
     <div class="field">
@@ -86,78 +75,42 @@
         opacity: 0.5
     }
 
+    .thumbnail {
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 5px;
+        width: 150px;
+    }
 </style>
 
 <script>
+
+    function handleImageSelectOrDragDrop(evt) {
+        var files = evt.target.files;
+        for (var i = 0, file; file = files[i]; i++) {
+            
+            if (!file.type.match('image.*')) {
+                continue;
+            }
+
+            const objectURL = window.URL.createObjectURL(file);
+            console.log(objectURL);
+            var reader = new FileReader();
+            reader.onload = (function(theFile) {
+                return function(e) {
+                    var span = document.createElement('span');
+                    span.innerHTML = ['<a href="', objectURL, '" data-lightbox="roadtrip" data-title="', escape(theFile.name), '"><img class="thumbnail" src="', objectURL, '"/></a>'].join('');
+                    document.getElementById('store-images').insertBefore(span, null);
+                };
+            })(file);
+
+            reader.readAsDataURL(file);
+        };
+    }
+
     $(document)
         .ready(function() {
-            $('.dropdown').dropdown();
 
-            $('.ui.form')
-                .form({
-                    fields: {
-                        name: {
-                            identifier  : 'name',
-                            rules: [
-                                {
-                                    type   : 'empty',
-                                    prompt : 'Please enter your store name'
-                                }
-                            ]
-                        },
-                        address: {
-                            identifier  : 'address',
-                            rules: [
-                                {
-                                    type   : 'empty',
-                                    prompt : 'Please enter your address'
-                                }
-                            ]
-                        },
-                        phone: {
-                            identifier  : 'phone',
-                            rules: [
-                                {
-                                    type   : 'regExp[^[\\d+-]+$]',
-                                    prompt : 'Incorrect phone number format'
-                                }
-                            ]
-                        },
-                        company: {
-                            identifier  : 'company',
-                            rules: [
-                                {
-                                    type   : 'empty',
-                                    prompt : 'Please select a company'
-                                }
-                            ]
-                        },
-                        latitude: {
-                            identifier  : 'latitude',
-                            rules: [
-                                {
-                                    type   : 'empty',
-                                    prompt : 'Please enter a latitude value'
-                                }
-                            ]
-                        },
-                        longitude: {
-                            identifier  : 'longitude',
-                            rules: [
-                                {
-                                    type   : 'empty',
-                                    prompt : 'Please enter a longitude value'
-                                }
-                            ]
-                        }
-                    }
-                });
-        });
-</script>
-
-
-<script>
-    $(document).ready( function () {
         var preview = document.getElementById('preview');
         $("#imgCloser").click(function () {
             $('#poster').val('');
@@ -176,9 +129,69 @@
             }
         });
 
-        $("#preview").click(function () {
-            $("#modal-image").attr("src", preview.src);
-            $('#image_modal').modal('show');
+        document.getElementById('files').addEventListener('change', handleImageSelectOrDragDrop, false);
+
+        $('.dropdown').dropdown();
+
+        $('.ui.form')
+            .form({
+                fields: {
+                    name: {
+                        identifier  : 'name',
+                        rules: [
+                            {
+                                type   : 'empty',
+                                prompt : 'Please enter your store name'
+                            }
+                        ]
+                    },
+                    address: {
+                        identifier  : 'address',
+                        rules: [
+                            {
+                                type   : 'empty',
+                                prompt : 'Please enter your address'
+                            }
+                        ]
+                    },
+                    phone: {
+                        identifier  : 'phone',
+                        rules: [
+                            {
+                                type   : 'regExp[^[\\d+-]+$]',
+                                prompt : 'Incorrect phone number format'
+                            }
+                        ]
+                    },
+                    company: {
+                        identifier  : 'company',
+                        rules: [
+                            {
+                                type   : 'empty',
+                                prompt : 'Please select a company'
+                            }
+                        ]
+                    },
+                    latitude: {
+                        identifier  : 'latitude',
+                        rules: [
+                            {
+                                type   : 'empty',
+                                prompt : 'Please enter a latitude value'
+                            }
+                        ]
+                    },
+                    longitude: {
+                        identifier  : 'longitude',
+                        rules: [
+                            {
+                                type   : 'empty',
+                                prompt : 'Please enter a longitude value'
+                            }
+                        ]
+                    }
+                }
+            });
         });
-    });
 </script>
+

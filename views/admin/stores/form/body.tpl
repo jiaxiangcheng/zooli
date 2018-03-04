@@ -1,22 +1,7 @@
 <div class="ui raised segment">
     <div class="ui error message"></div>
     {{template "common/flash.tpl" .}}
-    <div class="field" id="image-container">
-        <div style="{{if .storeForm.Image}}
-                        border: 1px solid #ddd;
-                        border-radius: 4px;
-                        padding: 5px;
-                        width: 150px;
-                    {{else}}
-                        width:100%;float:left;position:relative;display:none
-                    {{end}};">
-            <img class="ui fluid image" id="preview" src="{{.storeForm.Image}}"/>
-            <i id="imgCloser" class="close icon"></i>
-            <input type="hidden" id="oldImage" name="oldImage" value="{{.storeForm.Image}}">
-        </div>
-        <input type="file" accept="image/*" name="image" id="poster">
-    </div>
-
+    
     <div class="field">
         <div class="two fields">
             <div class="field">
@@ -103,58 +88,9 @@
     </div>
 </div>
 
-<div id="image_modal" class="ui modal">
-    <div class="image content">
-        <img id="modal-image">
-    </div>
-</div>
-
-<style>
-    #image-container{
-        position: relative;
-    }
-
-    #imgCloser{
-        position: absolute;
-        top: 0;
-        right: -10;
-        cursor: pointer;
-    }
-
-    img:hover{
-        cursor: pointer;
-        transition: 0.3s;
-        opacity: 0.5
-    }
-
-</style>
-
 <script>
     $(document)
             .ready(function() {
-                var preview = document.getElementById('preview');
-                $("#imgCloser").click(function () {
-                    $('#poster').val('');
-                    $('#oldImage').val("");
-                    preview.src = "";
-                    preview.parentNode.style = 'width:100%;float:left;position:relative;display:none';
-                });
-
-                $("#poster").change(function () {
-                    if (event.target.files.length > 0) {
-                        preview.src = URL.createObjectURL(event.target.files[0]);
-                        preview.parentNode.style = 'border: 1px solid #ddd;border-radius: 4px;padding: 5px;width: 150px;';
-                    } else {
-                        preview.src = "";
-                        preview.parentNode.style = 'width:100%;float:left;position:relative;display:none';
-                    }
-                });
-
-                $("#preview").click(function () {
-                    $("#modal-image").attr("src", preview.src);
-                    $('#image_modal').modal('show');
-                });
-
 
                 $('.dropdown').dropdown();
                 {{if .storeForm}}
