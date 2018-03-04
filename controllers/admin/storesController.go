@@ -215,7 +215,7 @@ func (c *StoresController) getStore() (models.Store, error) {
 	// get image
 	/*
 	defaultImage := c.GetString("oldImage")
-	path, err := c.UploadFile("image", "image", defaultImage)
+	path, err := c.UploadFileByKey("image", "image", defaultImage)
 	if err != nil {
 		return store, err
 	} else {

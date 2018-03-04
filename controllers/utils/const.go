@@ -11,4 +11,6 @@ const (
 
 	// Put all ERROR Message here
 	ERROR_LOGIN_COMBO = "error.login combo"
+	ERROR_FILE_TYPE = "error.file type"
+	ERROR_FILE_NOT_UPLOADED = "error.file not uploaded"
 )

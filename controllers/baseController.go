@@ -11,6 +11,9 @@ import (
 	"github.com/Qiaorui/zooli/models"
 	"github.com/astaxie/beego"
 	"github.com/beego/i18n"
+	"mime/multipart"
+	"io"
+	utils "github.com/Qiaorui/zooli/controllers/utils"
 )
 
 const EXTERNAL_FILE_STORAGE = "static/storage/"
@@ -150,7 +153,7 @@ func (c *BaseController) GetString(key string, def ...string) string {
 Using form key and specify format to upload a file.
 Return path and error if exists.
 */
-func (c *BaseController) UploadFile(key string, format string, defaultPath string) (string, error) {
+func (c *BaseController) UploadFileByKey(key string, format string, defaultPath string) (string, error) {
 	path := defaultPath
 	f, h, err := c.GetFile(key)
 	if err != nil {
@@ -177,7 +180,45 @@ func (c *BaseController) UploadFile(key string, format string, defaultPath strin
 			return "", err
 		}
 	} else {
-		return "", errors.New("the upload file has incorrect format")
+		return "", errors.New(i18n.Tr(c.Lang, utils.ERROR_FILE_TYPE))
 	}
+	return c.Ctx.Input.Site() + ":" + strconv.Itoa(c.Ctx.Input.Port()) + "/" + path, nil
+}
+
+
+
+func (c *BaseController) UploadFileByFile(header *multipart.FileHeader, format string) (string, error) {
+	path := ""
+	file, err := header.Open()
+	if err != nil {
+		return "", err
+	}
+
+	defer file.Close()
+
+	buff := make([]byte, 512) // docs tell that it take only first 512 bytes into consideration
+	if _, err = file.Read(buff); err != nil {
+		return "", err
+	}
+
+	if !strings.Contains(http.DetectContentType(buff), format) {
+		return "", errors.New(i18n.Tr(c.Lang, utils.ERROR_FILE_TYPE))
+	}
+
+
+	if _, err := os.Stat(EXTERNAL_FILE_STORAGE); os.IsNotExist(err) {
+		os.Mkdir(EXTERNAL_FILE_STORAGE, os.ModePerm)
+	}
+	path = EXTERNAL_FILE_STORAGE + strconv.FormatInt(time.Now().Unix(), 10) + header.Filename
+
+	f, err := os.OpenFile(path, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0666)
+	if err != nil {
+		return "", err
+	}
+	defer f.Close()
+
+	io.Copy(f, file)
+
+
 	return c.Ctx.Input.Site() + ":" + strconv.Itoa(c.Ctx.Input.Port()) + "/" + path, nil
 }

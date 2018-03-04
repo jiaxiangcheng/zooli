@@ -208,7 +208,7 @@ func (c *ProductsController) getProduct() (models.Product, error) {
 	// get image
 	/*
 		defaultImage := c.GetString("oldImage")
-		path, err := c.UploadFile("image", "image", defaultImage)
+		path, err := c.UploadFileByKey("image", "image", defaultImage)
 		if err != nil {
 			return product, err
 		} else {

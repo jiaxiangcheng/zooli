@@ -5,6 +5,7 @@ import (
 	utils "github.com/Qiaorui/zooli/controllers/utils"
 	"github.com/Qiaorui/zooli/models"
 	"github.com/astaxie/beego"
+	"fmt"
 )
 
 type ManagersStoreController struct {
@@ -92,10 +93,23 @@ func (c *ManagersStoreController) getStore() (models.Store, error) {
 
 	store.ID = storeDb.ID
 
-	file, header, err := c.GetFile("image")
 
-	beego.Debug(file)
-	beego.Debug(header)
+	imageFiles, err := c.GetFiles("files[]")
+	if err == nil {
+		for _, h := range imageFiles {
+			fmt.Println(h.Filename)
+			path, err := c.UploadFileByFile(h, "image")
+			if err != nil {
+				fmt.Println("ERROR: ", err)
+				return store, err
+			} else {
+				store.Images = append(store.Images, models.StoreImage{
+					Image: path,
+				})
+			}
+		}
+	}
+
 
 	latitude, err := c.GetFloat("latitude")
 	if err != nil {
@@ -112,7 +126,7 @@ func (c *ManagersStoreController) getStore() (models.Store, error) {
 	// get image
 	/*
 		defaultImage := c.GetString("oldImage")
-		path, err := c.UploadFile("image", "image", defaultImage)
+		path, err := c.UploadFileByKey("image", "image", defaultImage)
 		if err != nil {
 			return store, err
 		} else {

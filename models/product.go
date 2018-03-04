@@ -11,7 +11,7 @@ type Product struct {
 	Name			string			`gorm:"not null" valid:"required"`
 	Description		string			`gorm:"type:longtext" valid:"-"`
 	Value			float64			`valid:"optional"`
-	Images			[]ProductImage
+	Images			[]ProductImage	`valid:"-"`
 	Service			Service			`valid:"-" json:"-"`
 	ServiceID		uint			`gorm:"not null" valid:"required"`
 	Store			Store			`valid:"-" json:"-"`
