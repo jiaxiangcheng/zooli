@@ -7,11 +7,8 @@ import (
 	utils "github.com/Qiaorui/zooli/controllers/utils"
 	"github.com/Qiaorui/zooli/models"
 	"github.com/astaxie/beego"
-<<<<<<< HEAD
-	"fmt"
 	"github.com/beego/i18n"
-=======
->>>>>>> ebbde83c7a399d1baaa4972cff0a0bbb656bba67
+
 )
 
 type ManagersStoreController struct {
