@@ -80,8 +80,9 @@ func (c *ManagersStoreController) GetStoreFromDB() models.Store {
 }
 */
 func (c *ManagersStoreController) UpdateImages() {
+	flash := beego.NewFlash()
+	store, err := c.getStore()
 
-	storeDb, _ := GetCurrentStore(&c.BaseController)
 	imageFiles, err := c.GetFiles("files[]")
 	if err == nil {
 		for _, h := range imageFiles {
@@ -89,7 +90,11 @@ func (c *ManagersStoreController) UpdateImages() {
 			path, err := c.UploadFileByFile(h, "image")
 			if err != nil {
 				fmt.Println("ERROR: ", err)
-				return store, err
+				flash.Error(err.Error())
+				flash.Store(&c.Controller)
+				c.SetSession("storeInfo", store)
+				c.Redirect("/dashboard", 302)
+				return
 			} else {
 				store.Images = append(store.Images, models.StoreImage{
 					Image:   path,
