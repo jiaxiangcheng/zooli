@@ -205,6 +205,8 @@ func (c *BaseController) UploadFileByFile(header *multipart.FileHeader, format s
 		return "", errors.New(i18n.Tr(c.Lang, utils.ERROR_FILE_TYPE))
 	}
 
+	// reset to pointer 0
+	file.Seek(0, 0)
 
 	if _, err := os.Stat(EXTERNAL_FILE_STORAGE); os.IsNotExist(err) {
 		os.Mkdir(EXTERNAL_FILE_STORAGE, os.ModePerm)

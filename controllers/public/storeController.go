@@ -105,6 +105,7 @@ func (c *ManagersStoreController) getStore() (models.Store, error) {
 			} else {
 				store.Images = append(store.Images, models.StoreImage{
 					Image: path,
+					StoreID: store.ID,
 				})
 			}
 		}

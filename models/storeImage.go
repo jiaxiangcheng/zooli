@@ -1,12 +1,13 @@
 package models
 
 import (
-	"github.com/jinzhu/gorm"
 	"github.com/astaxie/beego"
+	"time"
 )
 
 type StoreImage struct {
-	gorm.Model			`valid:"-"`
+	ID			uint		`gorm:"primary_key" valid:"-"`
+	CreatedAt	time.Time	`valid:"-"`
 	Image		string	`gorm:"not null" valid:"required, url"`
 	StoreID		uint	`gorm:"not null" valid:"required"`
 }
