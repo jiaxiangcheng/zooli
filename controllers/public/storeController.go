@@ -92,6 +92,11 @@ func (c *ManagersStoreController) getStore() (models.Store, error) {
 
 	store.ID = storeDb.ID
 
+	file, header, err := c.GetFile("image")
+
+	beego.Debug(file)
+	beego.Debug(header)
+
 	latitude, err := c.GetFloat("latitude")
 	if err != nil {
 		return store, err
