@@ -81,7 +81,7 @@ func (c *ManagersStoreController) GetStoreFromDB() models.Store {
 */
 func (c *ManagersStoreController) UpdateImages() {
 	flash := beego.NewFlash()
-	store, err := c.getStore()
+	storeDb, _ := GetCurrentStore(&c.BaseController)
 
 	imageFiles, err := c.GetFiles("files[]")
 	if err == nil {
@@ -92,20 +92,20 @@ func (c *ManagersStoreController) UpdateImages() {
 				fmt.Println("ERROR: ", err)
 				flash.Error(err.Error())
 				flash.Store(&c.Controller)
-				c.SetSession("storeInfo", store)
+				c.SetSession("storeInfo", storeDb)
 				c.Redirect("/dashboard", 302)
 				return
 			} else {
-				store.Images = append(store.Images, models.StoreImage{
+				storeDb.Images = append(storeDb.Images, models.StoreImage{
 					Image:   path,
-					StoreID: store.ID,
+					StoreID: storeDb.ID,
 				})
 			}
 		}
 	}
 
 	//update the store
-	store.Update()
+	storeDb.Update()
 
 	// load message success and redirect
 	flash.Success("You have update the gallery")
