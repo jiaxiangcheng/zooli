@@ -7,11 +7,6 @@ import (
 	utils "github.com/Qiaorui/zooli/controllers/utils"
 	"github.com/Qiaorui/zooli/models"
 	"github.com/astaxie/beego"
-<<<<<<< HEAD
-	"fmt"
-	"github.com/beego/i18n"
-=======
->>>>>>> ebbde83c7a399d1baaa4972cff0a0bbb656bba67
 )
 
 type ManagersStoreController struct {
@@ -48,7 +43,7 @@ func (c *ManagersStoreController) Update() {
 	}
 
 	if !store.Exists() {
-		flash.Error(i18n.Tr(c.Lang, utils.ERROR_STORE_AREADY_EXISTS))
+		flash.Error("Incorrect store id")
 		flash.Store(&c.Controller)
 		c.Redirect("/dashboard", 302)
 		return
@@ -69,7 +64,7 @@ func (c *ManagersStoreController) Update() {
 	store.Update()
 
 	// load message success and redirect
-	flash.Success(i18n.Tr(c.Lang, utils.SUCCESS_UPDATE_STORE))
+	flash.Success("You have update the store")
 	flash.Store(&c.Controller)
 	c.Redirect("/public/store", 302)
 }
@@ -84,39 +79,6 @@ func (c *ManagersStoreController) GetStoreFromDB() models.Store {
 	return store
 }
 */
-func (c *ManagersStoreController) UpdateImages() {
-	flash := beego.NewFlash()
-	storeDb, _ := GetCurrentStore(&c.BaseController)
-
-	imageFiles, err := c.GetFiles("files[]")
-	if err == nil {
-		for _, h := range imageFiles {
-			fmt.Println(h.Filename)
-			path, err := c.UploadFileByFile(h, "image")
-			if err != nil {
-				fmt.Println("ERROR: ", err)
-				flash.Error(err.Error())
-				flash.Store(&c.Controller)
-				c.SetSession("storeInfo", storeDb)
-				c.Redirect("/dashboard", 302)
-				return
-			} else {
-				storeDb.Images = append(storeDb.Images, models.StoreImage{
-					Image:   path,
-					StoreID: storeDb.ID,
-				})
-			}
-		}
-	}
-
-	//update the store
-	storeDb.Update()
-
-	// load message success and redirect
-	flash.Success("You have update the gallery")
-	flash.Store(&c.Controller)
-	c.Redirect("/public/store", 302)
-}
 
 func (c *ManagersStoreController) getStore() (models.Store, error) {
 
@@ -133,6 +95,27 @@ func (c *ManagersStoreController) getStore() (models.Store, error) {
 	}
 
 	store.ID = storeDb.ID
+
+	imageFiles, err := c.GetFiles("files[]")
+	if err == nil {
+		for _, h := range imageFiles {
+			fmt.Println(h.Filename)
+			path, err := c.UploadFileByFile(h, "image")
+			if err != nil {
+				fmt.Println("ERROR: ", err)
+				return store, err
+			} else {
+				store.Images = append(store.Images, models.StoreImage{
+<<<<<<< HEAD
+					Image:   path,
+=======
+					Image: path,
+>>>>>>> 217650c575dd8e61df2a8707ae06f3a3ff085cf8
+					StoreID: store.ID,
+				})
+			}
+		}
+	}
 
 	latitude, err := c.GetFloat("latitude")
 	if err != nil {

@@ -42,6 +42,7 @@ func init() {
 
 	beego.Router("/public/store", &public.ManagersStoreController{}, "get:Edit")
 	beego.Router("/public/store", &public.ManagersStoreController{}, "post:Update")
+	beego.Router("/public/store/images", &public.ManagersStoreController{}, "post:UpdateImages")
 
 	beego.Router("/admin/services", &admin.ServicesController{}, "get:Get")
 	beego.Router("/admin/services/new", &admin.ServicesController{}, "get:New")
