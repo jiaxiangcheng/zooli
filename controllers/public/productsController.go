@@ -7,6 +7,7 @@ import (
 	utils "github.com/Qiaorui/zooli/controllers/utils"
 	"github.com/Qiaorui/zooli/models"
 	"github.com/astaxie/beego"
+	"github.com/beego/i18n"
 )
 
 type ProductsController struct {
@@ -43,7 +44,7 @@ func (c *ProductsController) Edit() {
 	}
 	if !product.Exists() || product.StoreID != s.ID {
 		flash := beego.NewFlash()
-		flash.Error("Incorrect product id")
+		flash.Error(i18n.Tr(c.Lang, utils.ERROR_PRODUCT_AREADY_EXISTS))
 		flash.Store(&c.Controller)
 		c.Redirect("/public/products", 302)
 		return
@@ -102,7 +103,7 @@ func (c *ProductsController) Create() {
 	product.Insert()
 
 	// load message success and redirect
-	flash.Success("You have created the product " + product.Name)
+	flash.Success(i18n.Tr(c.Lang, utils.SUCCESS_CREATE_PRODUCT) + " " + product.Name)
 	flash.Store(&c.Controller)
 	c.Redirect("/public/products", 303)
 }
@@ -129,7 +130,7 @@ func (c *ProductsController) Update() {
 
 	pDB := models.FindProductByID(uint(id))
 	if !pDB.Exists() || pDB.StoreID != s.ID {
-		flash.Error("Incorrect product id")
+		flash.Error(i18n.Tr(c.Lang, utils.ERROR_PRODUCT_AREADY_EXISTS))
 		flash.Store(&c.Controller)
 		c.Redirect("/public/products", 302)
 		return
@@ -152,7 +153,7 @@ func (c *ProductsController) Update() {
 	product.Update()
 
 	// load message success and redirect
-	flash.Success("You have updated the product " + product.Name)
+	flash.Success(i18n.Tr(c.Lang, utils.SUCCESS_UPDATE_PRODUCT) + " " + product.Name)
 	flash.Store(&c.Controller)
 	c.Redirect("/public/products/"+strconv.Itoa(id), 302)
 }
@@ -179,7 +180,7 @@ func (c *ProductsController) Delete() {
 	product.DeleteSoft()
 
 	// load message success and redirect
-	flash.Success("You have deleted product")
+	flash.Success(i18n.Tr(c.Lang, utils.SUCCESS_DELETE_PRODUCT))
 	flash.Store(&c.Controller)
 	c.Redirect("/public/products", 303)
 }

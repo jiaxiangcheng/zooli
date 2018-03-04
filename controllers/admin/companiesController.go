@@ -7,6 +7,7 @@ import (
 	utils "github.com/Qiaorui/zooli/controllers/utils"
 	"github.com/Qiaorui/zooli/models"
 	"github.com/astaxie/beego"
+	"github.com/beego/i18n"
 )
 
 type CompaniesController struct {
@@ -34,7 +35,7 @@ func (c *CompaniesController) Edit() {
 	}
 	if !company.Exists() {
 		flash := beego.NewFlash()
-		flash.Error("Incorrect company id")
+		flash.Error(i18n.Tr(c.Lang, utils.ERROR_COMPANY_AREADY_EXISTS))
 		flash.Store(&c.Controller)
 		c.Redirect("/admin/companies", 302)
 		return
@@ -82,7 +83,7 @@ func (c *CompaniesController) Create() {
 	company.Insert()
 
 	// load message success and redirect
-	flash.Success("You have created the company " + company.Name)
+	flash.Success(i18n.Tr(c.Lang, utils.SUCCESS_CREATE_COMPANY) + " " + company.Name)
 	flash.Store(&c.Controller)
 	c.Redirect("/admin/companies", 303)
 }
@@ -104,7 +105,7 @@ func (c *CompaniesController) Update() {
 
 	company.ID = uint(id)
 	if !company.Exists() {
-		flash.Error("Incorrect company id")
+		flash.Error(i18n.Tr(c.Lang, utils.ERROR_COMPANY_AREADY_EXISTS))
 		flash.Store(&c.Controller)
 		c.Redirect("/admin/companies", 302)
 		return
@@ -125,7 +126,7 @@ func (c *CompaniesController) Update() {
 	company.Update()
 
 	// load message success and redirect
-	flash.Success("You have updated the company " + company.Name)
+	flash.Success(i18n.Tr(c.Lang, utils.SUCCESS_UPDATE_COMPANY) + " " + company.Name)
 	flash.Store(&c.Controller)
 	c.Redirect("/admin/companies/"+strconv.Itoa(id), 302)
 }
@@ -139,7 +140,7 @@ func (c *CompaniesController) Delete() {
 	var company models.Company
 	company.ID = uint(id)
 	if !company.Exists() {
-		flash.Error("Incorrect company id")
+		flash.Error(i18n.Tr(c.Lang, utils.ERROR_COMPANY_AREADY_EXISTS))
 		flash.Store(&c.Controller)
 		c.Redirect("/admin/companies", 303)
 		return
@@ -148,7 +149,7 @@ func (c *CompaniesController) Delete() {
 	company.DeleteSoft()
 
 	// load message success and redirect
-	flash.Success("You have deleted company " + company.Name)
+	flash.Success(i18n.Tr(c.Lang, utils.SUCCESS_DELETE_COMPANY) + " " + company.Name)
 	flash.Store(&c.Controller)
 	c.Redirect("/admin/companies", 303)
 }

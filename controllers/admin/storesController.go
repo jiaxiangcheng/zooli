@@ -9,6 +9,7 @@ import (
 	utils "github.com/Qiaorui/zooli/controllers/utils"
 	"github.com/Qiaorui/zooli/models"
 	"github.com/astaxie/beego"
+	"github.com/beego/i18n"
 )
 
 type StoresController struct {
@@ -35,7 +36,7 @@ func (c *StoresController) Edit() {
 
 	if !s.Exists() {
 		flash := beego.NewFlash()
-		flash.Error("Incorrect store id")
+		flash.Error(i18n.Tr(c.Lang, utils.ERROR_STORE_AREADY_EXISTS))
 		flash.Store(&c.Controller)
 		c.Redirect("/admin/stores", 302)
 		return
@@ -91,7 +92,7 @@ func (c *StoresController) Create() {
 	store.Insert()
 
 	// load message success and redirect
-	flash.Success("You have create the stores " + store.Name)
+	flash.Success(i18n.Tr(c.Lang, utils.SUCCESS_CREATE_STORE) + " " + store.Name)
 	flash.Store(&c.Controller)
 	c.Redirect("/admin/stores", 303)
 }
@@ -113,7 +114,7 @@ func (c *StoresController) Update() {
 
 	store.ID = uint(id)
 	if !store.Exists() {
-		flash.Error("Incorrect store id")
+		flash.Error(i18n.Tr(c.Lang, utils.ERROR_STORE_AREADY_EXISTS))
 		flash.Store(&c.Controller)
 		c.Redirect("/admin/stores", 302)
 		return
@@ -134,7 +135,7 @@ func (c *StoresController) Update() {
 	store.Update()
 
 	// load message success and redirect
-	flash.Success("You have update the store " + store.Name)
+	flash.Success(i18n.Tr(c.Lang, utils.SUCCESS_UPDATE_STORE) + " " + store.Name)
 	flash.Store(&c.Controller)
 	c.Redirect("/admin/stores/"+strconv.Itoa(id), 302)
 }
@@ -148,7 +149,7 @@ func (c *StoresController) Delete() {
 	var store models.Store
 	store.ID = uint(id)
 	if !store.Exists() {
-		flash.Error("Incorrect store id")
+		flash.Error(i18n.Tr(c.Lang, utils.ERROR_STORE_AREADY_EXISTS))
 		flash.Store(&c.Controller)
 		c.Redirect("/admin/stores", 303)
 		return
@@ -157,7 +158,7 @@ func (c *StoresController) Delete() {
 	store.DeleteSoft()
 
 	// load message success and redirect
-	flash.Success("You have deleted store")
+	flash.Success(i18n.Tr(c.Lang, utils.SUCCESS_DELETE_STORE))
 	flash.Store(&c.Controller)
 	c.Redirect("/admin/stores", 303)
 }

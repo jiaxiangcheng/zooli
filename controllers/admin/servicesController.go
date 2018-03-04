@@ -7,6 +7,7 @@ import (
 	utils "github.com/Qiaorui/zooli/controllers/utils"
 	"github.com/Qiaorui/zooli/models"
 	"github.com/astaxie/beego"
+	"github.com/beego/i18n"
 )
 
 type ServicesController struct {
@@ -34,7 +35,7 @@ func (c *ServicesController) Edit() {
 	}
 	if !service.Exists() {
 		flash := beego.NewFlash()
-		flash.Error("Incorrect service id")
+		flash.Error(i18n.Tr(c.Lang, utils.ERROR_SERVICE_AREADY_EXISTS))
 		flash.Store(&c.Controller)
 		c.Redirect("/admin/services", 302)
 		return
@@ -81,7 +82,7 @@ func (c *ServicesController) Create() {
 	service.Insert()
 
 	// load message success and redirect
-	flash.Success("You have created the service " + service.Name)
+	flash.Success(i18n.Tr(c.Lang, utils.SUCCESS_CREATE_SERVICE) + " " + service.Name)
 	flash.Store(&c.Controller)
 	c.Redirect("/admin/services", 303)
 }
@@ -103,7 +104,7 @@ func (c *ServicesController) Update() {
 
 	service.ID = uint(id)
 	if !service.Exists() {
-		flash.Error("Incorrect service id")
+		flash.Error(i18n.Tr(c.Lang, utils.ERROR_SERVICE_AREADY_EXISTS))
 		flash.Store(&c.Controller)
 		c.Redirect("/admin/services", 302)
 		return
@@ -124,7 +125,7 @@ func (c *ServicesController) Update() {
 	service.Update()
 
 	// load message success and redirect
-	flash.Success("You have updated the service " + service.Name)
+	flash.Success(i18n.Tr(c.Lang, utils.SUCCESS_UPDATE_SERVICE) + " " + service.Name)
 	flash.Store(&c.Controller)
 	c.Redirect("/admin/services/"+strconv.Itoa(id), 302)
 }
@@ -138,7 +139,7 @@ func (c *ServicesController) Delete() {
 	var service models.Service
 	service.ID = uint(id)
 	if !service.Exists() {
-		flash.Error("Incorrect service id")
+		flash.Error(i18n.Tr(c.Lang, utils.ERROR_SERVICE_AREADY_EXISTS))
 		flash.Store(&c.Controller)
 		c.Redirect("/admin/services", 303)
 		return
@@ -147,7 +148,7 @@ func (c *ServicesController) Delete() {
 	service.DeleteSoft()
 
 	// load message success and redirect
-	flash.Success("You have deleted service " + service.Name)
+	flash.Success(i18n.Tr(c.Lang, utils.SUCCESS_DELETE_SERVICE) + " " + service.Name)
 	flash.Store(&c.Controller)
 	c.Redirect("/admin/services", 303)
 }

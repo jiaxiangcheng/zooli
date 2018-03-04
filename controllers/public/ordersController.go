@@ -7,6 +7,7 @@ import (
 	utils "github.com/Qiaorui/zooli/controllers/utils"
 	"github.com/Qiaorui/zooli/models"
 	"github.com/astaxie/beego"
+	"github.com/beego/i18n"
 )
 
 type OrdersController struct {
@@ -45,7 +46,7 @@ func (c *OrdersController) Edit() {
 	}
 	if !order.Exists() {
 		flash := beego.NewFlash()
-		flash.Error("Incorrect order id")
+		flash.Error(i18n.Tr(c.Lang, utils.ERROR_ORDER_AREADY_EXISTS))
 		flash.Store(&c.Controller)
 		c.Redirect("/public/orders", 302)
 		return
@@ -133,7 +134,7 @@ func (c *OrdersController) Create() {
 	order.Insert()
 
 	// load message success and redirect
-	flash.Success("You have created the order")
+	flash.Success(i18n.Tr(c.Lang, utils.SUCCESS_CREATE_ORDER))
 	flash.Store(&c.Controller)
 	c.Redirect("/public/orders", 303)
 }
@@ -156,7 +157,7 @@ func (c *OrdersController) Update() {
 
 	order.ID = uint(id)
 	if !order.Exists() {
-		flash.Error("Incorrect order id")
+		flash.Error(i18n.Tr(c.Lang, utils.ERROR_ORDER_AREADY_EXISTS))
 		flash.Store(&c.Controller)
 		c.Redirect("/public/orders", 302)
 		return
@@ -177,7 +178,7 @@ func (c *OrdersController) Update() {
 	order.Update()
 
 	// load message success and redirect
-	flash.Success("You have updated the order")
+	flash.Success(i18n.Tr(c.Lang, utils.SUCCESS_UPDATE_ORDER))
 	flash.Store(&c.Controller)
 	c.Redirect("/public/orders/"+strconv.Itoa(id), 302)
 }
@@ -202,7 +203,7 @@ func (c *OrdersController) NextStatus() {
 	order.Update()
 
 	// load message success and redirect
-	flash.Success("You have updated the order")
+	flash.Success(i18n.Tr(c.Lang, utils.SUCCESS_NEXTSTATUS_ORDER))
 	flash.Store(&c.Controller)
 	c.Redirect("/public/orders/"+strconv.Itoa(id), 302)
 }
@@ -217,7 +218,7 @@ func (c *OrdersController) Delete() {
 	var order models.Order
 	order.ID = uint(id)
 	if !order.Exists() {
-		flash.Error("Incorrect order id")
+		flash.Error(i18n.Tr(c.Lang, utils.ERROR_ORDER_AREADY_EXISTS))
 		flash.Store(&c.Controller)
 		c.Redirect("/public/orders", 303)
 		return
@@ -226,7 +227,7 @@ func (c *OrdersController) Delete() {
 	order.DeleteSoft()
 
 	// load message success and redirect
-	flash.Success("You have deleted order")
+	flash.Success(i18n.Tr(c.Lang, utils.SUCCESS_DELETE_ORDER))
 	flash.Store(&c.Controller)
 	c.Redirect("/public/orders", 303)
 }

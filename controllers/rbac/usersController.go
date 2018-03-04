@@ -8,6 +8,7 @@ import (
 	"github.com/Qiaorui/zooli/models"
 	"github.com/astaxie/beego"
 	"github.com/pkg/errors"
+	"github.com/beego/i18n"
 )
 
 type UsersController struct {
@@ -35,7 +36,7 @@ func (c *UsersController) Edit() {
 	}
 	if !u.Exists() {
 		flash := beego.NewFlash()
-		flash.Error("Incorrect user id")
+		flash.Error(i18n.Tr(c.Lang, utils.ERROR_USER_AREADY_EXISTS))
 		flash.Store(&c.Controller)
 		c.Redirect("/admin/users", 302)
 		return
@@ -86,7 +87,7 @@ func (c *UsersController) Create() {
 	u.Insert()
 
 	// load message success and redirect
-	flash.Success("You have created the user " + u.Name)
+	flash.Success(i18n.Tr(c.Lang, utils.SUCCESS_CREATE_USER) + " " + u.Name)
 	flash.Store(&c.Controller)
 	c.Redirect("/admin/users", 303)
 }
@@ -108,7 +109,7 @@ func (c *UsersController) Update() {
 
 	u.ID = uint(id)
 	if !u.Exists() {
-		flash.Error("Incorrect user id")
+		flash.Error(i18n.Tr(c.Lang, utils.ERROR_USER_AREADY_EXISTS))
 		flash.Store(&c.Controller)
 		c.Redirect("/admin/users", 302)
 		return
@@ -140,7 +141,7 @@ func (c *UsersController) Update() {
 	}
 
 	// load message success and redirect
-	flash.Success("You have updated the user " + u.Name)
+	flash.Success(i18n.Tr(c.Lang, utils.SUCCESS_UPDATE_USER) + " " + u.Name)
 	flash.Store(&c.Controller)
 	c.Redirect("/admin/users/"+strconv.Itoa(id), 302)
 }
@@ -154,7 +155,7 @@ func (c *UsersController) Delete() {
 	var u models.User
 	u.ID = uint(id)
 	if !u.Exists() {
-		flash.Error("Incorrect user id")
+		flash.Error(i18n.Tr(c.Lang, utils.ERROR_USER_AREADY_EXISTS))
 		flash.Store(&c.Controller)
 		c.Redirect("/admin/users", 303)
 		return
@@ -163,7 +164,7 @@ func (c *UsersController) Delete() {
 	u.DeleteSoft()
 
 	// load message success and redirect
-	flash.Success("You have deleted user " + u.Name)
+	flash.Success(i18n.Tr(c.Lang, utils.SUCCESS_DELETE_USER) + " " + u.Name)
 	flash.Store(&c.Controller)
 	c.Redirect("/admin/users", 303)
 }
@@ -174,7 +175,7 @@ func (c *UsersController) AssignStore() {
 	id, _ := strconv.Atoi(c.Ctx.Input.Param(":id"))
 	u := models.FindUserByID(uint(id))
 	if !u.Exists() {
-		flash.Error("Incorrect user id")
+		flash.Error(i18n.Tr(c.Lang, utils.ERROR_USER_AREADY_EXISTS))
 		flash.Store(&c.Controller)
 		c.Redirect("/admin/stores", 303)
 		return
@@ -198,7 +199,8 @@ func (c *UsersController) AssignStore() {
 
 	u.AssignStore(s)
 
-	flash.Success("You have assigned User " + u.Name + " to Store " + s.Name)
+	flash.Success(i18n.Tr(c.Lang, utils.SUCCESS_ASSIGN_USER) + " " + u.Name +
+	 " " + i18n.Tr(c.Lang, utils.TO_STORE) + " " + s.Name)
 	flash.Store(&c.Controller)
 	c.Redirect("/admin/stores", 303)
 }

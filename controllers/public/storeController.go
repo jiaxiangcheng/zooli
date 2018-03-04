@@ -6,6 +6,7 @@ import (
 	"github.com/Qiaorui/zooli/models"
 	"github.com/astaxie/beego"
 	"fmt"
+	"github.com/beego/i18n"
 )
 
 type ManagersStoreController struct {
@@ -40,7 +41,7 @@ func (c *ManagersStoreController) Update() {
 	}
 
 	if !store.Exists() {
-		flash.Error("Incorrect store id")
+		flash.Error(i18n.Tr(c.Lang, utils.ERROR_STORE_AREADY_EXISTS))
 		flash.Store(&c.Controller)
 		c.Redirect("/dashboard", 302)
 		return
@@ -61,7 +62,7 @@ func (c *ManagersStoreController) Update() {
 	store.Update()
 
 	// load message success and redirect
-	flash.Success("You have update the store")
+	flash.Success(i18n.Tr(c.Lang, utils.SUCCESS_UPDATE_STORE))
 	flash.Store(&c.Controller)
 	c.Redirect("/public/store", 302)
 }

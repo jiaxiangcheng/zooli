@@ -13,9 +13,9 @@
                     <thead>
                         <tr>
                             <th>{{i18n .Lang "table_attribute_names.name"}}</th>
-                            <th>{{i18n .Lang "table_attribute_names.name"}}</th>
-                            <th class="center aligned">{{i18n .Lang "table_attribute_names.name"}}</th>
-                            <th>{{i18n .Lang "table_attribute_names.name"}}</th>
+                            <th>{{i18n .Lang "table_attribute_names.description"}}</th>
+                            <th class="center aligned">{{i18n .Lang "table_attribute_names.value"}}</th>
+                            <th>{{i18n .Lang "table_attribute_names.services"}}</th>
                             <th></th>
                         </tr>
                     </thead>

@@ -5,8 +5,8 @@
     </h2>
 
     {{template "public/products/form/body.tpl" .}}
-    <button id="save" class="ui primary button" type="submit">Save</button>
-    <button id="cancel" class="ui button" type="button">Cancel</button>
+    <button id="save" class="ui primary button" type="submit">{{i18n .Lang "forms.save"}}</button>
+    <button id="cancel" class="ui button" type="button">{{i18n .Lang "forms.cancel"}}</button>
 </form>
 
 <script type="text/javascript">
