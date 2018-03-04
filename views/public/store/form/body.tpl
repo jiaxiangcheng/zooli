@@ -1,60 +1,61 @@
-<div class="ui raised segment">
-    <div class="ui error message"></div>
-    {{template "common/flash.tpl" .}}
-    <div class="field" id="image-container">
-        <input type="file" id="files" name="files[]" accept="image/*" multiple/>
-        <output id="store-images"></output>
-    </div>
-
-    <div class="field">
+<div class="ui horizontal segments">
+    <div class="ui raised segment">
+        <div class="ui error message"></div>
+        {{template "common/flash.tpl" .}}
+        
+        <div class="field">
+            <div class="two fields">
+                <div class="field">
+                    <label>{{i18n .Lang "forms.name"}}</label>
+                    <input name="name" value="{{.storeForm.Name}}" type="text" placeholder="{{i18n .Lang "forms.name"}}"/>
+                </div>
+                <div class="ten wide field">
+                    <label>{{i18n .Lang "forms.address"}}</label>
+                    <input name="address" value="{{.storeForm.Address}}" type="text" placeholder="{{i18n .Lang "forms.address"}}"/>
+                </div>
+    
+            </div>
+        </div>
+        <div class="field">
+            <div class="three fields">
+                <div class="field">
+                    <label>{{i18n .Lang "forms.phone_number"}}</label>
+                    <input name="phone" value="{{.storeForm.PhoneNumber}}" type="text" placeholder="{{i18n .Lang "forms.phone_number"}}"/>
+                </div>
+                <div class="field">
+                    <label>{{i18n .Lang "forms.latitude"}}</label>
+                    <input name="latitude" value="{{.storeForm.Latitude}}" type="text" placeholder="{{i18n .Lang "forms.latitude"}}"/>
+                </div>
+                <div class="field">
+                    <label>{{i18n .Lang "forms.longitude"}}</label>
+                    <input name="longitude" value="{{.storeForm.Longitude}}" type="text" placeholder="{{i18n .Lang "forms.longitude"}}"/>
+                </div>
+            </div>
+        </div>
         <div class="two fields">
             <div class="field">
-                <label>{{i18n .Lang "forms.name"}}</label>
-                <input name="name" value="{{.storeForm.Name}}" type="text" placeholder="{{i18n .Lang "forms.name"}}"/>
-            </div>
-            <div class="ten wide field">
-                <label>{{i18n .Lang "forms.address"}}</label>
-                <input name="address" value="{{.storeForm.Address}}" type="text" placeholder="{{i18n .Lang "forms.address"}}"/>
-            </div>
-
-        </div>
-    </div>
-    <div class="field">
-        <div class="three fields">
-            <div class="field">
-                <label>{{i18n .Lang "forms.phone_number"}}</label>
-                <input name="phone" value="{{.storeForm.PhoneNumber}}" type="text" placeholder="{{i18n .Lang "forms.phone_number"}}"/>
+                <label>{{i18n .Lang "forms.company"}}</label>
+                <div class="field">
+                    <div>{{.storeForm.Company.Name}}</div>
+                </div>
             </div>
             <div class="field">
-                <label>{{i18n .Lang "forms.latitude"}}</label>
-                <input name="latitude" value="{{.storeForm.Latitude}}" type="text" placeholder="{{i18n .Lang "forms.latitude"}}"/>
-            </div>
-            <div class="field">
-                <label>{{i18n .Lang "forms.longitude"}}</label>
-                <input name="longitude" value="{{.storeForm.Longitude}}" type="text" placeholder="{{i18n .Lang "forms.longitude"}}"/>
+                <label>{{i18n .Lang "forms.services"}}</label>
+                <div class="field">
+                    <div>{{range .storeForm.Services}} <a class="ui blue label">{{.Name}}</a> {{end}}</div>
+                </div>
             </div>
         </div>
     </div>
-    <div class="two fields">
-        <div class="field">
-            <label>{{i18n .Lang "forms.company"}}</label>
-            <div class="field">
-                <div>{{.storeForm.Company.Name}}</div>
-            </div>
-        </div>
-        <div class="field">
-            <label>{{i18n .Lang "forms.services"}}</label>
-            <div class="field">
-                <div>{{range .storeForm.Services}} <a class="ui blue label">{{.Name}}</a> {{end}}</div>
-            </div>
+    
+    <div class="ui raised segment">
+        <div class="field" id="image-container">
+            <label>Gallery</label>
+            <input type="file" id="files" name="files[]" accept="image/*" multiple/>
+            <output id="store-images"></output>
         </div>
     </div>
-</div>
-
-<div id="image_modal" class="ui modal">
-    <div class="image content">
-        <img id="modal-image">
-    </div>
+    
 </div>
 
 <style>
@@ -94,7 +95,7 @@
             }
 
             const objectURL = window.URL.createObjectURL(file);
-            console.log(objectURL);
+            console.log(file);
             var reader = new FileReader();
             reader.onload = (function(theFile) {
                 return function(e) {
@@ -108,8 +109,23 @@
         };
     }
 
+    function loadStoreImages(images) {
+        console.log(images);
+
+        for (var i = 0, image; image = images[i]; i++) {
+            var imageName = image.Image.split('/').pop();
+            var imageSource = image.Image;
+
+            var span = document.createElement('span');
+            span.innerHTML = ['<a href="', imageSource, '" data-lightbox="roadtrip" data-title="', escape(imageName), '"><img class="thumbnail" src="', imageSource, '"/></a>'].join('');
+            document.getElementById('store-images').insertBefore(span, null);
+        }
+    }
+
     $(document)
         .ready(function() {
+
+        loadStoreImages({{.storeImages}});
 
         var preview = document.getElementById('preview');
         $("#imgCloser").click(function () {

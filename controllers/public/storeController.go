@@ -1,11 +1,12 @@
 package public
 
 import (
+	"fmt"
+
 	"github.com/Qiaorui/zooli/controllers"
 	utils "github.com/Qiaorui/zooli/controllers/utils"
 	"github.com/Qiaorui/zooli/models"
 	"github.com/astaxie/beego"
-	"fmt"
 )
 
 type ManagersStoreController struct {
@@ -25,6 +26,8 @@ func (c *ManagersStoreController) Edit() {
 	}
 
 	c.Data["storeForm"] = store
+	c.Data["storeImages"] = models.FindImagesByStoreID(store.ID)
+
 	c.TplName = "public/store/edit.tpl"
 }
 
@@ -93,7 +96,6 @@ func (c *ManagersStoreController) getStore() (models.Store, error) {
 
 	store.ID = storeDb.ID
 
-
 	imageFiles, err := c.GetFiles("files[]")
 	if err == nil {
 		for _, h := range imageFiles {
@@ -104,12 +106,12 @@ func (c *ManagersStoreController) getStore() (models.Store, error) {
 				return store, err
 			} else {
 				store.Images = append(store.Images, models.StoreImage{
-					Image: path,
+					Image:   path,
+					StoreID: store.ID,
 				})
 			}
 		}
 	}
-
 
 	latitude, err := c.GetFloat("latitude")
 	if err != nil {
