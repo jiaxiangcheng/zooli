@@ -54,6 +54,7 @@
             <input type="file" id="files" name="files[]" accept="image/*" multiple/>
             <output id="store-images"></output>
         </div>
+        <button id="save-gallery" class="ui primary right floated button" type="submit">Save</button>
     </div>
     
 </div>
@@ -126,6 +127,17 @@
         .ready(function() {
 
         loadStoreImages({{.storeImages}});
+
+        $('#save-gallery')
+            .on('click', function () {
+                $.ajax({
+                    type: "get",
+                    url: "/public/store/images",
+                    success: function (data) {
+                        $('#main_content').html(data);
+                    }
+                });
+            });
 
         var preview = document.getElementById('preview');
         $("#imgCloser").click(function () {

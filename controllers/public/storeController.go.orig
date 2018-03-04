@@ -79,34 +79,6 @@ func (c *ManagersStoreController) GetStoreFromDB() models.Store {
 	return store
 }
 */
-func (c *ManagersStoreController) UpdateImages() {
-
-	storeDb, _ := GetCurrentStore(&c.BaseController)
-	imageFiles, err := c.GetFiles("files[]")
-	if err == nil {
-		for _, h := range imageFiles {
-			fmt.Println(h.Filename)
-			path, err := c.UploadFileByFile(h, "image")
-			if err != nil {
-				fmt.Println("ERROR: ", err)
-				return store, err
-			} else {
-				store.Images = append(store.Images, models.StoreImage{
-					Image:   path,
-					StoreID: store.ID,
-				})
-			}
-		}
-	}
-
-	//update the store
-	store.Update()
-
-	// load message success and redirect
-	flash.Success("You have update the gallery")
-	flash.Store(&c.Controller)
-	c.Redirect("/public/store", 302)
-}
 
 func (c *ManagersStoreController) getStore() (models.Store, error) {
 
@@ -123,6 +95,27 @@ func (c *ManagersStoreController) getStore() (models.Store, error) {
 	}
 
 	store.ID = storeDb.ID
+
+	imageFiles, err := c.GetFiles("files[]")
+	if err == nil {
+		for _, h := range imageFiles {
+			fmt.Println(h.Filename)
+			path, err := c.UploadFileByFile(h, "image")
+			if err != nil {
+				fmt.Println("ERROR: ", err)
+				return store, err
+			} else {
+				store.Images = append(store.Images, models.StoreImage{
+<<<<<<< HEAD
+					Image:   path,
+=======
+					Image: path,
+>>>>>>> 217650c575dd8e61df2a8707ae06f3a3ff085cf8
+					StoreID: store.ID,
+				})
+			}
+		}
+	}
 
 	latitude, err := c.GetFloat("latitude")
 	if err != nil {
