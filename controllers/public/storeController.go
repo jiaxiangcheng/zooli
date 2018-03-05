@@ -8,7 +8,6 @@ import (
 	"github.com/Qiaorui/zooli/models"
 	"github.com/astaxie/beego"
 	"github.com/beego/i18n"
-
 )
 
 type ManagersStoreController struct {
@@ -84,8 +83,10 @@ func (c *ManagersStoreController) GetStoreFromDB() models.Store {
 func (c *ManagersStoreController) UpdateImages() {
 	flash := beego.NewFlash()
 	storeDb, _ := GetCurrentStore(&c.BaseController)
+	beego.Debug(storeDb)
 
 	imageFiles, err := c.GetFiles("files[]")
+	beego.Debug(imageFiles)
 	if err == nil {
 		for _, h := range imageFiles {
 			fmt.Println(h.Filename)
@@ -105,14 +106,10 @@ func (c *ManagersStoreController) UpdateImages() {
 			}
 		}
 	}
+	beego.Debug("go //update the store")
 
 	//update the store
 	storeDb.Update()
-
-	// load message success and redirect
-	flash.Success("You have update the gallery")
-	flash.Store(&c.Controller)
-	c.Redirect("/public/store", 302)
 }
 
 func (c *ManagersStoreController) getStore() (models.Store, error) {

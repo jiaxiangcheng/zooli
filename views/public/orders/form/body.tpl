@@ -23,6 +23,11 @@
                 <label>Current Status</label>
                 <a class="ui {{if eq .orderForm.Status .ordered}}orange{{else if eq .orderForm.Status .inService}}yellow{{else if eq .orderForm.Status .endService}}olive{{else if eq .orderForm.Status .waitingForPayment}}teal{{else if eq .orderForm.Status .orderFinished}}green{{else}}grey{{end}} label">{{.orderForm.Status}}</a>
             </div>
+            <div class="four wide field">
+                {{if not (eq .orderForm.Status .orderedCanceled)}}
+                    <button id="cancel-order" class="ui red right floated button">Cancel order</button>
+                {{end}}
+            </div>
         </div>
 
         <div class="ui mini steps">

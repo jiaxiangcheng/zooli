@@ -55,6 +55,7 @@ func init() {
 	beego.Router("/public/orders/:id([0-9]+", &public.OrdersController{}, "get:Edit")
 	beego.Router("/public/orders/:id([0-9]+", &public.OrdersController{}, "post:Update")
 	beego.Router("/public/orders/:id([0-9]+/next", &public.OrdersController{}, "post:NextStatus")
+	beego.Router("/public/orders/:id([0-9]+/cancel", &public.OrdersController{}, "post:CancelOrder")
 
 	beego.Router("/public/products", &public.ProductsController{}, "get:Get")
 	beego.Router("/public/products/new", &public.ProductsController{}, "get:New")

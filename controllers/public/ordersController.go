@@ -189,21 +189,32 @@ func (c *OrdersController) NextStatus() {
 	var order models.Order
 	id, _ := strconv.Atoi(c.Ctx.Input.Param(":id"))
 	order = models.FindOrderByID(uint(id))
-	beego.Debug(order.Status)
 
 	oldStatusInt := c.getStatusFromConst(order.Status)
-	beego.Debug(oldStatusInt)
 	currenStatusInt := oldStatusInt + 1
-	beego.Debug(currenStatusInt)
 
 	order.Status = c.getStatusFromInt(currenStatusInt)
-
-	beego.Debug("current Status = " + order.Status.String())
 
 	order.Update()
 
 	// load message success and redirect
 	flash.Success(i18n.Tr(c.Lang, utils.SUCCESS_NEXTSTATUS_ORDER))
+	flash.Store(&c.Controller)
+	c.Redirect("/public/orders/"+strconv.Itoa(id), 302)
+}
+
+func (c *OrdersController) CancelOrder() {
+	flash := beego.NewFlash()
+
+	var order models.Order
+	id, _ := strconv.Atoi(c.Ctx.Input.Param(":id"))
+	order = models.FindOrderByID(uint(id))
+	order.Status = models.CANCELED
+
+	order.Update()
+
+	// load message success and redirect
+	flash.Success("Order has been canceled")
 	flash.Store(&c.Controller)
 	c.Redirect("/public/orders/"+strconv.Itoa(id), 302)
 }
@@ -253,6 +264,7 @@ func (c *OrdersController) getOrder() (models.Order, error) {
 	*/
 
 	status := c.GetString("status")
+
 	s, _ := strconv.Atoi(status)
 
 	order.Status = c.getStatusFromInt(s)

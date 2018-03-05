@@ -9,6 +9,7 @@
     {{if not (eq .orderForm.Status .orderFinished .orderedCanceled)}}
         <button id="next" class="ui primary right floated button" type="button">Next Status</button>
     {{end}}
+    
 </form>
 
 <script type="text/javascript">
@@ -49,6 +50,17 @@
                         async: false,
                         type: "post",
                         url: "/public/orders/{{.orderForm.ID}}/next",
+                        success: function (data) {
+                            $('#main_content').html(data);
+                        }
+                    });
+                });
+            $('#cancel-order')
+                .on('click', function () {
+                    $.ajax({
+                        async: false,
+                        type: "post",
+                        url: "/public/orders/{{.orderForm.ID}}/cancel",
                         success: function (data) {
                             $('#main_content').html(data);
                         }
