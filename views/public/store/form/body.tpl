@@ -47,16 +47,6 @@
                 </div>
             </div>
         </div>
-        
-        <div class="ui raised segment">
-            <div class="field" id="image-container">
-                <label>Gallery</label>
-                <input type="file" id="files" name="files[]" accept="image/*" multiple/>
-                <output id="store-images"></output>
-            </div>
-            <button id="save-gallery" class="ui primary right floated button" type="submit">Save</button>
-        </div>
-        
     </div>
     
     <style>
@@ -85,88 +75,88 @@
     
     <script>
     
-        var output = document.getElementById("store-images");
+        // var output = document.getElementById("store-images");
     
-        function handleImageSelectOrDragDrop(evt) {
-            var files = evt.target.files;
-            for (var i = 0, file; file = files[i]; i++) {
+        // function handleImageSelectOrDragDrop(evt) {
+        //     var files = evt.target.files;
+        //     for (var i = 0, file; file = files[i]; i++) {
                 
-                if (!file.type.match('image.*')) {
-                    continue;
-                }
+        //         if (!file.type.match('image.*')) {
+        //             continue;
+        //         }
     
-                const objectURL = window.URL.createObjectURL(file);
-                console.log(file);
-                var reader = new FileReader();
-                reader.onload = (function(theFile) {
-                    return function(e) {
-                        var span = document.createElement('span');
-                        span.innerHTML = ['<a href="', objectURL, '" data-lightbox="roadtrip" data-title="', escape(theFile.name), '"><img class="thumbnail" src="', objectURL, '"/></a><a href="#" class="closer">X</a>'].join('');
-                        output.insertBefore(span, null);
-                        span.children[1].addEventListener("click", function(event){
-                            span.parentNode.removeChild(span);
-                        });   
-                    };
-                })(file);
+        //         const objectURL = window.URL.createObjectURL(file);
+        //         console.log(file);
+        //         var reader = new FileReader();
+        //         reader.onload = (function(theFile) {
+        //             return function(e) {
+        //                 var span = document.createElement('span');
+        //                 span.innerHTML = ['<a href="', objectURL, '" data-lightbox="roadtrip" data-title="', escape(theFile.name), '"><img class="thumbnail" src="', objectURL, '"/></a><a href="#" class="closer">X</a>'].join('');
+        //                 output.insertBefore(span, null);
+        //                 span.children[1].addEventListener("click", function(event){
+        //                     span.parentNode.removeChild(span);
+        //                 });   
+        //             };
+        //         })(file);
     
-                reader.readAsDataURL(file);
-            };
-        }
+        //         reader.readAsDataURL(file);
+        //     };
+        // }
     
-        function loadStoreImages(images) {
-            console.log(images);
+        // function loadStoreImages(images) {
+        //     console.log(images);
     
-            for (var i = 0; i < images.length; i++) {
-                var image = images[i];
-                var imageName = image.Image.split('/').pop();
-                var imageSource = image.Image;
+        //     for (var i = 0; i < images.length; i++) {
+        //         var image = images[i];
+        //         var imageName = image.Image.split('/').pop();
+        //         var imageSource = image.Image;
     
-                var span = document.createElement('span');
-                span.innerHTML = ['<a href="', imageSource, '" data-lightbox="roadtrip" data-title="', escape(imageName), '"><img class="thumbnail" src="', imageSource, '"/></a><a href="#" class="closer">X</a>'].join('');
-                output.insertBefore(span, null);
-                span.children[1].addEventListener("click", function(event){
-                    console.log("span = " + span.innerHTML);
-                    console.log("span.parentNode = " + span.parentNode.innerHTML);
-                    span.parentNode.removeChild(span);
-                }); 
-            }
-        }
+        //         var span = document.createElement('span');
+        //         span.innerHTML = ['<a href="', imageSource, '" data-lightbox="roadtrip" data-title="', escape(imageName), '"><img class="thumbnail" src="', imageSource, '"/></a><a href="#" class="closer">X</a>'].join('');
+        //         output.insertBefore(span, null);
+        //         span.children[1].addEventListener("click", function(event){
+        //             console.log("span = " + span.innerHTML);
+        //             console.log("span.parentNode = " + span.parentNode.innerHTML);
+        //             span.parentNode.removeChild(span);
+        //         }); 
+        //     }
+        // }
     
         $(document)
             .ready(function() {
     
-            loadStoreImages({{.storeImages}});
+            //loadStoreImages({{.storeImages}});
     
-            $('#save-gallery')
-                .on('click', function () {
-                    $.ajax({
-                        type: "post",
-                        url: "/public/store/images",
-                        success: function (data) {
-                            $('#main_content').html(data);
-                        }
-                    });
-                });
+            // $('#save-gallery')
+            //     .on('click', function () {
+            //         $.ajax({
+            //             type: "post",
+            //             url: "/public/store/images",
+            //             success: function (data) {
+            //                 $('#main_content').html(data);
+            //             }
+            //         });
+            //     });
     
-            var preview = document.getElementById('preview');
-            $("#imgCloser").click(function () {
-                $('#poster').val('');
-                $('#oldImage').val("");
-                preview.src = "";
-                preview.parentNode.style = 'width:100%;float:left;position:relative;display:none';
-            });
+            // var preview = document.getElementById('preview');
+            // $("#imgCloser").click(function () {
+            //     $('#poster').val('');
+            //     $('#oldImage').val("");
+            //     preview.src = "";
+            //     preview.parentNode.style = 'width:100%;float:left;position:relative;display:none';
+            // });
     
-            $("#poster").change(function () {
-                if (event.target.files.length > 0) {
-                    preview.src = URL.createObjectURL(event.target.files[0]);
-                    preview.parentNode.style = 'border: 1px solid #ddd;border-radius: 4px;padding: 5px;width: 150px;';
-                } else {
-                    preview.src = "";
-                    preview.parentNode.style = 'width:100%;float:left;position:relative;display:none';
-                }
-            });
+            // $("#poster").change(function () {
+            //     if (event.target.files.length > 0) {
+            //         preview.src = URL.createObjectURL(event.target.files[0]);
+            //         preview.parentNode.style = 'border: 1px solid #ddd;border-radius: 4px;padding: 5px;width: 150px;';
+            //     } else {
+            //         preview.src = "";
+            //         preview.parentNode.style = 'width:100%;float:left;position:relative;display:none';
+            //     }
+            // });
     
-            document.getElementById('files').addEventListener('change', handleImageSelectOrDragDrop, false);
+            // document.getElementById('files').addEventListener('change', handleImageSelectOrDragDrop, false);
     
             $('.dropdown').dropdown();
     

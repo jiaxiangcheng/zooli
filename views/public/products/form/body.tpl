@@ -33,7 +33,7 @@
         <textarea name="description" type="text" placeholder="{{i18n .Lang "form.type_description"}}">{{.productForm.Description}}</textarea>
     </div>
     <div class="field" id="image-container">
-        <div style="{{if .productForm.Image}}
+        <div style="{{if .productForm.Images}}
                         border: 1px solid #ddd;
                         border-radius: 4px;
                         padding: 5px;
@@ -41,9 +41,9 @@
                     {{else}}
                         width:100%;float:left;position:relative;display:none
                     {{end}};">
-            <img class="ui fluid image" id="preview" src="{{.productForm.Image}}"/>
+            <img class="ui fluid image" id="preview" src="{{.productForm.Images}}"/>
             <i id="imgCloser" class="close icon" style="position: absolute;top:15px;right:15px;cursor: pointer;"></i>
-            <input type="hidden" id="oldImage" name="oldImage" value="{{.productForm.Image}}">
+            <input type="hidden" id="oldImage" name="oldImage" value="{{.productForm.Images}}">
         </div>
         <input type="file" accept="image/*" name="image" id="poster">
     </div>

@@ -85,7 +85,10 @@ func (c *ManagersStoreController) UpdateImages() {
 	storeDb, _ := GetCurrentStore(&c.BaseController)
 	beego.Debug(storeDb)
 
-	imageFiles, err := c.GetFiles("files[]")
+	//imageFiles, err := c.GetFiles("files[]")
+	imageFiles, err := c.GetFiles("file")
+	//files, info, err := c.Ctx. FormFile("file")
+
 	beego.Debug(imageFiles)
 	if err == nil {
 		for _, h := range imageFiles {
