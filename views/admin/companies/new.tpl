@@ -1,7 +1,7 @@
 <form class="ui form">
-    <h2 id="title">
+    <h2 id="title" style="margin-top: 15px">
         <i class="world icon"></i>
-        New Company
+        {{i18n .Lang "companies_table.new_company"}}
     </h2>
 
     {{template "admin/companies/form/body.tpl" .}}

@@ -1,7 +1,7 @@
 <form class="ui form" enctype="multipart/form-data">
-    <h2 id="title">
+    <h2 id="title" style="margin-top: 15px">
         <i class="payment icon"></i>
-        New Order
+        {{i18n .Lang "orders_table.new_order"}}
     </h2>
     {{template "public/orders/form/body.tpl" .}}
     <button id="save" class="ui primary button" type="submit">{{i18n .Lang "forms.create"}}</button>

@@ -1,7 +1,7 @@
 <form class="ui form" enctype="multipart/form-data">
-    <h2 id="title">
+    <h2 id="title" style="margin-top: 15px">
         <i class="world icon"></i>
-        New Product
+        {{i18n .Lang "products_table.new_product"}}
     </h2>
 
     {{template "public/products/form/body.tpl" .}}
