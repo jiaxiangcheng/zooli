@@ -13,7 +13,7 @@
 
                     <thead>
                         <tr>
-                            <th>{{i18n .Lang "table_attribute_names.name"}}</th>
+                            <th>{{i18n .Lang "table_attribute_names.company_name"}}</th>
                             <th>{{i18n .Lang "table_attribute_names.contact"}}</th>
                             <th>{{i18n .Lang "table_attribute_names.phone"}}</th>
                             <th>{{i18n .Lang "table_attribute_names.email"}}</th>
