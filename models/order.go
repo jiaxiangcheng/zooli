@@ -1,14 +1,15 @@
 package models
 
 import (
-	"github.com/jinzhu/gorm"
-	"github.com/astaxie/beego"
 	"encoding/json"
 	"time"
+
+	"github.com/astaxie/beego"
+	"github.com/jinzhu/gorm"
 )
 
-
 type Status int
+
 const (
 	ORDERED Status = iota + 1
 	IN_SERVICE
@@ -18,7 +19,7 @@ const (
 	CANCELED
 )
 
-var statuses = [...]string {
+var statuses = [...]string{
 	"ORDERED",
 	"IN SERVICE",
 	"END SERVICE",
@@ -28,22 +29,19 @@ var statuses = [...]string {
 }
 
 func (status Status) String() string {
-	return statuses[status - 1]
+	return statuses[status-1]
 }
-
-
 
 type Order struct {
-	gorm.Model				`valid:"-"`
-	Customer	Customer	`valid:"-" json:"-"`
-	CustomerID	uint		`gorm:"not null" valid:"required"`
-	Product		Product		`valid:"-" json:"-"`
-	ProductID	uint		`gorm:"not null" valid:"required"`
-	Status		Status		`gorm:"not null" valid:"required"`
-	Fee			float64		`valid:"-"`
-	Logs		[]OrderLog	`valid:"-" json:"-"`
+	gorm.Model `valid:"-"`
+	Customer   Customer   `valid:"-" json:"-"`
+	CustomerID uint       `gorm:"not null" valid:"required"`
+	Product    Product    `valid:"-" json:"-"`
+	ProductID  uint       `gorm:"not null" valid:"required"`
+	Status     Status     `gorm:"not null" valid:"required"`
+	Fee        float64    `valid:"-"`
+	Logs       []OrderLog `valid:"-" json:"-"`
 }
-
 
 func (o *Order) Insert() {
 	DB.Create(&o)
@@ -80,6 +78,13 @@ func FindOrdersByStoreID(storeID uint) []Order {
 	return o
 }
 
+func FindOrdersByCustomerID(customerID uint) []Order {
+	var o []Order
+	DB.Where("customer_id = ?", customerID).Preload("Product").Preload("Logs").Find(&o)
+
+	return o
+}
+
 func FindOrders() []Order {
 	var o []Order
 	DB.Find(&o)
@@ -93,9 +98,9 @@ func (o *Order) Update() {
 
 	if oDB.Status != o.Status {
 		l := OrderLog{
-			Status: o.Status,
+			Status:    o.Status,
 			Timestamp: time.Now(),
-			OrderID: o.ID,
+			OrderID:   o.ID,
 		}
 		l.Insert()
 	}
@@ -110,7 +115,6 @@ func (o *Order) DeleteSoft() {
 	beego.Debug("Delete Order:", o)
 	DB.Delete(&o)
 }
-
 
 func (o Order) String() string {
 	out, err := json.Marshal(o)
