@@ -10,9 +10,22 @@ git clone https://github.com/Qiaorui/zooli.git $GOPATH/src/github.com/Qiaorui/zo
 
 cd $GOPATH/src/github.com/Qiaorui/zooli/
 
+# update package
+go get -u
+
+# run web app
 bee run
 ```
 Then your app should be able to run in http://localhost:8090/
+
+The default account:
+```
+username: admin
+password: 1234
+```
+
+If you generate random data set, all fake account has password: 111111
+
 > Note: if any error happens please check prerequisites first.
 
 ### Prerequisites
@@ -69,6 +82,8 @@ Advance
 
 ### Beego
 * https://beego.me/docs/intro/
+* https://drive.google.com/open?id=172OSzfEmixDe3zIsZ4b7umJSD9YEjcWX beego-in-action
+* https://lei-cao.gitbooks.io/beego-in-action/content/zh/index.html Beego 实战
 
 ### Frontend
 General
@@ -82,6 +97,7 @@ UI
 * https://beego.me/docs/mvc/view/tutorial.md  Go template guide
 * https://semantic-ui.com/ Semantic UI
 * https://www.w3schools.com/ basic html, css, js knowledge
+* https://facebook.github.io/flux/ FLUX
 
 Javascript
 
@@ -92,6 +108,12 @@ Jquery
 
 * https://jquery.com/
 * https://www.w3schools.com/jquery/default.asp
+
+### Backend
+* http://www.cnblogs.com/samlin/archive/2010/02/08/log-operation-management.html Logging system
+* http://www.cnblogs.com/hooray/archive/2012/09/05/2672133.html Logging system
+* http://blog.csdn.net/jackljf/article/details/5750577 Logging system
+
 
 ### Docker
 Training
@@ -108,8 +130,6 @@ Book
 * https://book.douban.com/subject/27082348/ 自己动手写docker
 * https://github.com/yeasy/docker_practice 从入门到实践
 * https://book.douban.com/subject/26780404/ 第一本Docker
-* https://drive.google.com/open?id=172OSzfEmixDe3zIsZ4b7umJSD9YEjcWX beego-in-action
-* https://lei-cao.gitbooks.io/beego-in-action/content/zh/index.html Beego 实战
 
 ## Use cases
 
@@ -118,7 +138,7 @@ and some products that belong to one service. The client can order a product and
 Each store will have some manager (user) who using this application to monitoring the workflow and receive money.
 For now we are putting all kinds of user (admin, manager) in the same User table, differ by Role. This is easiest way to do so, but not correct.
 
-![alt text](https://image.ibb.co/cxeQax/network.png "class diagram")
+![alt text](https://image.ibb.co/dZ2ckx/network_1.png "class diagram")
 
 Following we define some use cases. The necessary fields to create a model are defined in Go source code file under **/model** directory.
 

@@ -1,92 +1,116 @@
-<h1 class="ui header" style="text-align:center;">Orders</h1>
-{{template "common/flash.tpl" .}}
-<table class="ui single line striped collapsing table" id="table_list">
-    <thead>
-    <tr>
-        <th class="center aligned">Client</th>
-        <th class="center aligned">Product</th>
-        <th class="center aligned">Status</th>
-        <th class="center aligned">Fee</th>
-        <th class="center aligned"></th>
-        <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    {{ range .orders }}
-    <tr>
-        <td class="center aligned">{{ .Client.Name}}</td>
-        <td class="center aligned">{{ .Product.Name}}</td>
-        <td class="center aligned">{{ .Status}}</td>
-        <td class="center aligned">{{ .Fee}}</td>
-        <td class="center aligned">
-            <button type="button"
-                    class="ui basic button"
-                    onclick="editOrders('{{ .ID}}');">
-                View
-            </button>
-        </td>
-        <td class="center aligned">
-            <button type="button"
-                    class="ui negative button"
-                    data-toggle="modal"
-                    data-target=".bs-example-modal-sm"
-                    onclick="deleteOrders('{{ .ID}}');">
-                Delete
-            </button>
-        </td>
-    </tr>
-    {{ end }}
-    </tbody>
-</table>
+{{template "common/modal.tpl" .}}
 
-<div class="ui middle aligned center aligned grid">
-    <button type="button"
-            title="View user"
-            class="ui basic big button"
-            onclick="newOrders();"
-            style="margin: 15px;">
-        <i class="add order icon"></i>
-        Create order
-    </button>
+<div class="row">
+    <div class="column">
+
+        <div class="ui segments">
+            <div class="ui segment">
+                <h1 class="ui header center aligned">{{i18n .Lang "orders_table.title"}}</h1>
+            </div>
+            <div class="ui segment">
+                {{template "common/flash.tpl" .}}
+                <table class="ui compact selectable striped celled table tablet stackable" id="data_table" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>Serial number</th>
+                            <th>{{i18n .Lang "table_attribute_names.customer"}}</th>
+                            <th>{{i18n .Lang "table_attribute_names.product"}}</th>
+                            <th>{{i18n .Lang "table_attribute_names.status"}}</th>
+                            <th>{{i18n .Lang "table_attribute_names.fee"}}</th>
+                            <th class="center aligned">Created</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{ range .orders }}
+                        <tr>
+                            <td>{{ .ID}}</td>
+                            <td>{{ .Customer.Name}}</td>
+                            <td>{{ .Product.Name}}</td>
+                            <td><a class="ui {{if eq .Status $.ordered}}orange{{else if eq .Status $.inService}}yellow{{else if eq .Status $.endService}}olive{{else if eq .Status $.waitingForPayment}}teal{{else if eq .Status $.orderFinished}}green{{else}}grey{{end}} label">{{.Status}}</a></td>
+                            <td>{{ .Fee}}</td>
+                            <td class="center aligned">{{ .CreatedAt.Format "2006-01-02 15:04"}}</td>
+                            <td class="center aligned">
+                                <i class="blue link pencil alternate icon" onclick="editOrder('{{ .ID}}');"></i>
+                                <i class="red link trash alternate icon" onclick="openDeleteModal('{{ .ID}}');"></i>
+                            </td>
+                        </tr>
+                        {{ end }}
+                    </tbody>
+                    <tfoot class="full-width">
+                        <tr>
+                            <th colspan="5">
+                                <div class="ui right floated small primary labeled icon button" onclick="newOrder();">
+                                    <i class="payment icon"></i> {{i18n .Lang "orders_table.add_order"}}
+                                </div>
+                            </th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
 
-<style>
-    #table_list {
-       margin-left:auto;
-       margin-right:auto;
-     }
-</style>
 
 <script type="text/javascript">
-    /*function newOrders() {
-        $.ajax({
-            async: false,
-            type: "get",
-            url: "/public/orders/new",
-            success: function (data) {
-                $('#main_content').html(data);
-            }
-        });
-    }
 
-    function editOrders(order_id) {
-        $.ajax({
-            async: false,
-            type: "get",
-            url: "/public/orders/" + order_id,
-            success: function (data) {
-                $('#main_content').html(data);
-            }
-        });
+$(document).ready(function() {
+    $('#data_table').DataTable({
+        language: {
+            "search": {{i18n .Lang "search input"}}
+        },
+        lengthChange: false,
+        order: [[ 5, "desc" ]],
+        info: false
     }
-    function deleteOrders(order_id) {
-        $.ajax({
-            async: false,
-            type: "delete",
-            url: "/public/orders/" + order_id,
-            success: function (data) {
-                $('#main_content').html(data);
-            }
-        });
-    }*/
+);
+
+});
+
+function newOrder() {
+    $.ajax({
+        async: false,
+        type: "get",
+        url: "/public/orders/new",
+        success: function (data) {
+            $('#main_content').html(data);
+        }
+    });
+}
+
+function editOrder(order_id) {
+    $.ajax({
+        async: false,
+        type: "get",
+        url: "/public/orders/" + order_id,
+        success: function (data) {
+            $('#main_content').html(data);
+        }
+    });
+}
+
+function deleteOrder(order_id) {
+    $.ajax({
+        async: false,
+        type: "delete",
+        url: "/public/orders/" + order_id,
+        success: function (data) {
+            $('#main_content').html(data);
+        }
+    });
+}
+
+function openDeleteModal(order_id) {
+    $('#mini_modal .header').html("Alert");
+    $('#mini_modal .content').html("Are you sure to delete order?");
+    $('#mini_modal')
+    .modal({
+        onApprove : function() {
+            deleteOrder(order_id)
+        }
+    })
+    .modal('show');
+}
+
 </script>

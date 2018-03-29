@@ -6,6 +6,7 @@ import (
 
 	"github.com/Qiaorui/zooli/models"
 	"github.com/pkg/errors"
+	"regexp"
 )
 
 func Validate(obj interface{}, validatePK ...bool) error {
@@ -58,7 +59,7 @@ func Validate(obj interface{}, validatePK ...bool) error {
 		}
 	case models.Order:
 		//
-	case models.Client:
+	case models.Customer:
 		//
 	case models.Vehicle:
 		if obj.ExistsPlate() {
@@ -70,6 +71,12 @@ func Validate(obj interface{}, validatePK ...bool) error {
 	if err != nil {
 		return err
 	}
+	// TODO: a temporary fix, should be changed later
+	govalidator.TagMap["phone"] = govalidator.Validator(func(str string) bool {
+		match, _ := regexp.MatchString("^[\\d-+]+$", str)
+		return match
+	})
+
 	_, err = govalidator.ValidateStruct(obj)
 
 	return err

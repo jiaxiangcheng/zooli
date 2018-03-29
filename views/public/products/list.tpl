@@ -1,95 +1,109 @@
-<h1 class="ui header" style="text-align:center;">Products</h1>
-{{template "common/flash.tpl" .}}
-<table class="ui single line striped collapsing table" id="table_list" style="table-layout:fixed; width:100%;">
-    <thead>
-    <tr>
-        <th class="center aligned">Name</th>
-        <th class="center aligned">Description</th>
-        <th class="center aligned">Value</th>
-        <th class="center aligned">Image</th>
-        <th class="center aligned">Service</th>
-        <th class="center aligned"></th>
-        <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    {{ range .products }}
-    <tr>
-        <td class="center aligned" style="overflow: hidden;text-overflow: ellipsis;">{{ .Name}}</td>
-        <td class="center aligned" style="overflow: hidden;text-overflow: ellipsis;">{{ .Description}}</td>
-        <td class="center aligned" style="overflow: hidden;text-overflow: ellipsis;">{{ .Value}}</td>
-        <td class="center aligned" style="overflow: hidden;text-overflow: ellipsis;"></td>
-        <td class="center aligned" style="overflow: hidden;text-overflow: ellipsis;">{{ .Service.Name}}</td>
-        <td class="center aligned">
-            <button type="button"
-                    class="ui basic button"
-                    onclick="editProducts('{{ .ID}}');">
-                View
-            </button>
-        </td>
-        <td class="center aligned">
-            <button type="button"
-                    class="ui negative button"
-                    data-toggle="modal"
-                    data-target=".bs-example-modal-sm"
-                    onclick="deleteProducts('{{ .ID}}');">
-                Delete
-            </button>
-        </td>
-    </tr>
-    {{ end }}
-    </tbody>
-</table>
+{{template "common/modal.tpl" .}}
 
-<div class="ui middle aligned center aligned grid">
-    <button type="button"
-            title="View user"
-            class="ui basic big button"
-            onclick="newProducts();"
-            style="margin: 15px;">
-        <i class="add product icon"></i>
-        Create product
-    </button>
+<div class="row">
+    <div class="column">
+
+        <div class="ui segments">
+            <div class="ui segment">
+                <h1 class="ui header center aligned">{{i18n .Lang "products_table.title"}}</h1>
+            </div>
+            <div class="ui segment">
+                {{template "common/flash.tpl" .}}
+                <table class="ui compact fixed single line selectable striped celled table tablet stackable" id="data_table" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>{{i18n .Lang "table_attribute_names.name"}}</th>
+                            <th>{{i18n .Lang "table_attribute_names.description"}}</th>
+                            <th class="center aligned">{{i18n .Lang "table_attribute_names.value"}}</th>
+                            <th>{{i18n .Lang "table_attribute_names.services"}}</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{ range .products }}
+                        <tr>
+                            <td>{{ .Name}}</td>
+                            <td>{{ .Description}}</td>
+                            <td class="center aligned">{{ .Value}}</td>
+                            <td>{{ .Service.Name}}</td>
+                            <td class="center aligned">
+                                <i class="blue link pencil alternate icon" onclick="editProduct('{{ .ID}}');"></i>
+                                <i class="red link trash alternate icon" onclick="openDeleteModal('{{ .ID}}');"></i>
+                            </td>
+                        </tr>
+                        {{ end }}
+                    </tbody>
+                    <tfoot class="full-width">
+                        <tr>
+                            <th colspan="5">
+                                <div class="ui right floated small primary labeled icon button" onclick="newProduct();">
+                                    <i class="cubes icon"></i> {{i18n .Lang "products_table.add_product"}}
+                                </div>
+                            </th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
 
-<style>
-    #table_list {
-       margin-left:auto;
-       margin-right:auto;
-     }
-</style>
 
 <script type="text/javascript">
-    function newProducts() {
-        $.ajax({
-            async: false,
-            type: "get",
-            url: "/public/products/new",
-            success: function (data) {
-                $('#main_content').html(data);
-            }
-        });
-    }
 
-    function editProducts(product_id) {
-        $.ajax({
-            async: false,
-            type: "get",
-            url: "/public/products/" + product_id,
-            success: function (data) {
-                $('#main_content').html(data);
-            }
-        });
+$(document).ready(function() {
+    $('#data_table').DataTable({
+        language: {
+            "search": {{i18n .Lang "search input"}}
+        },
+        lengthChange: false,
+        info: false
     }
+);
 
-    function deleteProducts(product_id) {
-        $.ajax({
-            async: false,
-            type: "delete",
-            url: "/public/products/" + product_id,
-            success: function (data) {
-                $('#main_content').html(data);
-            }
-        });
-    }
+});
+
+function newProduct() {
+    $.ajax({
+        async: false,
+        type: "get",
+        url: "/public/products/new",
+        success: function (data) {
+            $('#main_content').html(data);
+        }
+    });
+}
+
+function editProduct(product_id) {
+    $.ajax({
+        async: false,
+        type: "get",
+        url: "/public/products/" + product_id,
+        success: function (data) {
+            $('#main_content').html(data);
+        }
+    });
+}
+
+function deleteProduct(product_id) {
+    $.ajax({
+        async: false,
+        type: "delete",
+        url: "/public/products/" + product_id,
+        success: function (data) {
+            $('#main_content').html(data);
+        }
+    });
+}
+function openDeleteModal(product_id) {
+    $('#mini_modal .header').html("Alert");
+    $('#mini_modal .content').html("Are you sure to delete product?");
+    $('#mini_modal')
+    .modal({
+        onApprove : function() {
+            deleteProduct(product_id)
+        }
+    })
+    .modal('show');
+}
 </script>

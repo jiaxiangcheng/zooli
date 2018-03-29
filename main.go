@@ -22,4 +22,5 @@ func main() {
 	//models.DB.LogMode(true)
 
 	beego.Run()
+
 }

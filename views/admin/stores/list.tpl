@@ -1,134 +1,115 @@
-<h1 class="ui header" style="text-align:center;">Stores</h1>
 {{template "common/modal.tpl" .}}
-{{template "common/flash.tpl" .}}
-<table class="ui single line striped collapsing table" id="table_list" style="table-layout:fixed; width:100%;">
-    <thead>
-    <tr>
-        <th class="center aligned">Name</th>
-        <th class="center aligned">Address</th>
-        <th class="center aligned">Latitude</th>
-        <th class="center aligned">Longitude</th>
-        <th class="center aligned">Phone number</th>
-        <th class="center aligned">Company name</th>
-        <th class="center aligned">Manager</th>
-        <th class="center aligned">Services</th>
-        <th class="center aligned"></th>
-        <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    {{ range $i, $s := .stores }}
-    <tr>
-        <td class="center aligned" style="overflow: hidden;text-overflow: ellipsis;">{{ .Name}}</td>
-        <td class="center aligned" style="overflow: hidden;text-overflow: ellipsis;">{{ .Address}}</td>
-        <td class="center aligned" style="overflow: hidden;text-overflow: ellipsis;">{{ .Latitude}}</td>
-        <td class="center aligned" style="overflow: hidden;text-overflow: ellipsis;">{{ .Longitude}}</td>
-        <td class="center aligned" style="overflow: hidden;text-overflow: ellipsis;">{{ .PhoneNumber}}</td>
-        <td class="center aligned" style="overflow: hidden;text-overflow: ellipsis;">{{ .Company.Name}}</td>
-        <td class="center aligned" style="overflow: hidden;text-overflow: ellipsis;">{{range .Managers}} <a class="ui olive label">{{.Name}}</a>{{end}}</td>
-        <td class="center aligned" style="overflow: hidden;text-overflow: ellipsis;">{{range .Services}} <a class="ui blue label">{{.Name}}</a> {{end}}</td>
-        <td class="center aligned">
-            <button type="button"
-                    class="ui basic button"
-                    onclick="editStore('{{ .ID}}');">
-                View
-            </button>
-        </td>
 
-        <td class="center aligned">
-            <button type="button"
-                    class="ui negative button"
-                    onclick="openDeleteModal('{{ .ID}}');">
-                Delete
-            </button>
-        </td>
+<div class="row">
+    <div class="column">
 
-    </tr>
-    {{ end }}
-    </tbody>
-</table>
-
-<div class="ui middle aligned center aligned grid">
-    <button type="button"
-            title="View store"
-            class="ui basic big button"
-            onclick="newStore();"
-            style="margin: 15px;">
-        <i class="add store icon"></i>
-        Create store
-    </button>
+        <div class="ui segments">
+            <div class="ui segment">
+                <h1 class="ui header center aligned">{{i18n .Lang "stores_table.title"}}</h1>
+            </div>
+            <div class="ui segment">
+                {{template "common/flash.tpl" .}}
+                <table class="ui compact single line selectable striped celled table tablet stackable" id="data_table" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>{{i18n .Lang "table_attribute_names.name"}}</th>
+                            <th>{{i18n .Lang "table_attribute_names.address"}}</th>
+                            <th>{{i18n .Lang "table_attribute_names.phone"}}</th>
+                            <th>{{i18n .Lang "table_attribute_names.companies"}}</th>
+                            <th>{{i18n .Lang "table_attribute_names.managers"}}</th>
+                            <th>{{i18n .Lang "table_attribute_names.services"}}</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{ range $i, $s := .stores }}
+                        <tr>
+                            <td>{{ .Name}}</td>
+                            <td>{{ .Address}}</td>
+                            <td>{{ .PhoneNumber}}</td>
+                            <td>{{ .Company.Name}}</td>
+                            <td>{{range .Managers}} <a class="ui olive label">{{.Name}}</a>{{end}}</td>
+                            <td>{{range .Services}} <a class="ui blue label">{{.Name}}</a> {{end}}</td>
+                            <td class="center aligned">
+                                <i class="blue link pencil alternate icon" onclick="editStore('{{ .ID}}');"></i>
+                                <i class="red link trash alternate icon" onclick="openDeleteModal('{{ .ID}}');"></i>
+                            </td>
+                        </tr>
+                        {{ end }}
+                    </tbody>
+                    <tfoot class="full-width">
+                        <tr>
+                            <th colspan="7">
+                                <div class="ui right floated small primary labeled icon button" onclick="newStore();">
+                                    <i class="shopping bag icon"></i> {{i18n .Lang "stores_table.add_store"}}
+                                </div>
+                            </th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
 
-<style>
-    #table_list {
-       margin-left:auto;
-       margin-right:auto;
-     }
-</style>
-
 <script type="text/javascript">
-    $(document)
-            .ready(function() {
-               /*$('.dropdown')
-                    .dropdown({
-                        action: function(text, value) {
-                            args = value.split(",");
-                            $.ajax({
-                                type: "post",
-                                url: "/admin/users/" + args[0] + "/assign",
-                                data: {"storeID": args[1]},
-                                success: function (data) {
-                                    $('#main_content').html(data);
-                                }
-                            });
-                        }
-                        });*/
-            });
-
-
-    function newStore() {
-        $.ajax({
-            async: false,
-            type: "get",
-            url: "/admin/stores/new",
-            success: function (data) {
-                $('#main_content').html(data);
-            }
-        });
-    }
-    function editStore(store_id) {
-        $.ajax({
-            async: false,
-            type: "get",
-            url: "/admin/stores/" + store_id,
-            success: function (data) {
-                $('#main_content').html(data);
-            }
-        });
-    }
-
-    function deleteStore(store_id) {
-        $.ajax({
-            async: false,
-            type: "delete",
-            url: "/admin/stores/" + store_id,
-            success: function (data) {
-                $('#main_content').html(data);
-            }
-        });
-    }
-
-    function openDeleteModal(store_id) {
-        $('#mini_modal .header').html("Alert");
-        $('#mini_modal .content').html("Are you sure to delete store?");
-        $('#mini_modal')
-            .modal({
-                onApprove : function() {
-                    deleteStore(store_id)
+    $(document).ready(function() {
+        $('#data_table').DataTable({
+                    language: {
+                        "search": {{i18n .Lang "search input"}}
+                    },
+                    lengthChange: false,
+                    info: false
                 }
-            })
-            .modal('show');
-    }
+        );
+
+    });
+
+
+
+function newStore() {
+    $.ajax({
+        async: false,
+        type: "get",
+        url: "/admin/stores/new",
+        success: function (data) {
+            $('#main_content').html(data);
+        }
+    });
+}
+function editStore(store_id) {
+    $.ajax({
+        async: false,
+        type: "get",
+        url: "/admin/stores/" + store_id,
+        success: function (data) {
+            $('#main_content').html(data);
+        }
+    });
+}
+
+function deleteStore(store_id) {
+    $.ajax({
+        async: false,
+        type: "delete",
+        url: "/admin/stores/" + store_id,
+        success: function (data) {
+            $('#main_content').html(data);
+        }
+    });
+}
+
+function openDeleteModal(store_id) {
+    $('#mini_modal .header').html("Alert");
+    $('#mini_modal .content').html("Are you sure to delete store?");
+    $('#mini_modal')
+    .modal({
+        onApprove : function() {
+            deleteStore(store_id)
+        }
+    })
+    .modal('show');
+}
 
 
 </script>

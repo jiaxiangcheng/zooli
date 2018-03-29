@@ -1,12 +1,12 @@
-<form class="ui form">
+<form class="ui form" enctype="multipart/form-data">
     <h2 id="title">
         <i class="cubes icon"></i>
         Product Information
     </h2>
 
     {{template "public/products/form/body.tpl" .}}
-    <button id="save" class="ui primary button" type="submit">Save</button>
-    <button id="cancel" class="ui button" type="button">Cancel</button>
+    <button id="save" class="ui primary button" type="submit">{{i18n .Lang "forms.save"}}</button>
+    <button id="cancel" class="ui button" type="button">{{i18n .Lang "forms.cancel"}}</button>
 </form>
 
 <script type="text/javascript">
@@ -16,7 +16,13 @@
                         .api({
                             url : "/public/products/{{.productForm.ID}}",
                             method : 'POST',
-                            serializeForm : true,
+                            cache: false,
+                            processData: false,
+                            contentType: false,
+                            beforeSend: (settings)=>{
+                                settings.data = new FormData($(".ui.form")[0]);
+                                return settings;
+                            },
                             onSuccess    : function(response) {
                                 $('#main_content').html(response);
                             },

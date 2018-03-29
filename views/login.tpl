@@ -28,16 +28,16 @@
                 <div class="field">
                     <div class="ui left icon input">
                         <i class="user icon"></i>
-                        <input type="text" name="username" value="{{ .userForm.Username }}" placeholder="username">
+                        <input type="text" name="username" value="{{ .userForm.Username }}" placeholder="{{i18n .Lang "forms.username"}}">
                     </div>
                 </div>
                 <div class="field">
                     <div class="ui left icon input">
                         <i class="lock icon"></i>
-                        <input type="password" name="password" placeholder="password">
+                        <input type="password" name="password" placeholder="{{i18n .Lang "forms.password"}}">
                     </div>
                 </div>
-                <div class="ui fluid large blue submit button">Login</div>
+                <div class="ui fluid large blue submit button">{{i18n .Lang "login.login"}}</div>
             </div>
 
             <div class="ui error message"></div>

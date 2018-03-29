@@ -39,14 +39,46 @@ func GenerateRandomDataset() {
 	companyCount := 10
 	managerCount := 400
 	storeCount := 200
-	var services []Service
+	clientCount := 5000
 
+	var services []Service
+	statuses := [...]Status{ORDERED, IN_SERVICE, END_SERVICE, WAITING_FOR_PAYMENT, FINISHED}
+
+	startTime := time.Date(2017, 6, 1,0, 0, 0, 0, time.UTC).Unix()
+	endTime := time.Now().Unix()
+	diffTime := int(endTime - startTime)
+
+	source := rand.NewSource(time.Now().UnixNano())
+	ran := rand.New(source)
 
 	for _, i := range [...]string{"Maintenance", "Wash", "Rent", "Repair", "Gas", "Restaurant", "Hotel"} {
 		s := Service{Name:i}
 		s.Insert()
 		services = append(services, s)
 	}
+
+	for i := 1; i <= clientCount; i++ {
+		c := Customer{
+			Name: fake.FullName(),
+			PhoneNumber: fake.Phone(),
+			Email: fake.EmailAddress(),
+		}
+		c.SetPassword("111111")
+
+		c.Insert()
+
+		vCount := ran.Intn(3)
+		for j := 0; j < vCount ; j++ {
+			v := Vehicle{
+				Model: fake.Model(),
+				OwnerID: c.ID,
+				Plate: string(c.Name[0]) + strconv.Itoa(int(c.ID)) + strconv.Itoa(j+1) ,
+			}
+			v.Insert()
+		}
+	}
+
+
 
 	for i := 1; i <= companyCount; i++ {
 		c := Company{
@@ -57,29 +89,74 @@ func GenerateRandomDataset() {
 		}
 		c.ID = uint(i)
 		c.Insert()
-		source := rand.NewSource(time.Now().UnixNano())
-		ran := rand.New(source)
+
 		sc := ran.Intn(3) + 1
 		ss := Shuffle(services)[:sc]
 
 		for j := 0; j < storeCount/companyCount; j++ {
-			source = rand.NewSource(time.Now().UnixNano())
-			ran = rand.New(source)
 			s := Store{
 				Name: "Store " + strconv.Itoa(j),
 				Address: fake.StreetAddress(),
-				Latitude: ran.Float64()*90,
-				Longitude: ran.Float64()*180,
+				Latitude: float64(fake.Latitude()),
+				Longitude: float64(fake.Longitude()),
 				PhoneNumber: fake.Phone(),
 				CompanyID: uint(i),
-				Image: "",
 			}
-			source = rand.NewSource(time.Now().UnixNano())
-			ran = rand.New(source)
 			ssc := ran.Intn(sc) + 1
 			sss := Shuffle(ss)[:ssc]
 			s.Services = sss
 			s.Insert()
+
+			pCount := ran.Intn(4)
+			for k := 0; k < pCount; k++ {
+				p := Product{
+					Name: fake.ProductName(),
+					Value: float64(int(ran.Float64() * 10000)) / 100,
+					StoreID: s.ID,
+					ServiceID: sss[ran.Intn(len(sss))].ID,
+					Description: fake.Paragraph(),
+				}
+
+				p.Insert()
+
+				oCount := ran.Intn(200)
+				for m := 0; m < oCount; m++ {
+					o := Order{
+						CustomerID: uint(ran.Intn(clientCount) + 1),
+						Fee: p.Value,
+						ProductID: p.ID,
+					}
+					var targetStatus int
+					if ran.Intn(10) > 5 {
+						targetStatus = len(statuses) - 1
+					} else {
+						targetStatus = ran.Intn(len(statuses))
+					}
+					tmpT := time.Unix(startTime + int64(ran.Intn(diffTime)), 0)
+					for n := 0; n <= targetStatus; n++ {
+						tmpT = tmpT.Add( time.Hour * time.Duration(ran.Intn(24)))
+						ol := OrderLog{
+							Status: statuses[n],
+							Timestamp: tmpT,
+						}
+						o.Logs = append(o.Logs, ol)
+						if ran.Intn(20) < 2 {
+							olc := OrderLog{
+								Status: CANCELED,
+								Timestamp: tmpT.Add( time.Hour * time.Duration(ran.Intn(24))),
+							}
+							o.Logs = append(o.Logs, olc)
+							break
+						}
+					}
+					o.Status = o.Logs[len(o.Logs)-1].Status
+
+					o.Insert()
+
+				}
+
+			}
+
 		}
 	}
 
@@ -93,13 +170,13 @@ func GenerateRandomDataset() {
 		}
 		m.ID = uint(i)
 		m.SetPassword("111111")
-		source := rand.NewSource(time.Now().UnixNano())
-		ran := rand.New(source)
-		if ran.Intn(10) > 4 {
+		if ran.Intn(10) > 2 {
 			m.StoreID = uint(ran.Intn(storeCount) + 1)
 		}
 		m.Insert()
 	}
+
+
 
 
 }
@@ -111,22 +188,25 @@ func LoadlibDB(db *gorm.DB) {
 	db.AutoMigrate(&Company{})
 	db.AutoMigrate(&Role{})
 	db.AutoMigrate(&User{})
+	db.AutoMigrate(&ProductImage{})
 	db.AutoMigrate(&Product{})
+	db.AutoMigrate(&StoreImage{})
 	db.AutoMigrate(&Store{})
-	db.AutoMigrate(&Client{})
+	db.AutoMigrate(&Customer{})
 	db.AutoMigrate(&Vehicle{})
 	db.AutoMigrate(&Order{})
+	db.AutoMigrate(&OrderLog{})
 }
 
 
 func Syncdb() {
 	createDB()
+	//insertRoles()
+	//insertUser()
 	if err := Connect(); err != nil {
 		beego.Error(err)
 		return
 	}
-	insertRoles()
-	insertUser()
 	fmt.Println("database init is complete.")
 }
 

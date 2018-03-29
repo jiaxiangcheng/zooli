@@ -1,24 +1,59 @@
 package models
 
 import (
-	"github.com/jinzhu/gorm"
-	"github.com/astaxie/beego"
 	"encoding/json"
+	"time"
+
+	"github.com/astaxie/beego"
+	"github.com/jinzhu/gorm"
 )
 
-type Order struct {
-	gorm.Model        `valid:"-"`
-	Client    Client  `valid:"-" json:"-"`
-	ClientID  uint    `gorm:"not null" valid:"required,alphanum"`
-	Product   Product `valid:"-" json:"-"`
-	ProductID uint    `gorm:"not null" valid:"required,alphanum"`
-	Status    int     `gorm:"not null" valid:"required,alphanum"`
-	Fee       float64 `valid:"-"`
+type Status int
+
+const (
+	ORDERED Status = iota + 1
+	IN_SERVICE
+	END_SERVICE
+	WAITING_FOR_PAYMENT
+	FINISHED
+	CANCELED
+)
+
+var statuses = [...]string{
+	"ORDERED",
+	"IN SERVICE",
+	"END SERVICE",
+	"WAITING FOR PAYMENT",
+	"FINISHED",
+	"CANCELED",
 }
 
+func (status Status) String() string {
+	return statuses[status-1]
+}
+
+type Order struct {
+	gorm.Model `valid:"-"`
+	Customer   Customer   `valid:"-" json:"-"`
+	CustomerID uint       `gorm:"not null" valid:"required"`
+	Product    Product    `valid:"-" json:"-"`
+	ProductID  uint       `gorm:"not null" valid:"required"`
+	Status     Status     `gorm:"not null" valid:"required"`
+	Fee        float64    `valid:"-"`
+	Logs       []OrderLog `valid:"-" json:"-"`
+}
 
 func (o *Order) Insert() {
 	DB.Create(&o)
+	if len(o.Logs) == 0 {
+		l := OrderLog{
+			o.Status,
+			time.Now(),
+			o.ID,
+		}
+		l.Insert()
+	}
+
 	beego.Debug("Insert Order:", o)
 }
 
@@ -30,10 +65,25 @@ func (o *Order) Exists() bool {
 
 func FindOrderByID(id uint) Order {
 	var o Order
-	DB.Where("id = ?", id).Find(&o)
+	DB.Where("id = ?", id).Preload("Customer").Preload("Product").Preload("Logs").Find(&o)
 	return o
 }
 
+func FindOrdersByStoreID(storeID uint) []Order {
+	var o []Order
+	DB.Where("product_id in (?)",
+		DB.Table("products").Select("id").Where("store_id = ?", storeID).QueryExpr()).
+		Preload("Customer").Preload("Product").Find(&o)
+
+	return o
+}
+
+func FindOrdersByCustomerID(customerID uint) []Order {
+	var o []Order
+	DB.Where("customer_id = ?", customerID).Preload("Product").Preload("Logs").Find(&o)
+
+	return o
+}
 
 func FindOrders() []Order {
 	var o []Order
@@ -46,6 +96,14 @@ func (o *Order) Update() {
 	oDB.ID = o.ID
 	DB.Where(&oDB).First(&oDB)
 
+	if oDB.Status != o.Status {
+		l := OrderLog{
+			Status:    o.Status,
+			Timestamp: time.Now(),
+			OrderID:   o.ID,
+		}
+		l.Insert()
+	}
 	oDB.Status = o.Status
 	oDB.Fee = o.Fee
 
@@ -58,7 +116,6 @@ func (o *Order) DeleteSoft() {
 	DB.Delete(&o)
 }
 
-
 func (o Order) String() string {
 	out, err := json.Marshal(o)
 	if err != nil {
@@ -66,4 +123,11 @@ func (o Order) String() string {
 		return ""
 	}
 	return string(out)
+}
+
+func NumOrders() int {
+	var count int = 0
+	var c []Order
+	DB.Find(&c).Count(&count)
+	return count
 }

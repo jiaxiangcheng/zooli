@@ -2,8 +2,8 @@
     <div class="ui error message"></div>
     {{template "common/flash.tpl" .}}
     <div class="field">
-        <label>Name</label>
-        <input name="name" value="{{.serviceForm.Name}}" type="text" placeholder="Name"/>
+        <label>{{i18n .Lang "forms.name"}}</label>
+        <input name="name" value="{{.serviceForm.Name}}" type="text" placeholder="{{i18n .Lang "forms.name"}}"/>
     </div>
 </div>
 
