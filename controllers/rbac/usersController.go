@@ -7,8 +7,8 @@ import (
 	utils "github.com/Qiaorui/zooli/controllers/utils"
 	"github.com/Qiaorui/zooli/models"
 	"github.com/astaxie/beego"
-	"github.com/pkg/errors"
 	"github.com/beego/i18n"
+	"github.com/pkg/errors"
 )
 
 type UsersController struct {
@@ -16,7 +16,6 @@ type UsersController struct {
 }
 
 func (c *UsersController) Get() {
-	beego.Info("sadsad")
 	c.Data["users"] = models.FindUsers()
 	c.TplName = "admin/users/list.tpl"
 }
@@ -99,8 +98,9 @@ func (c *UsersController) Update() {
 
 	//get identifier of user
 	id, _ := strconv.Atoi(c.Ctx.Input.Param(":id"))
-
+	beego.Debug(id)
 	u, err := c.getUser()
+	beego.Debug(u)
 	if err != nil {
 		flash.Error(err.Error())
 		flash.Store(&c.Controller)
@@ -201,7 +201,7 @@ func (c *UsersController) AssignStore() {
 	u.AssignStore(s)
 
 	flash.Success(i18n.Tr(c.Lang, utils.SUCCESS_ASSIGN_USER) + " " + u.Name +
-	 " " + i18n.Tr(c.Lang, utils.TO_STORE) + " " + s.Name)
+		" " + i18n.Tr(c.Lang, utils.TO_STORE) + " " + s.Name)
 	flash.Store(&c.Controller)
 	c.Redirect("/admin/stores", 303)
 }
